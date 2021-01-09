@@ -20,6 +20,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import PeopleIcon from "@material-ui/icons/People";
+// akhir drawer
 const useStyles = makeStyles((theme) => ({
   // style pada topbar
   root: {
@@ -184,11 +185,13 @@ export default function ButtonAppBar() {
       </List>
     </div>
   );
+  // akhir list drawer
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.topBar}>
         <Grid container justify="center">
-          <Grid item lg={12} xs={12} sm={12} ms={12} style={{ maxWidth: 1280 }}>
+          <Grid item lg={12} xs={12} sm={12} md={12} style={{ maxWidth: 1280 }}>
             <Toolbar className={classes.toolbar}>
               <Typography className={classes.logo}>MyShop</Typography>
               <IconButton
