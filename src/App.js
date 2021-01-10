@@ -4,6 +4,7 @@ import { Grid, makeStyles } from "@material-ui/core";
 import Iklan from "./components/iklan";
 import "./App.css";
 import Jenis from "./components/content/jenis";
+import Footer from "./components/footer";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1280,
@@ -42,6 +43,7 @@ function App() {
           <Jenis />
         </Grid>
       </div>
+      <Footer />
     </div>
   );
 }
