@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
   // style pada topbar
   root: {
     flexGrow: 1,
+    marginBottom: 10,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -35,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
   toolbar: {
     justifyContent: "space-between",
     display: "flex",
+    padding: 0,
+    [theme.breakpoints.down("md")]: {
+      marginLeft: 10,
+      marginRight: 10,
+    },
   },
   logo: {
     fontSize: 30,
@@ -98,12 +104,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       display: "none",
     },
+    padding: 0,
   },
   responDua: {
     display: "none",
     [theme.breakpoints.down("xs")]: {
       display: "inline-block",
     },
+    padding: 0,
   },
   // akhir responsif icon button pada topbar
 
@@ -230,14 +238,7 @@ export default function ButtonAppBar() {
                   onClick={handleProfileMenuOpen}
                   className={classes.respon}
                 >
-                  <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                  >
-                    <AccountCircle style={{ fontSize: 30 }} />
-                  </IconButton>
+                  <AccountCircle style={{ fontSize: 30 }} />
                 </MenuItem>
               </div>
             </Toolbar>

@@ -43,24 +43,34 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
     backgroundColor: theme.palette.background.default,
   },
-  img: {
-    height: 400,
-    width: "100%",
-    display: "block",
-    maxWidth: "100%",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-  },
   panah: {
     display: "flex",
     justifyContent: "space-between",
     height: 400,
-    position: "relative",
-    bottom: 400,
+    marginTop: -400,
+    [theme.breakpoints.down("xs")]: {
+      marginTop: -250,
+      height: 250,
+    },
   },
   stepper: {
     backgroundColor: "white",
+  },
+  arrow: {
+    fontSize: 80,
+  },
+  image: {
+    height: 400,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    marginRight: 10,
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: 250,
+    },
   },
 }));
 function Carausel() {
@@ -81,7 +91,7 @@ function Carausel() {
   };
 
   return (
-    <div style={{ marginTop: 10 }}>
+    <div>
       <AutoPlaySwipeableViews
         axis={theme.direction === "rtl" ? "x-reverse" : "x"}
         index={activeStep}
@@ -95,44 +105,20 @@ function Carausel() {
                 <div
                   style={{
                     backgroundImage: "url(" + step.imgPath + ")",
-                    height: 400,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    marginRight: 10,
                   }}
-                >
-                  test
-                </div>
+                  className={classes.image}
+                ></div>
               ) : null}
             </div>
           );
-          // <div key={step.label}>
-          //   {Math.abs(activeStep - index) <= 2 ? (
-          //     // <img
-          //     //   className={classes.img}
-          //     //   src={step.imgPath}
-          //     //   alt={step.label}
-          //     // />
-          //     <Grid container>
-          //       <Grid item xs={12} sm={12} md={12} lg={12}>
-          //         <div className={classes.img}>test</div>
-          //       </Grid>
-          //     </Grid>
-          //   ) : // <Grid container>
-          //   //   <Grid item xs={12} sm={12} md={12} lg={12}>
-          //   //     <div className={classes.img}>test</div>
-          //   //   </Grid>
-          //   // </Grid>
-          //   null}
-          // </div>
         })}
       </AutoPlaySwipeableViews>
       <div className={classes.panah}>
         <Button onClick={handleBack}>
-          <KeyboardArrowLeft style={{ fontSize: 80 }} />
+          <KeyboardArrowLeft className={classes.arrow} />
         </Button>
         <Button onClick={handleNext}>
-          <KeyboardArrowRight style={{ fontSize: 80 }} />
+          <KeyboardArrowRight className={classes.arrow} />
         </Button>
       </div>
     </div>
