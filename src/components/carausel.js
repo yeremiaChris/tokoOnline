@@ -58,6 +58,8 @@ const useStyles = makeStyles((theme) => ({
   },
   arrow: {
     fontSize: 80,
+    color: "grey",
+    textShadow: "2px 2px red",
   },
   image: {
     height: 400,
@@ -71,6 +73,16 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("xs")]: {
       height: 250,
     },
+    background: "linier-gradient(to right, red,blue)",
+  },
+  button: {
+    height: "100%",
+    alignItems: "center",
+    display: "grid",
+    justifyContent: "center",
+  },
+  view: {
+    marginTop: 150,
   },
 }));
 function Carausel() {
@@ -102,12 +114,13 @@ function Carausel() {
           return (
             <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
-                <div
-                  style={{
-                    backgroundImage: "url(" + step.imgPath + ")",
-                  }}
-                  className={classes.image}
-                ></div>
+                <div className={classes.image}>
+                  <div className={classes.button}>
+                    <Button className={classes.view} variant="outlined">
+                      View
+                    </Button>
+                  </div>
+                </div>
               ) : null}
             </div>
           );

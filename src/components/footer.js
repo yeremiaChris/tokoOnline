@@ -1,5 +1,8 @@
 import React from "react";
 import { Grid, makeStyles } from "@material-ui/core";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import GitHubIcon from "@material-ui/icons/GitHub";
 const useStyles = makeStyles((theme) => ({
   footer: {
     width: 1280,
@@ -12,14 +15,23 @@ const useStyles = makeStyles((theme) => ({
   },
   satu: {
     textAlign: "left",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+    },
   },
   dua: {
     textAlign: "left",
+    [theme.breakpoints.down("sm")]: {
+      textAlign: "center",
+    },
   },
   tiga: {
     textAlign: "left",
     display: "flex",
     justifyContent: "space-between",
+    [theme.breakpoints.down("sm")]: {
+      justifyContent: "space-around",
+    },
   },
   list: {
     fontSize: 20,
@@ -28,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     listStyle: "none",
     padding: 0,
   },
+  icon: {
+    justifyContent: "space-between",
+    display: "flex",
+  },
 }));
 function Footer() {
   const styles = useStyles();
@@ -35,7 +51,7 @@ function Footer() {
     <Grid container justify="center" className={styles.container}>
       <Grid item className={styles.footer}>
         <Grid container>
-          <Grid item lg={4} className={styles.satu}>
+          <Grid item lg={4} md={4} sm={12} xs={12} className={styles.satu}>
             <h2>Informasi Toko</h2>
             <div className={styles.list}>
               <ul className={styles.ul}>
@@ -45,7 +61,7 @@ function Footer() {
               </ul>
             </div>
           </Grid>
-          <Grid item lg={4} className={styles.dua}>
+          <Grid item lg={4} md={4} sm={12} xs={12} className={styles.dua}>
             <h2>Informasi Pelanggan</h2>
             <div className={styles.list}>
               <ul className={styles.ul}>
@@ -55,7 +71,7 @@ function Footer() {
               </ul>
             </div>
           </Grid>
-          <Grid item lg={4} className={styles.tiga}>
+          <Grid item lg={4} md={4} sm={12} xs={12} className={styles.tiga}>
             <div>
               <h2>Join Us</h2>
               <div className={styles.list}>
@@ -67,7 +83,12 @@ function Footer() {
               </div>
             </div>
             <div>
-              <h2>Logo</h2>
+              <h2>MY SHOP</h2>
+              <div className={styles.icon}>
+                <InstagramIcon />
+                <FacebookIcon />
+                <GitHubIcon />
+              </div>
             </div>
           </Grid>
         </Grid>

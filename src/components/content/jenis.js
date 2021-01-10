@@ -7,6 +7,7 @@ import {
   CardContent,
   CardActionArea,
   Grid,
+  Button,
 } from "@material-ui/core";
 import Image1 from "../../image/black.jpeg";
 import Image2 from "../../image/white.jpeg";
@@ -43,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     top: 160,
     zIndex: 9999,
   },
+  bottom: {
+    marginBottom: 20,
+  },
 
   //   card
   cardItem: {
@@ -53,6 +57,11 @@ const useStyles = makeStyles((theme) => ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
     backgroundSize: "cover",
+  },
+  lihat: {
+    alignItems: "center",
+    justifyContent: "center",
+    display: "grid",
   },
 }));
 
@@ -158,6 +167,11 @@ export default function Jenis() {
             </Card>
           );
         })}
+      </Grid>
+      <Grid container justify="center" className={classes.bottom}>
+        <Grid item>
+          <Button className={classes.lihat}>LIHAT LAINNYA</Button>
+        </Grid>
       </Grid>
     </>
   );
