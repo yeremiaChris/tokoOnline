@@ -33,54 +33,18 @@ const tutorialSteps = [
   },
 ];
 const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  header: {
-    display: "flex",
-    alignItems: "center",
-    height: 50,
-    paddingLeft: theme.spacing(4),
-    backgroundColor: theme.palette.background.default,
-  },
-  panah: {
-    display: "flex",
-    justifyContent: "space-between",
-    height: 400,
-    marginTop: -400,
-    backgroundColor: "yellow",
-  },
-  stepper: {
-    backgroundColor: "white",
-  },
-  arrow: {
-    fontSize: 80,
-    color: "grey",
-    textShadow: "2px 2px red",
-  },
   image: {
     height: 400,
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    marginRight: 10,
     [theme.breakpoints.down("sm")]: {
-      width: "100%",
       height: 300,
     },
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
+    backgroundColor: "green",
+    [theme.breakpoints.up("md")]: {
+      marginRight: 10,
     },
-    backgroundColor: "red",
-  },
-  button: {
-    height: "100%",
-    alignItems: "center",
-    display: "grid",
-    justifyContent: "center",
-  },
-  view: {
-    marginTop: 150,
   },
 }));
 function Carausel() {
@@ -112,9 +76,7 @@ function Carausel() {
           return (
             <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
-                <div className={classes.image}>
-                  <Button variant="outlined">View</Button>
-                </div>
+                <div className={classes.image}>test</div>
               ) : null}
             </div>
           );
