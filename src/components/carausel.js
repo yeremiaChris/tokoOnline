@@ -48,10 +48,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     height: 400,
     marginTop: -400,
-    [theme.breakpoints.down("xs")]: {
-      marginTop: -250,
-      height: 250,
-    },
+    backgroundColor: "yellow",
   },
   stepper: {
     backgroundColor: "white",
@@ -69,11 +66,12 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 10,
     [theme.breakpoints.down("sm")]: {
       width: "100%",
+      height: 300,
     },
     [theme.breakpoints.down("xs")]: {
-      height: 250,
+      width: "100%",
     },
-    background: "linier-gradient(to right, red,blue)",
+    backgroundColor: "red",
   },
   button: {
     height: "100%",
@@ -115,25 +113,21 @@ function Carausel() {
             <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
                 <div className={classes.image}>
-                  <div className={classes.button}>
-                    <Button className={classes.view} variant="outlined">
-                      View
-                    </Button>
-                  </div>
+                  <Button variant="outlined">View</Button>
                 </div>
               ) : null}
             </div>
           );
         })}
       </AutoPlaySwipeableViews>
-      <div className={classes.panah}>
+      {/* <div className={classes.panah}>
         <Button onClick={handleBack}>
           <KeyboardArrowLeft className={classes.arrow} />
         </Button>
         <Button onClick={handleNext}>
           <KeyboardArrowRight className={classes.arrow} />
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 }

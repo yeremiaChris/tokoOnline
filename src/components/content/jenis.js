@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 10,
     boxShadow: "0 0 0 gray",
     width: 320,
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   media: {
     height: 320,
@@ -131,10 +134,10 @@ export default function Jenis() {
 
   return (
     <>
-      <div className={classes.terbaru}>
-        <h1>Terbaru</h1>
-      </div>
       <Grid item xs={12} className={classes.card}>
+        <div className={classes.terbaru}>
+          <h1>Terbaru</h1>
+        </div>
         {data.map((item) => {
           return (
             // <div
