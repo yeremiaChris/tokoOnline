@@ -29,11 +29,23 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
       height: 145,
     },
+    display: "grid",
+    alignContent: "center",
+    justifyContent: "center",
   },
   coverItem: {
     [theme.breakpoints.down("sm")]: {
       display: "flex",
     },
+  },
+  button: {
+    backgroundColor: "black",
+    color: "white",
+  },
+  buttonContainer: {
+    zIndex: 1,
+    backgroundColor: "red",
+    marginBottom: -100,
   },
 }));
 
@@ -66,25 +78,27 @@ function Iklan() {
       {iklan &&
         iklan.map((item) => {
           return (
-            <Grid
-              className={styles.coverItem}
-              style={{
-                justifyContent: item.flex,
-              }}
-              item
-              lg={12}
-              md={12}
-              sm={6}
-              xs={12}
-              key={item.key}
-            >
-              <div
+            <>
+              <Grid
+                className={styles.coverItem}
                 style={{
-                  backgroundImage: "url(" + item.gambar + ")",
+                  justifyContent: item.flex,
                 }}
-                className={styles.iklan}
-              ></div>
-            </Grid>
+                item
+                lg={12}
+                md={12}
+                sm={6}
+                xs={12}
+                key={item.key}
+              >
+                <div
+                  style={{
+                    backgroundImage: "url(" + item.gambar + ")",
+                  }}
+                  className={styles.iklan}
+                ></div>
+              </Grid>
+            </>
           );
         })}
     </Grid>
