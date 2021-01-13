@@ -14,47 +14,38 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("xs")]: {
       height: 400,
-      height: 300,
     },
     display: "flex",
   },
-
-  // gambar iklan
-  iklan: {
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    height: 195,
-    [theme.breakpoints.down("sm")]: {
-      width: "99%",
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-      height: 145,
-    },
-    display: "grid",
-    alignContent: "center",
-    justifyContent: "center",
-  },
-
   // cover iklan
   coverItem: {
     [theme.breakpoints.down("sm")]: {
-      display: "flex",
+      display: "grid",
     },
   },
-
-  // button view
-  button: {
-    backgroundColor: "black",
-    color: "white",
+  img: {
+    objectFit: "cover",
+    width: "100%",
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+    height: 195,
+    "&:hover": {
+      filter: "brightness(30%)",
+    },
+    transition: ".2s",
   },
-
-  // button container
-  buttonContainer: {
+  btn: {
+    color: "white",
+    borderColor: "white",
     zIndex: 1,
+  },
+  containerButton: {
     backgroundColor: "red",
-    marginBottom: -100,
+    height: 195,
+    marginBottom: -195,
+    alignItems: "center",
+    justifyContent: "center",
   },
 }));
 
@@ -63,12 +54,12 @@ const iklanState = [
   {
     key: "1",
     gambar: Gambar,
-    flex: "start",
+    display: "none",
   },
   {
     key: "2",
     gambar: GambarDua,
-    flex: "flex-end",
+    display: "none",
   },
 ];
 
@@ -78,6 +69,21 @@ function Iklan() {
 
   // state iklan
   const [iklan, setIklan] = React.useState(iklanState);
+  const mouseEnter = (key) => {
+    setIklan(
+      iklan.map((item) =>
+        item.key === key ? { ...item, display: "flex" } : item
+      )
+    );
+  };
+  const mouseLeave = (key) => {
+    setIklan(
+      iklan.map((item) =>
+        item.key === key ? { ...item, display: "none" } : item
+      )
+    );
+  };
+
   return (
     <Grid
       container
@@ -91,9 +97,6 @@ function Iklan() {
             <>
               <Grid
                 className={styles.coverItem}
-                style={{
-                  justifyContent: item.flex,
-                }}
                 item
                 lg={12}
                 md={12}
@@ -102,11 +105,20 @@ function Iklan() {
                 key={item.key}
               >
                 <div
-                  style={{
-                    backgroundImage: "url(" + item.gambar + ")",
-                  }}
-                  className={styles.iklan}
-                ></div>
+                  style={{ display: item.display }}
+                  className={styles.containerButton}
+                >
+                  <Button className={styles.btn} variant="outlined">
+                    View
+                  </Button>
+                </div>
+                <img
+                  onMouseEnter={() => mouseEnter(item.key)}
+                  onMouseLeave={() => mouseLeave(item.key)}
+                  alt={item.key}
+                  className={styles.img}
+                  src={item.gambar}
+                ></img>
               </Grid>
             </>
           );
