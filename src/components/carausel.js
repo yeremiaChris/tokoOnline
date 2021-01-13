@@ -5,6 +5,7 @@ import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
+// initial state carausel
 const tutorialSteps = [
   {
     label: "San Francisco – Oakland Bay Bridge, United States",
@@ -16,28 +17,11 @@ const tutorialSteps = [
     imgPath:
       "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
   },
-  {
-    label: "Bali, Indonesia",
-    imgPath:
-      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=400&h=250&q=80",
-  },
-  {
-    label: "NeONBRAND Digital Marketing, Las Vegas, United States",
-    imgPath:
-      "https://images.unsplash.com/photo-1518732714860-b62714ce0c59?auto=format&fit=crop&w=400&h=250&q=60",
-  },
-  {
-    label: "Goč, Serbia",
-    imgPath:
-      "https://images.unsplash.com/photo-1512341689857-198e7e2f3ca8?auto=format&fit=crop&w=400&h=250&q=60",
-  },
 ];
 const useStyles = makeStyles((theme) => ({
+  // image dari iklan carausel yang di slide
   image: {
     height: 400,
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
     [theme.breakpoints.down("sm")]: {
       height: 300,
     },
@@ -46,23 +30,63 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 10,
     },
   },
+
+  // img element
+  img: {
+    objectFit: "cover",
+    width: "100%",
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+    height: "100%",
+  },
+  button: {
+    backgroundColor: "red",
+  },
+
+  // arah arrow
+  panah: {
+    justifyContent: "space-between",
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      marginRight: 10,
+    },
+    height: 400,
+    marginTop: -400,
+    [theme.breakpoints.down("sm")]: {
+      height: 300,
+      marginTop: -300,
+    },
+  },
+  iconArrow: {
+    color: "gray",
+    fontSize: 60,
+  },
 }));
 function Carausel() {
+  // styles
   const classes = useStyles();
+
+  // carausel atau slide
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const handleNext = (prevActiveStep) => {
+    setActiveStep((prevActiveStep) =>
+      prevActiveStep < 1 ? prevActiveStep + 1 : (prevActiveStep = 1)
+    );
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) =>
+      prevActiveStep < 1 ? (prevActiveStep = 1) : prevActiveStep - 1
+    );
   };
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+  // akhir carausel atau slide
 
   return (
     <div>
@@ -76,20 +100,26 @@ function Carausel() {
           return (
             <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
-                <div className={classes.image}>test</div>
+                <div className={classes.image}>
+                  <img
+                    alt={step.label}
+                    className={classes.img}
+                    src={step.imgPath}
+                  ></img>
+                </div>
               ) : null}
             </div>
           );
         })}
       </AutoPlaySwipeableViews>
-      {/* <div className={classes.panah}>
+      <div className={classes.panah}>
         <Button onClick={handleBack}>
-          <KeyboardArrowLeft className={classes.arrow} />
+          <KeyboardArrowLeft className={classes.iconArrow} />
         </Button>
         <Button onClick={handleNext}>
-          <KeyboardArrowRight className={classes.arrow} />
+          <KeyboardArrowRight className={classes.iconArrow} />
         </Button>
-      </div> */}
+      </div>
     </div>
   );
 }

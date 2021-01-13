@@ -5,6 +5,7 @@ import GambarDua from "../image/kamera.jpg";
 
 // styles
 const useStyles = makeStyles((theme) => ({
+  // container semuanya
   container: {
     height: 400,
     [theme.breakpoints.down("sm")]: {
@@ -17,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
     },
     display: "flex",
   },
+
+  // gambar iklan
   iklan: {
     backgroundPosition: "center",
     backgroundSize: "cover",
@@ -33,15 +36,21 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
     justifyContent: "center",
   },
+
+  // cover iklan
   coverItem: {
     [theme.breakpoints.down("sm")]: {
       display: "flex",
     },
   },
+
+  // button view
   button: {
     backgroundColor: "black",
     color: "white",
   },
+
+  // button container
   buttonContainer: {
     zIndex: 1,
     backgroundColor: "red",
@@ -49,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// inital state iklan
 const iklanState = [
   {
     key: "1",
