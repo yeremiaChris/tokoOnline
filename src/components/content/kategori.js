@@ -36,20 +36,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       justifyContent: "center",
     },
-  },
-  terbaru: {
-    textAlign: "center",
-    width: "100%",
-    padding: 0,
-    marginBottom: 30,
-  },
-  buttonCard: {
-    position: "relative",
-    top: 160,
-    zIndex: 9999,
-  },
-  bottom: {
-    marginBottom: 20,
+    marginTop: 50,
   },
 
   //   card
@@ -62,86 +49,53 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   },
-  lihat: {
-    alignItems: "center",
-    justifyContent: "center",
-    display: "grid",
-  },
-  terbaruText: {
-    fontWeight: "normal",
+  button: {
+    "&:hover": {
+      backgroundColor: "black",
+      color: "white",
+    },
+    fontWeight: "bold",
   },
 }));
 
 // dummy data
 const data = [
   {
-    nama: "T-Shirt Black",
+    nama: "T-Shirt",
     harga: 52000,
     stok: 2,
     image: Image1,
     key: "1",
   },
   {
-    nama: "T-Shirt White",
+    nama: "Shirt",
     harga: 52000,
     stok: 2,
     image: Image2,
     key: "2",
   },
   {
-    nama: "T-Shirt Tan",
+    nama: "Shoes",
     harga: 52000,
     stok: 2,
     image: Image3,
     key: "3",
   },
   {
-    nama: "T-Shirt Grey",
+    nama: "Jeans",
     harga: 52000,
     stok: 2,
     image: Image4,
     key: "4",
   },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image1,
-    key: "5",
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image2,
-    key: "6",
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image3,
-    key: "7",
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image4,
-    key: "8",
-  },
 ];
-
-export default function Jenis() {
+export default function Kategori() {
   // styles
   const classes = useStyles();
 
   return (
     <>
       <Grid item xs={12} className={classes.card}>
-        <div className={classes.terbaru}>
-          <h1 className={classes.terbaruText}>REKOMENDASI</h1>
-        </div>
         {data.map((item) => {
           return (
             <Card className={classes.root} key={item.key}>
@@ -157,17 +111,14 @@ export default function Jenis() {
                   {item.nama}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  Rp {item.harga}
+                  <Button className={classes.button} variant="outlined">
+                    Shop Now
+                  </Button>
                 </Typography>
               </CardContent>
             </Card>
           );
         })}
-      </Grid>
-      <Grid container justify="center" className={classes.bottom}>
-        <Grid item>
-          <Button className={classes.lihat}>LIHAT LAINNYA</Button>
-        </Grid>
       </Grid>
     </>
   );

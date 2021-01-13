@@ -4,6 +4,7 @@ import { Grid, makeStyles } from "@material-ui/core";
 import Iklan from "./components/iklan";
 import "./App.css";
 import Jenis from "./components/content/jenis";
+import Kategori from "./components/content/kategori";
 import Footer from "./components/footer";
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -40,9 +41,15 @@ function App() {
       </div>
       <div className={styles.content}>
         <Grid container className={styles.container}>
+          <Kategori />
+        </Grid>
+      </div>
+      <div className={styles.content}>
+        <Grid container className={styles.container}>
           <Jenis />
         </Grid>
       </div>
+
       <Footer />
     </div>
   );
