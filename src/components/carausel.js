@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       height: 300,
     },
-    backgroundColor: "green",
     [theme.breakpoints.up("md")]: {
       marginRight: 10,
     },
@@ -39,6 +38,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: "auto",
     marginRight: "auto",
     height: "100%",
+    "&:hover": {
+      filter: "brightness(30%)",
+    },
+    transition: ".2s",
   },
   button: {
     backgroundColor: "red",
@@ -47,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   // arah arrow
   panah: {
     justifyContent: "space-between",
+    alignItems: "center",
     display: "flex",
     [theme.breakpoints.up("md")]: {
       marginRight: 10,
@@ -62,6 +66,11 @@ const useStyles = makeStyles((theme) => ({
     color: "gray",
     fontSize: 60,
   },
+  buttonView: {
+    color: "white",
+    borderColor: "white",
+    marginTop: 100,
+  },
 }));
 function Carausel() {
   // styles
@@ -71,6 +80,7 @@ function Carausel() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
 
+  // handle icon arrow
   const handleNext = (prevActiveStep) => {
     setActiveStep((prevActiveStep) =>
       prevActiveStep < 1 ? prevActiveStep + 1 : (prevActiveStep = 1)
@@ -82,11 +92,21 @@ function Carausel() {
       prevActiveStep < 1 ? (prevActiveStep = 1) : prevActiveStep - 1
     );
   };
+  // akhir handle icon arrow
 
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
   // akhir carausel atau slide
+
+  // state button view mouse enter
+  const [display, setDisplay] = React.useState("none");
+  const mouseEnter = () => {
+    setDisplay("flex");
+  };
+  const mouseLeave = () => {
+    setDisplay("none");
+  };
 
   return (
     <div>
@@ -98,7 +118,11 @@ function Carausel() {
       >
         {tutorialSteps.map((step, index) => {
           return (
-            <div key={step.label}>
+            <div
+              onMouseEnter={mouseEnter}
+              onMouseLeave={mouseLeave}
+              key={step.label}
+            >
               {Math.abs(activeStep - index) <= 2 ? (
                 <div className={classes.image}>
                   <img
@@ -115,6 +139,13 @@ function Carausel() {
       <div className={classes.panah}>
         <Button onClick={handleBack}>
           <KeyboardArrowLeft className={classes.iconArrow} />
+        </Button>
+        <Button
+          style={{ display: display }}
+          className={classes.buttonView}
+          variant="outlined"
+        >
+          View
         </Button>
         <Button onClick={handleNext}>
           <KeyboardArrowRight className={classes.iconArrow} />
