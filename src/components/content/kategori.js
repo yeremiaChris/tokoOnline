@@ -81,13 +81,6 @@ const data = [
     image: Image3,
     key: "3",
   },
-  {
-    nama: "Jeans",
-    harga: 52000,
-    stok: 2,
-    image: Image4,
-    key: "4",
-  },
 ];
 export default function Kategori() {
   // styles

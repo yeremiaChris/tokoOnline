@@ -199,7 +199,7 @@ export default function ButtonAppBar() {
     <div className={classes.root}>
       <AppBar position="static" className={classes.topBar}>
         <Grid container justify="center">
-          <Grid item lg={12} xs={12} sm={12} md={12} style={{ maxWidth: 1280 }}>
+          <Grid item lg={12} xs={12} sm={12} md={12} style={{ maxWidth: 1050 }}>
             <Toolbar className={classes.toolbar}>
               <Typography className={classes.logo}>MyShop</Typography>
               <IconButton

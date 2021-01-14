@@ -6,9 +6,10 @@ import "./App.css";
 import Jenis from "./components/content/jenis";
 import Kategori from "./components/content/kategori";
 import Footer from "./components/footer";
+import Content from "./components/content/content";
 const useStyles = makeStyles((theme) => ({
   container: {
-    maxWidth: 1280,
+    maxWidth: 1050,
     justifySelf: "center",
     [theme.breakpoints.down("sm")]: {
       marginLeft: 10,
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: 10,
       paddingLeft: 10,
     },
+    marginBottom: 10,
   },
   content: {
     display: "grid",
@@ -29,6 +31,11 @@ function App() {
   return (
     <div className="App">
       <Topbar />
+      <div className={styles.content}>
+        <Grid container className={styles.container}>
+          <Content />
+        </Grid>
+      </div>
       <div className={styles.content}>
         <Grid container className={styles.container}>
           <Grid item xs={12} lg={8} sm={12} md={8}>
