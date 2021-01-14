@@ -96,13 +96,13 @@ function Iklan() {
           return (
             <>
               <Grid
+                key={item.key}
                 className={styles.coverItem}
                 item
                 lg={12}
                 md={12}
                 sm={6}
                 xs={12}
-                key={item.key}
               >
                 <div
                   style={{ display: item.display }}

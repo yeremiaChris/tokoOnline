@@ -7,6 +7,7 @@ import Jenis from "./components/content/jenis";
 import Kategori from "./components/content/kategori";
 import Footer from "./components/footer";
 import Content from "./components/content/content";
+import TopMenu from "./components/topMenu";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1050,
@@ -32,6 +33,11 @@ function App() {
     <div className="App">
       <Topbar />
       <div className={styles.content}>
+        <Grid container className={styles.container}>
+          <TopMenu />
+        </Grid>
+      </div>
+      <div style={{ zIndex: -1 }} className={styles.content}>
         <Grid container className={styles.container}>
           <Content />
         </Grid>

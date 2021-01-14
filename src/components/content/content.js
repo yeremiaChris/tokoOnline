@@ -1,19 +1,12 @@
 import React from "react";
 import ItemContent from "./itemContent";
-import {
-  InputBase,
-  fade,
-  Grid,
-  makeStyles,
-  IconButton,
-} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+import { Grid, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   kiri: {
     backgroundColor: "#ebebeb",
-    height: 500,
     borderRadius: 5,
     paddingTop: 10,
+    paddingBottom: 20,
   },
   kanan: {
     paddingLeft: 10,
@@ -58,17 +51,16 @@ const sideButton = [
 ];
 function Content() {
   const styles = useStyles();
-  const [searchQuery, setSearchQuery] = React.useState("");
   return (
     <>
-      <Grid item xs={2} sm={2} md={2} lg={3}>
+      <Grid item xs={12} sm={12} md={3} lg={3}>
         <div className={styles.kiri}>
           <ul className={styles.ul}>
             {sideButton &&
               sideButton.map((item) => {
                 return (
-                  <li className={styles.list}>
-                    <a className={styles.sideButton} href="#">
+                  <li className={styles.list} key={item.key}>
+                    <a className={styles.sideButton} href="/#">
                       {item.name}
                     </a>
                   </li>
@@ -77,7 +69,7 @@ function Content() {
           </ul>
         </div>
       </Grid>
-      <Grid item xs={10} sm={10} md={10} lg={9}>
+      <Grid item xs={12} sm={12} md={9} lg={9}>
         <div className={styles.kanan}>
           <ItemContent />
         </div>

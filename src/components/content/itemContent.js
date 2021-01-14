@@ -51,6 +51,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   },
+  available: {
+    textAlign: "center",
+    backgroundColor: "black",
+    color: "white",
+    padding: 1,
+    width: "25%",
+  },
 }));
 
 // dummy data
@@ -115,6 +122,7 @@ export default function ItemContent() {
                   image={item.image}
                   title={item.nama}
                 />
+                <p className={classes.available}>Available</p>
               </CardActionArea>
               <CardContent style={{ textAlign: "left    " }}>
                 <Typography gutterBottom variant="h5" component="h2">
