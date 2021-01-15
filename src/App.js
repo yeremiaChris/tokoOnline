@@ -9,6 +9,84 @@ import Footer from "./components/footer";
 import Content from "./components/content/content";
 import TopMenu from "./components/topMenu";
 import ButtonSortCategori from "./components/content/ButtonSortCategori";
+
+// menu list
+const menuList = [
+  {
+    name: "New Arrivals",
+    key: "1",
+    icon: false,
+  },
+  {
+    name: "Collaboration",
+    key: "2",
+    icon: true,
+  },
+  {
+    name: "Collection",
+    key: "3",
+    icon: true,
+  },
+  {
+    name: "All Products",
+    key: "4",
+    icon: true,
+  },
+  {
+    name: "New Normal Essentials",
+    key: "5",
+    icon: false,
+  },
+  {
+    name: "Mix and Match",
+    key: "6",
+    icon: false,
+  },
+  {
+    name: "Payment Confirmation",
+    key: "7",
+    icon: false,
+  },
+];
+// akhir menu list
+
+// awal side menu categories
+// side button
+const sideButton = [
+  {
+    key: "1",
+    name: "All Products",
+  },
+  {
+    key: "2",
+    name: "Featured Products",
+  },
+  {
+    key: "3",
+    name: "Bundled Products",
+  },
+];
+const sideButtonDua = [
+  {
+    key: "1",
+    name: "Tops",
+  },
+  {
+    key: "2",
+    name: "Bottoms",
+  },
+  {
+    key: "3",
+    name: "Latest",
+  },
+  {
+    key: "4",
+    name: "Cheapest",
+  },
+];
+
+// akhir sidebar categoris
+
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1050,
@@ -33,14 +111,24 @@ function App() {
   return (
     <div className="App">
       <Topbar />
-      {/* <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <TopMenu />
-        </Grid>
-      </div> */}
+
       <div className={styles.content}>
         <Grid container className={styles.container}>
-          <Content />
+          <TopMenu menuList={menuList} />
+        </Grid>
+      </div>
+      <div className={styles.content}>
+        <Grid container className={styles.container}>
+          <ButtonSortCategori
+            menuList={menuList}
+            sideButtonDua={sideButtonDua}
+            sideButton={sideButton}
+          />
+        </Grid>
+      </div>
+      <div className={styles.content}>
+        <Grid container className={styles.container}>
+          <Content sideButton={sideButton} sideButtonDua={sideButtonDua} />
         </Grid>
       </div>
       {/* <div className={styles.content}>
@@ -48,7 +136,7 @@ function App() {
           <Grid item xs={12} lg={8} sm={12} md={8}>
             <Carausel />
           </Grid>
-          <Grid item xs={12} lg={4} sm={12} md={4}>
+          <Grid item xs={12} lg={4} sm={12} md= {4}>
             <Iklan />
           </Grid>
         </Grid>

@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: 10,
     marginBottom: 10,
+    [theme.breakpoints.down("md")]: {},
   },
   ul: {
     listStyle: "none",
@@ -31,49 +32,17 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     padding: 0,
   },
+  containerFull: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
-const menuList = [
-  {
-    name: "New Arrivals",
-    key: "1",
-    icon: false,
-  },
-  {
-    name: "Collaboration",
-    key: "2",
-    icon: true,
-  },
-  {
-    name: "Collection",
-    key: "3",
-    icon: true,
-  },
-  {
-    name: "All Products",
-    key: "4",
-    icon: true,
-  },
-  {
-    name: "New Normal Essentials",
-    key: "5",
-    icon: false,
-  },
-  {
-    name: "Mix and Match",
-    key: "6",
-    icon: false,
-  },
-  {
-    name: "Payment Confirmation",
-    key: "7",
-    icon: false,
-  },
-];
-export default function TopMenu() {
+export default function TopMenu({ menuList }) {
   const styles = useStyles();
   return (
-    <Grid container>
+    <Grid container className={styles.containerFull}>
       <div className={styles.container}>
         <ul className={styles.ul}>
           {menuList &&
