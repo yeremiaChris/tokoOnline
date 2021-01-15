@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     padding: 1,
     width: "25%",
+    marginBottom: 0,
   },
 }));
 
@@ -116,7 +117,7 @@ export default function ItemContent() {
         {data.map((item) => {
           return (
             <Card className={classes.root} key={item.key}>
-              <CardActionArea>
+              <CardActionArea style={{}}>
                 <CardMedia
                   className={classes.media}
                   image={item.image}
