@@ -8,6 +8,7 @@ import Kategori from "./components/content/kategori";
 import Footer from "./components/footer";
 import Content from "./components/content/content";
 import TopMenu from "./components/topMenu";
+import ButtonSortCategori from "./components/content/ButtonSortCategori";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1050,
@@ -32,17 +33,17 @@ function App() {
   return (
     <div className="App">
       <Topbar />
-      <div className={styles.content}>
+      {/* <div className={styles.content}>
         <Grid container className={styles.container}>
           <TopMenu />
         </Grid>
-      </div>
-      <div style={{ zIndex: -1 }} className={styles.content}>
+      </div> */}
+      <div className={styles.content}>
         <Grid container className={styles.container}>
           <Content />
         </Grid>
       </div>
-      <div className={styles.content}>
+      {/* <div className={styles.content}>
         <Grid container className={styles.container}>
           <Grid item xs={12} lg={8} sm={12} md={8}>
             <Carausel />
@@ -61,7 +62,7 @@ function App() {
         <Grid container className={styles.container}>
           <Jenis />
         </Grid>
-      </div>
+      </div> */}
 
       <Footer />
     </div>

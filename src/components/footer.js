@@ -5,7 +5,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import GitHubIcon from "@material-ui/icons/GitHub";
 const useStyles = makeStyles((theme) => ({
   footer: {
-    width: 1280,
+    width: 1050,
     color: "white",
     fontSize: 15,
   },

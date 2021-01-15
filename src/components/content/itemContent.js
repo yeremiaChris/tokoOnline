@@ -14,25 +14,41 @@ import Image3 from "../../image/tan.jpeg";
 import Image4 from "../../image/grey.jpeg";
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: 10,
     boxShadow: "0 0 0 gray",
     [theme.breakpoints.down("xs")]: {
       width: "100%",
     },
     width: 259,
-    maxWidth: 259,
+    [theme.breakpoints.down("md")]: {
+      width: 300,
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: 245,
+    },
   },
   media: {
-    height: 300,
+    height: 250,
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     objectFit: "cover",
+    [theme.breakpoints.down("md")]: {
+      height: 400,
+    },
+    [theme.breakpoints.down("sm")]: {
+      height: 280,
+    },
   },
   card: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-between",
+    [theme.breakpoints.down("md")]: {
+      justifyContent: "space-between",
+    },
     [theme.breakpoints.down("sm")]: {
+      justifyContent: "space-between",
+    },
+    [theme.breakpoints.down("xs")]: {
       justifyContent: "center",
     },
   },
@@ -57,7 +73,8 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     padding: 1,
     width: "25%",
-    marginBottom: 0,
+    marginTop: 0,
+    marginBottom: 5,
   },
 }));
 
@@ -105,6 +122,13 @@ const data = [
     image: Image2,
     key: "6",
   },
+  {
+    nama: "T-Shirt Grey",
+    harga: 52000,
+    stok: 2,
+    image: Image2,
+    key: "7",
+  },
 ];
 
 export default function ItemContent() {
@@ -117,15 +141,26 @@ export default function ItemContent() {
         {data.map((item) => {
           return (
             <Card className={classes.root} key={item.key}>
-              <CardActionArea style={{}}>
+              <CardActionArea>
                 <CardMedia
                   className={classes.media}
                   image={item.image}
                   title={item.nama}
                 />
-                <p className={classes.available}>Available</p>
+                <div
+                  style={{
+                    display: "flex",
+                  }}
+                >
+                  <p className={classes.available}>Available</p>
+                </div>
               </CardActionArea>
-              <CardContent style={{ textAlign: "left    " }}>
+              <CardContent
+                style={{
+                  padding: 0,
+                  textAlign: "left",
+                }}
+              >
                 <Typography gutterBottom variant="h5" component="h2">
                   {item.nama}
                 </Typography>

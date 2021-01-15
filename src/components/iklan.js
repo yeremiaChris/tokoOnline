@@ -94,33 +94,31 @@ function Iklan() {
       {iklan &&
         iklan.map((item) => {
           return (
-            <>
-              <Grid
-                key={item.key}
-                className={styles.coverItem}
-                item
-                lg={12}
-                md={12}
-                sm={6}
-                xs={12}
+            <Grid
+              key={item.key}
+              className={styles.coverItem}
+              item
+              lg={12}
+              md={12}
+              sm={6}
+              xs={12}
+            >
+              <div
+                style={{ display: item.display }}
+                className={styles.containerButton}
               >
-                <div
-                  style={{ display: item.display }}
-                  className={styles.containerButton}
-                >
-                  <Button className={styles.btn} variant="outlined">
-                    View
-                  </Button>
-                </div>
-                <img
-                  onMouseEnter={() => mouseEnter(item.key)}
-                  onMouseLeave={() => mouseLeave(item.key)}
-                  alt={item.key}
-                  className={styles.img}
-                  src={item.gambar}
-                ></img>
-              </Grid>
-            </>
+                <Button className={styles.btn} variant="outlined">
+                  View
+                </Button>
+              </div>
+              <img
+                onMouseEnter={() => mouseEnter(item.key)}
+                onMouseLeave={() => mouseLeave(item.key)}
+                alt={item.key}
+                className={styles.img}
+                src={item.gambar}
+              ></img>
+            </Grid>
           );
         })}
     </Grid>

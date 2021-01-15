@@ -79,53 +79,37 @@ export default function TopMenu() {
           {menuList &&
             menuList.map((item) => {
               return (
-                <>
-                  <li key={item.key}>
-                    {item.icon ? (
-                      <>
-                        <Menu
-                          menuButton={
-                            <a className={styles.link} href="/#">
-                              {item.name}
-                              {item.icon ? (
-                                <>
-                                  <ArrowDropDownIcon
-                                    fontSize="small"
-                                    className={styles.icon}
-                                  />
-                                </>
-                              ) : null}
-                            </a>
-                          }
-                        >
-                          <MenuItem>New File</MenuItem>
-                          <SubMenu label="Open">
-                            <MenuItem>index.html</MenuItem>
-                            <MenuItem>example.js</MenuItem>
-                            <SubMenu label="Styles">
-                              <MenuItem>about.css</MenuItem>
-                              <MenuItem>home.css</MenuItem>
-                              <MenuItem>index.css</MenuItem>
-                            </SubMenu>
-                          </SubMenu>
-                          <MenuItem>Save</MenuItem>
-                        </Menu>
-                      </>
-                    ) : (
-                      <a className={styles.link} href="/#">
-                        {item.name}
-                        {item.icon ? (
-                          <>
-                            <ArrowDropDownIcon
-                              fontSize="small"
-                              className={styles.icon}
-                            />
-                          </>
-                        ) : null}
-                      </a>
-                    )}
-                  </li>
-                </>
+                <li key={item.key}>
+                  {item.icon ? (
+                    <Menu
+                      menuButton={
+                        <a className={styles.link} href="/#">
+                          {item.name}
+                          <ArrowDropDownIcon
+                            fontSize="small"
+                            className={styles.icon}
+                          />
+                        </a>
+                      }
+                    >
+                      <MenuItem>New File</MenuItem>
+                      <SubMenu label="Open">
+                        <MenuItem>index.html</MenuItem>
+                        <MenuItem>example.js</MenuItem>
+                        <SubMenu label="Styles">
+                          <MenuItem>about.css</MenuItem>
+                          <MenuItem>home.css</MenuItem>
+                          <MenuItem>index.css</MenuItem>
+                        </SubMenu>
+                      </SubMenu>
+                      <MenuItem>Save</MenuItem>
+                    </Menu>
+                  ) : (
+                    <a className={styles.link} href="/#">
+                      {item.name}
+                    </a>
+                  )}
+                </li>
               );
             })}
         </ul>

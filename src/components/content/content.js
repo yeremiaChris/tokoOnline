@@ -14,9 +14,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: 20,
     marginBottom: 10,
   },
-  kanan: {
-    paddingLeft: 10,
-  },
   ul: {
     margin: 0,
     listStyle: "none",
@@ -37,6 +34,26 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 5,
     },
     padding: 10,
+  },
+  kiriKanan: {
+    backgroundColor: "green",
+  },
+  kiriKananContainer: {
+    display: "flex",
+    width: "100%",
+    backgroundColor: "yellow",
+    justifyContent: "space-between",
+  },
+  sideTool: {
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+  content: {
+    paddingLeft: 10,
+    [theme.breakpoints.down("md")]: {
+      paddingLeft: 0,
+    },
   },
 }));
 
@@ -73,10 +90,20 @@ const sideButtonDua = [
     name: "Cheapest",
   },
 ];
-function NumberFormatCustom(props) {
-  console.log(props);
-  const { inputRef, onChange, ...other } = props;
 
+// kiri kanan
+const kiriKanan = [
+  {
+    name: "kiri",
+    key: "1",
+  },
+  {
+    name: "Kanan",
+    key: "2",
+  },
+];
+function NumberFormatCustom(props) {
+  const { inputRef, onChange, ...other } = props;
   return (
     <NumberFormat
       {...other}
@@ -116,7 +143,7 @@ function Content() {
   };
   return (
     <>
-      <Grid item xs={12} sm={12} md={3} lg={3}>
+      <Grid className={styles.sideTool} item xs={12} sm={3} md={3} lg={3}>
         <div className={styles.kiri}>
           <ul className={styles.ul}>
             {sideButton &&
@@ -190,8 +217,8 @@ function Content() {
           </ul>
         </div>
       </Grid>
-      <Grid item xs={12} sm={12} md={9} lg={9}>
-        <div className={styles.kanan}>
+      <Grid className={styles.content} item xs={12} sm={12} md={12} lg={9}>
+        <div>
           <ItemContent />
         </div>
       </Grid>
