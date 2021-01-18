@@ -9,7 +9,9 @@ import Footer from "./components/footer";
 import Content from "./components/content/content";
 import TopMenu from "./components/topMenu";
 import ButtonSortCategori from "./components/content/ButtonSortCategori";
+import DetailContent from "./components/content/detailContent";
 
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // menu list
 const menuList = [
   {
@@ -109,51 +111,67 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const styles = useStyles();
   return (
-    <div className="App">
-      <Topbar />
-
-      <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <TopMenu menuList={menuList} />
-        </Grid>
-      </div>
-      <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <ButtonSortCategori
-            menuList={menuList}
-            sideButtonDua={sideButtonDua}
-            sideButton={sideButton}
-          />
-        </Grid>
-      </div>
-      <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <Content sideButton={sideButton} sideButtonDua={sideButtonDua} />
-        </Grid>
-      </div>
-      {/* <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <Grid item xs={12} lg={8} sm={12} md={8}>
-            <Carausel />
+    <Router>
+      <div className="App">
+        <Topbar />
+        <div className={styles.content}>
+          <Grid container className={styles.container}>
+            <TopMenu menuList={menuList} />
           </Grid>
-          <Grid item xs={12} lg={4} sm={12} md= {4}>
-            <Iklan />
+        </div>
+        <div className={styles.content}>
+          <Grid container className={styles.container}>
+            <ButtonSortCategori
+              menuList={menuList}
+              sideButtonDua={sideButtonDua}
+              sideButton={sideButton}
+            />
           </Grid>
-        </Grid>
+        </div>
+        <Switch>
+          <Route exact path="/">
+            <div className={styles.content}>
+              <Grid container className={styles.container}>
+                <Grid item xs={12} lg={8} sm={12} md={8}>
+                  <Carausel />
+                </Grid>
+                <Grid item xs={12} lg={4} sm={12} md={4}>
+                  <Iklan />
+                </Grid>
+              </Grid>
+            </div>
+            <div className={styles.content}>
+              <Grid container className={styles.container}>
+                <Kategori />
+              </Grid>
+            </div>
+            <div className={styles.content}>
+              <Grid container className={styles.container}>
+                <Jenis />
+              </Grid>
+            </div>
+          </Route>
+          <Route path="/content">
+            <div className={styles.content}>
+              <Grid container className={styles.container}>
+                <Content
+                  sideButton={sideButton}
+                  sideButtonDua={sideButtonDua}
+                />
+              </Grid>
+            </div>
+          </Route>
+          <Route path="/detail">
+            <div className={styles.content}>
+              <Grid container className={styles.container}>
+                <DetailContent />
+              </Grid>
+            </div>
+          </Route>
+        </Switch>
+        <Footer />
       </div>
-      <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <Kategori />
-        </Grid>
-      </div>
-      <div className={styles.content}>
-        <Grid container className={styles.container}>
-          <Jenis />
-        </Grid>
-      </div> */}
-
-      <Footer />
-    </div>
+    </Router>
   );
 }
 

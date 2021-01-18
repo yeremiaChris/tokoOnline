@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme) => ({
     },
     padding: 10,
   },
-  kiriKanan: {
-    backgroundColor: "green",
-  },
   kiriKananContainer: {
     display: "flex",
     width: "100%",
@@ -53,19 +50,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
-// kiri kanan
-const kiriKanan = [
-  {
-    name: "kiri",
-    key: "1",
-  },
-  {
-    name: "Kanan",
-    key: "2",
-  },
-];
-
 function Content({ sideButton, sideButtonDua }) {
   const styles = useStyles();
 
@@ -109,40 +93,6 @@ function Content({ sideButton, sideButtonDua }) {
           </ul>
         </div>
         <div className={styles.kiri}>
-          {/* <ul className={styles.ul}>
-            <li
-              style={{
-                borderRadius: 5,
-                padding: 10,
-              }}
-            >
-              Sort by Price
-            </li>
-            <li style={{ borderRadius: 5, padding: 10 }}>
-              <TextField
-                label="MIN"
-                value={values.numberformat}
-                onChange={handleChange}
-                name="numberformat"
-                id="formatted-numberformat-input"
-                InputProps={{
-                  inputComponent: NumberFormatCustom,
-                }}
-              />
-            </li>
-            <li style={{ borderRadius: 5, padding: 10 }}>
-              <TextField
-                label="MAX"
-                value={values.numberFormatDua}
-                onChange={handleChange}
-                name="numberFormatDua"
-                id="formatted-numberformat-input"
-                InputProps={{
-                  inputComponent: NumberFormatCustom,
-                }}
-              />
-            </li>
-          </ul> */}
           <SortbyPrice />
         </div>
       </Grid>
