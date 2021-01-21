@@ -12,6 +12,8 @@ import Image1 from "../../image/black.jpeg";
 import Image2 from "../../image/white.jpeg";
 import Image3 from "../../image/tan.jpeg";
 import Image4 from "../../image/grey.jpeg";
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "0 0 0 gray",
@@ -86,6 +88,7 @@ const data = [
     stok: 2,
     image: Image1,
     key: "1",
+    images: [Image1, Image2, Image3, Image4],
   },
   {
     nama: "T-Shirt White",
@@ -93,6 +96,7 @@ const data = [
     stok: 2,
     image: Image2,
     key: "2",
+    images: [Image1, Image2, Image3, Image4],
   },
   {
     nama: "T-Shirt Tan",
@@ -100,6 +104,7 @@ const data = [
     stok: 2,
     image: Image3,
     key: "3",
+    images: [Image1, Image2, Image3, Image4],
   },
   {
     nama: "T-Shirt Grey",
@@ -107,6 +112,7 @@ const data = [
     stok: 2,
     image: Image4,
     key: "4",
+    images: [Image1, Image2, Image3, Image4],
   },
   {
     nama: "T-Shirt Grey",
@@ -114,6 +120,7 @@ const data = [
     stok: 2,
     image: Image1,
     key: "5",
+    images: [Image1, Image2, Image3, Image4],
   },
   {
     nama: "T-Shirt Grey",
@@ -121,6 +128,7 @@ const data = [
     stok: 2,
     image: Image2,
     key: "6",
+    images: [Image1, Image2, Image3, Image4],
   },
   {
     nama: "T-Shirt Grey",
@@ -128,6 +136,7 @@ const data = [
     stok: 2,
     image: Image2,
     key: "7",
+    images: [Image1, Image2, Image3, Image4],
   },
 ];
 
@@ -140,35 +149,57 @@ export default function ItemContent() {
       <Grid item xs={12} className={classes.card}>
         {data.map((item) => {
           return (
-            <Card className={classes.root} key={item.key}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={item.image}
-                  title={item.nama}
-                />
-                <div
+            <Link
+              key={item.key}
+              style={{
+                color: "black",
+                textDecoration: "none",
+                textAlign: "left",
+              }}
+              to={{
+                pathname: `/detail/${item.nama}`,
+                state: {
+                  nama: item.nama,
+                  harga: item.harga,
+                  gambar: item.image,
+                  gambarBanyak: item.images,
+                },
+              }}
+            >
+              <Card className={classes.root}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={item.image}
+                    title={item.nama}
+                  />
+                  <div
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    <p className={classes.available}>Available</p>
+                  </div>
+                </CardActionArea>
+                <CardContent
                   style={{
-                    display: "flex",
+                    padding: 0,
+                    textAlign: "left",
                   }}
                 >
-                  <p className={classes.available}>Available</p>
-                </div>
-              </CardActionArea>
-              <CardContent
-                style={{
-                  padding: 0,
-                  textAlign: "left",
-                }}
-              >
-                <Typography gutterBottom variant="h5" component="h2">
-                  {item.nama}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Rp {item.harga}
-                </Typography>
-              </CardContent>
-            </Card>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {item.nama}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    Rp {item.harga}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </Grid>

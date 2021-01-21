@@ -2,7 +2,8 @@ import React from "react";
 import { Grid, makeStyles, Button } from "@material-ui/core";
 import Gambar from "../image/orang.jpg";
 import GambarDua from "../image/kamera.jpg";
-
+import Iklan1 from "../image/satu.jpg";
+import Iklan2 from "../image/iklan2.jpg";
 // styles
 const useStyles = makeStyles((theme) => ({
   // container semuanya
@@ -53,12 +54,12 @@ const useStyles = makeStyles((theme) => ({
 const iklanState = [
   {
     key: "1",
-    gambar: Gambar,
+    gambar: Iklan1,
     display: "none",
   },
   {
     key: "2",
-    gambar: GambarDua,
+    gambar: Iklan2,
     display: "none",
   },
 ];

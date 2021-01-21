@@ -12,7 +12,6 @@ import {
 import Image1 from "../../image/black.jpeg";
 import Image2 from "../../image/white.jpeg";
 import Image3 from "../../image/tan.jpeg";
-import Image4 from "../../image/grey.jpeg";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,

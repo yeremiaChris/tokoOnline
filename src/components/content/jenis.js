@@ -13,15 +13,13 @@ import Image1 from "../../image/black.jpeg";
 import Image2 from "../../image/white.jpeg";
 import Image3 from "../../image/tan.jpeg";
 import Image4 from "../../image/grey.jpeg";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
     marginBottom: 10,
     boxShadow: "0 0 0 gray",
     width: 320,
-    [theme.breakpoints.down("xs")]: {
-      width: "100%",
-    },
   },
   media: {
     height: 320,
@@ -79,6 +77,7 @@ const data = [
     harga: 52000,
     stok: 2,
     image: Image1,
+    images: [Image1, Image2, Image3, Image4],
     key: "1",
   },
   {
@@ -86,6 +85,7 @@ const data = [
     harga: 52000,
     stok: 2,
     image: Image2,
+    images: [Image1, Image2, Image3, Image4],
     key: "2",
   },
   {
@@ -93,6 +93,7 @@ const data = [
     harga: 52000,
     stok: 2,
     image: Image3,
+    images: [Image1, Image2, Image3, Image4],
     key: "3",
   },
   {
@@ -100,6 +101,7 @@ const data = [
     harga: 52000,
     stok: 2,
     image: Image4,
+    images: [Image1, Image2, Image3, Image4],
     key: "4",
   },
   {
@@ -107,6 +109,7 @@ const data = [
     harga: 52000,
     stok: 2,
     image: Image1,
+    images: [Image1, Image2, Image3, Image4],
     key: "5",
   },
   {
@@ -114,6 +117,7 @@ const data = [
     harga: 52000,
     stok: 2,
     image: Image2,
+    images: [Image1, Image2, Image3, Image4],
     key: "6",
   },
 ];
@@ -130,27 +134,50 @@ export default function Jenis() {
         </div>
         {data.map((item) => {
           return (
-            <Card className={classes.root} key={item.key}>
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={item.image}
-                  title={item.nama}
-                />
-              </CardActionArea>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {item.nama}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Rp {item.harga}
-                </Typography>
-              </CardContent>
-            </Card>
+            <Link
+              key={item.key}
+              style={{
+                color: "black",
+                textDecoration: "none",
+                textAlign: "left",
+              }}
+              to={{
+                pathname: `/detail/${item.nama}`,
+                state: {
+                  nama: item.nama,
+                  harga: item.harga,
+                  gambar: item.image,
+                  gambarBanyak: item.images,
+                  detail: true,
+                },
+              }}
+            >
+              <Card className={classes.root}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={item.image}
+                    title={item.nama}
+                  />
+                </CardActionArea>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {item.nama}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    Rp {item.harga}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Link>
           );
         })}
       </Grid>
-      <Grid container justify="center" className={classes.bottom}>
+      <Grid xs={12} container justify="center" className={classes.bottom}>
         <Grid item>
           <Button className={classes.lihat}>LIHAT LAINNYA</Button>
         </Grid>

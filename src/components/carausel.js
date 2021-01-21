@@ -3,19 +3,19 @@ import { makeStyles, useTheme, Button } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
+import Image1 from "../image/test.jpg";
+import Image2 from "../image/dua.jpg";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 // initial state carausel
 const tutorialSteps = [
   {
     label: "San Francisco – Oakland Bay Bridge, United States",
-    imgPath:
-      "https://images.unsplash.com/photo-1537944434965-cf4679d1a598?auto=format&fit=crop&w=400&h=250&q=60",
+    imgPath: Image1,
   },
   {
     label: "Bird",
-    imgPath:
-      "https://images.unsplash.com/photo-1538032746644-0212e812a9e7?auto=format&fit=crop&w=400&h=250&q=60",
+    imgPath: Image2,
   },
 ];
 const useStyles = makeStyles((theme) => ({

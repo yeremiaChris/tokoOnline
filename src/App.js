@@ -10,7 +10,7 @@ import Content from "./components/content/content";
 import TopMenu from "./components/topMenu";
 import ButtonSortCategori from "./components/content/ButtonSortCategori";
 import DetailContent from "./components/content/detailContent";
-
+import NotFound from "./components/notFound";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // menu list
 const menuList = [
@@ -161,10 +161,17 @@ function App() {
               </Grid>
             </div>
           </Route>
-          <Route path="/detail">
+          <Route path="/detail/:slug">
             <div className={styles.content}>
               <Grid container className={styles.container}>
                 <DetailContent />
+              </Grid>
+            </div>
+          </Route>
+          <Route>
+            <div className={styles.content}>
+              <Grid container className={styles.container}>
+                <NotFound />
               </Grid>
             </div>
           </Route>

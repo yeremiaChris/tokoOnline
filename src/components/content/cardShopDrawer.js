@@ -229,7 +229,7 @@ export default function TemporaryDrawer() {
           onClick={toggleDrawer("right", true)}
         >
           <div className={classes.buttonContainer}>
-            <AddShoppingCartIcon classN ame={classes.icon} />
+            <AddShoppingCartIcon className={classes.icon} />
             <p style={{ width: "100%", margin: 0 }}>Add To Card</p>
           </div>
         </Button>

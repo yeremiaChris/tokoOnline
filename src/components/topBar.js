@@ -11,7 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import MenuIcon from "@material-ui/icons/Menu";
-
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 // import drawer
 import clsx from "clsx";
 import List from "@material-ui/core/List";
@@ -21,6 +21,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import PeopleIcon from "@material-ui/icons/People";
 // akhir drawer
+
+import { useLocation, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   // style pada topbar
   root: {
@@ -112,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
       display: "inline-block",
     },
     padding: 0,
+    margin: 0,
   },
   // akhir responsif icon button pada topbar
 
@@ -123,9 +128,16 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
   },
   // akhir style drawer
+  link: {
+    textDecoration: "none",
+    color: "black",
+  },
 }));
 
 export default function ButtonAppBar() {
+  const location = useLocation();
+  const history = useHistory();
+  console.log(location);
   // variabel buat class
   const classes = useStyles();
 
@@ -195,23 +207,34 @@ export default function ButtonAppBar() {
   );
   // akhir list drawer
 
+  // back
+  const back = () => {
+    history.goBack();
+  };
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.topBar}>
         <Grid container justify="center">
           <Grid item lg={12} xs={12} sm={12} md={12} style={{ maxWidth: 1050 }}>
             <Toolbar className={classes.toolbar}>
-              <Typography className={classes.logo}>MyShop</Typography>
-              <IconButton
-                onClick={toggleDrawer("top", true)}
-                className={classes.responDua}
-                aria-label="account of current user"
-                aria-controls="primary-search-account-menu"
-                aria-haspopup="true"
-                color="inherit"
-              >
-                <MenuIcon style={{ fontSize: 25 }} />
-              </IconButton>
+              {location.pathname === "/" ? (
+                <>
+                  <Link className={classes.link} to="/">
+                    <Typography className={classes.logo}>MyShop</Typography>
+                    <IconButton
+                      onClick={toggleDrawer("top", true)}
+                      className={classes.responDua}
+                    >
+                      <MenuIcon style={{ fontSize: 25 }} />
+                    </IconButton>
+                  </Link>
+                </>
+              ) : (
+                <IconButton onClick={back}>
+                  <ArrowBackIcon style={{ color: "black" }} fontSize="large" />
+                </IconButton>
+              )}
+
               <SwipeableDrawer
                 anchor="top"
                 open={state["top"]}
