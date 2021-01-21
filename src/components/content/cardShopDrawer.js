@@ -11,6 +11,8 @@ import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import image1 from "../../image/1.jpg";
+import { useDispatch, useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   list: {
     width: 340,
@@ -100,20 +102,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TemporaryDrawer() {
+export default function TemporaryDrawer({ key, data }) {
+  const coba = useSelector((state) => state.cart);
+  console.log(coba.length);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
   });
 
-  const toggleDrawer = (anchor, open) => (event) => {
+  // dispatch action
+  const dispatch = useDispatch();
+  const addToCart = (key, data) => {
+    dispatch({ type: "addCart", key, data });
+  };
+
+  const toggleDrawer = (anchor, open) => (
+    event: React.KeyboardEvent | React.MouseEvent
+  ) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
+    } else if (open === true) {
+      addToCart(key, data);
     }
-
     setState({ ...state, [anchor]: open });
   };
 
@@ -199,7 +212,7 @@ export default function TemporaryDrawer() {
               <p>Sub Total</p>
               <p>Uang Kirim</p>
               <strong>
-                <p>Uang Kirim</p>
+                <p>Total Biaaya</p>
               </strong>
             </div>
             <div>
@@ -219,14 +232,13 @@ export default function TemporaryDrawer() {
       </div>
     </div>
   );
-
   return (
     <div>
       <React.Fragment key="right">
         <Button
           variant="outlined"
-          className={classes.shopButton}
           onClick={toggleDrawer("right", true)}
+          className={classes.shopButton}
         >
           <div className={classes.buttonContainer}>
             <AddShoppingCartIcon className={classes.icon} />

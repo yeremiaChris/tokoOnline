@@ -14,6 +14,8 @@ import Image2 from "../../image/white.jpeg";
 import Image3 from "../../image/tan.jpeg";
 import Image4 from "../../image/grey.jpeg";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { formatRupiah } from "../../redux/formatRupiah";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -126,58 +128,65 @@ export default function Jenis() {
   // styles
   const classes = useStyles();
 
+  // ambil data dari reducer
+  const items = useSelector((state) => state.item);
   return (
     <>
       <Grid item xs={12} className={classes.card}>
         <div className={classes.terbaru}>
           <h1 className={classes.terbaruText}>REKOMENDASI</h1>
         </div>
-        {data.map((item) => {
+        {items.map((item) => {
           return (
-            <Link
-              key={item.key}
-              style={{
-                color: "black",
-                textDecoration: "none",
-                textAlign: "left",
-              }}
-              to={{
-                pathname: `/detail/${item.nama}`,
-                state: {
-                  nama: item.nama,
-                  harga: item.harga,
-                  gambar: item.image,
-                  gambarBanyak: item.images,
-                  detail: true,
-                },
-              }}
-            >
-              <Card className={classes.root}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={item.image}
-                    title={item.nama}
-                  />
-                </CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {item.nama}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Rp {item.harga}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Link>
+            <>
+              {item.recomendasi ? (
+                <Link
+                  key={item.key}
+                  style={{
+                    color: "black",
+                    textDecoration: "none",
+                    textAlign: "left",
+                  }}
+                  to={{
+                    pathname: `/detail/${item.nama}`,
+                    state: {
+                      nama: item.nama,
+                      harga: item.harga,
+                      gambar: item.image,
+                      gambarBanyak: item.images,
+                      key: item.key,
+                      detail: true,
+                    },
+                  }}
+                >
+                  <Card className={classes.root}>
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={item.image}
+                        title={item.nama}
+                      />
+                    </CardActionArea>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {item.nama}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        {formatRupiah(item.harga)}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ) : null}
+            </>
           );
         })}
       </Grid>
-      <Grid xs={12} container justify="center" className={classes.bottom}>
+      <Grid container justify="center" className={classes.bottom}>
         <Grid item>
           <Button className={classes.lihat}>LIHAT LAINNYA</Button>
         </Grid>

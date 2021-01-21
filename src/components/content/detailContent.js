@@ -128,7 +128,7 @@ function DetailContent() {
                 </h5>
               </div>
               <div className={styles.button}>
-                <CardShop />
+                <CardShop key={location.state.key} data={location.state} />
               </div>
               <div style={{ marginTop: 30 }}>
                 <p

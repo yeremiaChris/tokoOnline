@@ -12,6 +12,10 @@ import ButtonSortCategori from "./components/content/ButtonSortCategori";
 import DetailContent from "./components/content/detailContent";
 import NotFound from "./components/notFound";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./redux/rootReducer";
 // menu list
 const menuList = [
   {
@@ -110,74 +114,79 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const styles = useStyles();
+
+  // redux
+  const store = createStore(rootReducer);
   return (
     <Router>
-      <div className="App">
-        <Topbar />
-        <div className={styles.content}>
-          <Grid container className={styles.container}>
-            <TopMenu menuList={menuList} />
-          </Grid>
-        </div>
-        <div className={styles.content}>
-          <Grid container className={styles.container}>
-            <ButtonSortCategori
-              menuList={menuList}
-              sideButtonDua={sideButtonDua}
-              sideButton={sideButton}
-            />
-          </Grid>
-        </div>
-        <Switch>
-          <Route exact path="/">
-            <div className={styles.content}>
-              <Grid container className={styles.container}>
-                <Grid item xs={12} lg={8} sm={12} md={8}>
-                  <Carausel />
+      <Provider store={store}>
+        <div className="App">
+          <Topbar />
+          <div className={styles.content}>
+            <Grid container className={styles.container}>
+              <TopMenu menuList={menuList} />
+            </Grid>
+          </div>
+          <div className={styles.content}>
+            <Grid container className={styles.container}>
+              <ButtonSortCategori
+                menuList={menuList}
+                sideButtonDua={sideButtonDua}
+                sideButton={sideButton}
+              />
+            </Grid>
+          </div>
+          <Switch>
+            <Route exact path="/">
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <Grid item xs={12} lg={8} sm={12} md={8}>
+                    <Carausel />
+                  </Grid>
+                  <Grid item xs={12} lg={4} sm={12} md={4}>
+                    <Iklan />
+                  </Grid>
                 </Grid>
-                <Grid item xs={12} lg={4} sm={12} md={4}>
-                  <Iklan />
+              </div>
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <Kategori />
                 </Grid>
-              </Grid>
-            </div>
-            <div className={styles.content}>
-              <Grid container className={styles.container}>
-                <Kategori />
-              </Grid>
-            </div>
-            <div className={styles.content}>
-              <Grid container className={styles.container}>
-                <Jenis />
-              </Grid>
-            </div>
-          </Route>
-          <Route path="/content">
-            <div className={styles.content}>
-              <Grid container className={styles.container}>
-                <Content
-                  sideButton={sideButton}
-                  sideButtonDua={sideButtonDua}
-                />
-              </Grid>
-            </div>
-          </Route>
-          <Route path="/detail/:slug">
-            <div className={styles.content}>
-              <Grid container className={styles.container}>
-                <DetailContent />
-              </Grid>
-            </div>
-          </Route>
-          <Route>
-            <div className={styles.content}>
-              <Grid container className={styles.container}>
-                <NotFound />
-              </Grid>
-            </div>
-          </Route>
-        </Switch>
-        <Footer />
-      </div>
+              </div>
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <Jenis />
+                </Grid>
+              </div>
+            </Route>
+            <Route path="/content">
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <Content
+                    sideButton={sideButton}
+                    sideButtonDua={sideButtonDua}
+                  />
+                </Grid>
+              </div>
+            </Route>
+            <Route path="/detail/:slug">
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <DetailContent />
+                </Grid>
+              </div>
+            </Route>
+            <Route>
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <NotFound />
+                </Grid>
+              </div>
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
+      </Provider>
     </Router>
   );
 }
