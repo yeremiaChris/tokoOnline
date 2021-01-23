@@ -67,6 +67,7 @@ const initState = {
     },
   ],
   cart: [],
+  uangKirim: 10000,
 };
 
 const rootReducer = (state = initState, action) => {
@@ -111,6 +112,11 @@ const rootReducer = (state = initState, action) => {
               : item
           ),
         ],
+      };
+    case "deleteCart":
+      return {
+        ...state,
+        cart: [...state.cart.filter((item) => item.key !== action.key)],
       };
     default:
       return state;

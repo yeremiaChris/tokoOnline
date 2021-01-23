@@ -103,6 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TemporaryDrawer({ key, data }) {
   const cart = useSelector((state) => state.cart);
+  const uangKirim = useSelector((state) => state.uangKirim);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
@@ -138,6 +139,25 @@ export default function TemporaryDrawer({ key, data }) {
   // kurang item di cart
   const kurang = (key) => {
     dispatch({ type: "decrementItem", key });
+  };
+
+  // hapus cart
+  const hapus = (key) => {
+    dispatch({ type: "deleteCart", key });
+  };
+
+  // subtotal
+  const subTotal = () => {
+    return cart.length !== 0
+      ? cart.reduce(
+          (subTotals, item) => subTotals + item.data.harga * item.quantity,
+          0
+        )
+      : 0;
+  };
+  // total biaya
+  const totalBiaya = () => {
+    return subTotal() + uangKirim;
   };
   const list = (anchor) => (
     <div
@@ -221,6 +241,7 @@ export default function TemporaryDrawer({ key, data }) {
                           edge="end"
                           color="inherit"
                           aria-label="menu"
+                          onClick={() => hapus(item.key)}
                         >
                           <DeleteOutlineIcon />
                         </IconButton>
@@ -243,10 +264,10 @@ export default function TemporaryDrawer({ key, data }) {
                 </strong>
               </div>
               <div>
-                <p>Rp 100.000</p>
-                <p>Rp 20.000</p>
+                <p>{formatRupiah(subTotal())}</p>
+                <p>{formatRupiah(uangKirim)}</p>
                 <strong>
-                  <p>Rp 1.000.000</p>
+                  <p>{formatRupiah(totalBiaya())}</p>
                 </strong>
               </div>
             </div>
