@@ -16,7 +16,7 @@ const initState = {
       jenis: "T-Shirt",
     },
     {
-      nama: "T-Shirt Black",
+      nama: "T-Shirt White",
       harga: 52000,
       stok: 2,
       image: Image2,
@@ -26,7 +26,7 @@ const initState = {
       jenis: "T-Shirt",
     },
     {
-      nama: "T-Shirt Black",
+      nama: "T-Shirt Tan",
       harga: 52000,
       stok: 2,
       image: Image3,
@@ -36,7 +36,7 @@ const initState = {
       jenis: "T-Shirt",
     },
     {
-      nama: "T-Shirt Black",
+      nama: "T-Shirt BLue",
       harga: 52000,
       stok: 2,
       image: Image4,
@@ -46,7 +46,7 @@ const initState = {
       jenis: "T-Shirt",
     },
     {
-      nama: "T-Shirt Black",
+      nama: "T-Shirt Gray",
       harga: 52000,
       stok: 2,
       image: Image1,
@@ -56,7 +56,7 @@ const initState = {
       jenis: "T-Shirt",
     },
     {
-      nama: "T-Shirt Black",
+      nama: "T-Shirt Red",
       harga: 52000,
       stok: 2,
       image: Image2,
@@ -72,16 +72,44 @@ const initState = {
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
     case "addCart":
-      console.log("add");
+      const exists = (key) => {
+        return state.cart.some((item) => item.key === action.item.key);
+      };
+      exists(action.key);
+      return {
+        // "spread" the original state object
+        ...state,
+        cart: state.cart.some((item) => item.key === action.item.key)
+          ? [
+              ...state.cart.map((item) =>
+                item.key === action.item.key
+                  ? { ...item, quantity: item.quantity + 1 }
+                  : item
+              ),
+            ]
+          : [...state.cart, action.item],
+        // but replace the "chosenIds" field
+      };
+    case "incrementItem":
       return {
         ...state,
         cart: [
-          ...state.cart,
-          {
-            key: action.key,
-            data: action.data,
-            quantity: 1,
-          },
+          ...state.cart.map((item) =>
+            item.key === action.key
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          ),
+        ],
+      };
+    case "decrementItem":
+      return {
+        ...state,
+        cart: [
+          ...state.cart.map((item) =>
+            item.key === action.key && item.quantity > 0
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          ),
         ],
       };
     default:

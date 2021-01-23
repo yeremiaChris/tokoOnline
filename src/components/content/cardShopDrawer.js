@@ -10,9 +10,8 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import image1 from "../../image/1.jpg";
 import { useDispatch, useSelector } from "react-redux";
-
+import { formatRupiah } from "../../redux/formatRupiah";
 const useStyles = makeStyles((theme) => ({
   list: {
     width: 340,
@@ -94,17 +93,16 @@ const useStyles = makeStyles((theme) => ({
     background: "#dfe8ee",
   },
   transaksiContainer: {
-    position: "absolute",
-    bottom: 0,
-    padding: 20,
-    right: 0,
-    left: 0,
+    // position: "absolute",
+    // bottom: 0,
+    // padding: 20,
+    // right: 0,
+    // left: 0,
   },
 }));
 
 export default function TemporaryDrawer({ key, data }) {
-  const coba = useSelector((state) => state.cart);
-  console.log(coba.length);
+  const cart = useSelector((state) => state.cart);
   const classes = useStyles();
   const [state, setState] = React.useState({
     right: false,
@@ -112,8 +110,11 @@ export default function TemporaryDrawer({ key, data }) {
 
   // dispatch action
   const dispatch = useDispatch();
-  const addToCart = (key, data) => {
-    dispatch({ type: "addCart", key, data });
+  const addToCart = (data) => {
+    dispatch({
+      type: "addCart",
+      item: { data: data, key: data.key, quantity: 1 },
+    });
   };
 
   const toggleDrawer = (anchor, open) => (
@@ -125,11 +126,19 @@ export default function TemporaryDrawer({ key, data }) {
     ) {
       return;
     } else if (open === true) {
-      addToCart(key, data);
+      addToCart(data);
     }
     setState({ ...state, [anchor]: open });
   };
 
+  // tambah item di cart
+  const tambah = (key) => {
+    dispatch({ type: "incrementItem", key });
+  };
+  // kurang item di cart
+  const kurang = (key) => {
+    dispatch({ type: "decrementItem", key });
+  };
   const list = (anchor) => (
     <div
       className={clsx(classes.list)}
@@ -159,75 +168,94 @@ export default function TemporaryDrawer({ key, data }) {
           <hr style={{ color: "#e9ecee" }}></hr>
         </div>
         <div className={classes.containerCart}>
-          <div>
-            <div style={{ marginTop: 20 }}>
-              <div className={classes.iconMenu}>
-                <div
-                  style={{ backgroundImage: "url(" + image1 + ")" }}
-                  className={classes.gambarCart}
-                ></div>
-                <div className={classes.tengahCart}>
-                  <div>
-                    <h3 style={{ margin: 0, fontSize: 15 }}>
-                      Short-Sleeve Unisex T-shirt
-                    </h3>
-                    <div className={classes.pengelolaanCart}>
-                      <IconButton
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                      >
-                        <AddIcon />
-                      </IconButton>
-                      <p
+          {cart &&
+            cart.map((item) => {
+              return (
+                <div key={item.data.key}>
+                  <div style={{ marginTop: 20 }}>
+                    <div className={classes.iconMenu}>
+                      <div
                         style={{
-                          padding: "3px 10px",
-                          backgroundColor: "white",
+                          backgroundImage: "url(" + item.data.gambar + ")",
                         }}
-                      >
-                        1
-                      </p>
-                      <IconButton edge="end" color="inherit" aria-label="menu">
-                        <RemoveIcon />
-                      </IconButton>
+                        className={classes.gambarCart}
+                      ></div>
+                      <div className={classes.tengahCart}>
+                        <div>
+                          <h3 style={{ margin: 0, fontSize: 15 }}>
+                            {item.data.nama}
+                          </h3>
+                          <div className={classes.pengelolaanCart}>
+                            <IconButton
+                              edge="start"
+                              color="inherit"
+                              aria-label="menu"
+                              onClick={() => tambah(item.key)}
+                            >
+                              <AddIcon />
+                            </IconButton>
+                            <p
+                              style={{
+                                padding: "3px 10px",
+                                backgroundColor: "white",
+                              }}
+                            >
+                              {item.quantity}
+                            </p>
+                            <IconButton
+                              edge="end"
+                              color="inherit"
+                              aria-label="menu"
+                              onClick={() => kurang(item.key)}
+                            >
+                              <RemoveIcon />
+                            </IconButton>
+                          </div>
+                        </div>
+                      </div>
+                      <div className={classes.kanan}>
+                        <p style={{ margin: 0, fontSize: 12 }}>
+                          {formatRupiah(item.data.harga)}
+                        </p>
+                        <IconButton
+                          edge="end"
+                          color="inherit"
+                          aria-label="menu"
+                        >
+                          <DeleteOutlineIcon />
+                        </IconButton>
+                      </div>
                     </div>
                   </div>
+                  <hr style={{ color: "#e9ecee" }}></hr>
                 </div>
-                <div className={classes.kanan}>
-                  <p style={{ margin: 0, fontSize: 12 }}>Rp. 190.000</p>
-                  <IconButton edge="end" color="inherit" aria-label="menu">
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                </div>
+              );
+            })}
+        </div>
+        <div className={classes.transaksiContainer}>
+          <div>
+            <div className={classes.transaksi}>
+              <div>
+                <p>Sub Total</p>
+                <p>Uang Kirim</p>
+                <strong>
+                  <p>Total Biaaya</p>
+                </strong>
+              </div>
+              <div>
+                <p>Rp 100.000</p>
+                <p>Rp 20.000</p>
+                <strong>
+                  <p>Rp 1.000.000</p>
+                </strong>
               </div>
             </div>
-            <hr style={{ color: "#e9ecee" }}></hr>
           </div>
-        </div>
-      </div>
-      <div className={classes.transaksiContainer}>
-        <div>
-          <div className={classes.transaksi}>
-            <div>
-              <p>Sub Total</p>
-              <p>Uang Kirim</p>
-              <strong>
-                <p>Total Biaaya</p>
-              </strong>
-            </div>
-            <div>
-              <p>Rp 100.000</p>
-              <p>Rp 20.000</p>
-              <strong>
-                <p>Rp 1.000.000</p>
-              </strong>
-            </div>
+          <div>
+            <Button variant="outlined" className={classes.buttonCheckout}>
+              <strong>Proses Checkout</strong>
+            </Button>
           </div>
-        </div>
-        <div>
-          <Button variant="outlined" className={classes.buttonCheckout}>
-            <strong>Proses Checkout</strong>
-          </Button>
         </div>
       </div>
     </div>

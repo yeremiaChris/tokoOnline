@@ -137,7 +137,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const location = useLocation();
   const history = useHistory();
-  console.log(location);
   // variabel buat class
   const classes = useStyles();
 
@@ -213,7 +212,7 @@ export default function ButtonAppBar() {
   };
   return (
     <div className={classes.root}>
-      <AppBar position="static" className={classes.topBar}>
+      <AppBar position="fixed" className={classes.topBar}>
         <Grid container justify="center">
           <Grid item lg={12} xs={12} sm={12} md={12} style={{ maxWidth: 1050 }}>
             <Toolbar className={classes.toolbar}>
