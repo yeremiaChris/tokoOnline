@@ -260,14 +260,20 @@ export default function TemporaryDrawer({ key, data }) {
                 <p>Sub Total</p>
                 <p>Uang Kirim</p>
                 <strong>
-                  <p>Total Biaaya</p>
+                  <p>Total Biaya</p>
                 </strong>
               </div>
               <div>
                 <p>{formatRupiah(subTotal())}</p>
-                <p>{formatRupiah(uangKirim)}</p>
+                <p>
+                  {subTotal() === 0 ? formatRupiah(0) : formatRupiah(uangKirim)}
+                </p>
                 <strong>
-                  <p>{formatRupiah(totalBiaya())}</p>
+                  <p>
+                    {subTotal() === 0
+                      ? formatRupiah(0)
+                      : formatRupiah(totalBiaya())}
+                  </p>
                 </strong>
               </div>
             </div>

@@ -62,13 +62,20 @@ export default function Jenis() {
 
   // ambil data dari reducer
   const items = useSelector((state) => state.item);
+  // state untuk next data
+  const [nextPage, setNextPage] = React.useState(6);
+  const next = () => {
+    setNextPage((prev) => prev + 3);
+  };
+  // 6 data yang di tampilkan
+  const onePage = items.slice(0, nextPage);
   return (
     <>
       <Grid item xs={12} className={classes.card}>
         <div className={classes.terbaru}>
           <h1 className={classes.terbaruText}>REKOMENDASI</h1>
         </div>
-        {items.map((item) => {
+        {onePage.map((item) => {
           return (
             <>
               {item.recomendasi ? (
@@ -120,7 +127,9 @@ export default function Jenis() {
       </Grid>
       <Grid container justify="center" className={classes.bottom}>
         <Grid item>
-          <Button className={classes.lihat}>LIHAT LAINNYA</Button>
+          <Button onClick={next} className={classes.lihat}>
+            LIHAT LAINNYA
+          </Button>
         </Grid>
       </Grid>
     </>

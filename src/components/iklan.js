@@ -40,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1,
   },
   containerButton: {
-    backgroundColor: "red",
     height: 195,
     marginBottom: -195,
     alignItems: "center",
