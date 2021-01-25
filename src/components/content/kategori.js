@@ -12,6 +12,7 @@ import {
 import Image1 from "../../image/black.jpeg";
 import Image2 from "../../image/white.jpeg";
 import Image3 from "../../image/tan.jpeg";
+import { Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -61,21 +62,18 @@ const useStyles = makeStyles((theme) => ({
 const data = [
   {
     nama: "T-Shirt",
-    harga: 52000,
     stok: 2,
     image: Image1,
     key: "1",
   },
   {
     nama: "Shirt",
-    harga: 52000,
     stok: 2,
     image: Image2,
     key: "2",
   },
   {
     nama: "Shoes",
-    harga: 52000,
     stok: 2,
     image: Image3,
     key: "3",
@@ -85,6 +83,7 @@ export default function Kategori() {
   // styles
   const classes = useStyles();
 
+  //
   return (
     <>
       <Grid item xs={12} className={classes.card}>
@@ -103,9 +102,19 @@ export default function Kategori() {
                   {item.nama}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <Button className={classes.button} variant="outlined">
-                    Shop Now
-                  </Button>
+                  <Link
+                    to={{
+                      pathname: `/content`,
+                      state: {
+                        nama: item.nama,
+                      },
+                    }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button className={classes.button} variant="outlined">
+                      Shop Now
+                    </Button>
+                  </Link>
                 </Typography>
               </CardContent>
             </Card>

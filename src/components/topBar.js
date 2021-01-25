@@ -21,7 +21,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import PeopleIcon from "@material-ui/icons/People";
 // akhir drawer
-
+import AddIcon from "@material-ui/icons/Add";
+import ShoppingBasketOutlinedIcon from "@material-ui/icons/ShoppingBasketOutlined";
+import DataUsageOutlinedIcon from "@material-ui/icons/DataUsageOutlined";
+import Badge from "@material-ui/core/Badge";
 import { useLocation, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -109,6 +112,7 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
     padding: 0,
+    marginRight: 30,
   },
   responDua: {
     display: "none",
@@ -229,9 +233,15 @@ export default function ButtonAppBar() {
                   </Link>
                 </>
               ) : (
-                <IconButton onClick={back}>
-                  <ArrowBackIcon style={{ color: "black" }} fontSize="large" />
-                </IconButton>
+                <MenuItem onClick={back} style={{ padding: 0 }}>
+                  <ArrowBackIcon
+                    style={{
+                      color: "black",
+                      margin: 0,
+                    }}
+                    fontSize="large"
+                  />
+                </MenuItem>
               )}
 
               <SwipeableDrawer
@@ -243,6 +253,26 @@ export default function ButtonAppBar() {
                 {list("top")}
               </SwipeableDrawer>
               <div className={classes.kanan}>
+                <MenuItem
+                  onClick={handleProfileMenuOpen}
+                  className={classes.respon}
+                >
+                  <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
+                </MenuItem>
+
+                <MenuItem
+                  onClick={handleProfileMenuOpen}
+                  className={classes.respon}
+                >
+                  <AddIcon style={{ fontSize: 30 }} />
+                </MenuItem>
+                <Badge
+                  className={classes.respon}
+                  badgeContent={4}
+                  color="secondary"
+                >
+                  <ShoppingBasketOutlinedIcon style={{ fontSize: 30 }} />
+                </Badge>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />
@@ -259,6 +289,7 @@ export default function ButtonAppBar() {
                 <MenuItem
                   onClick={handleProfileMenuOpen}
                   className={classes.respon}
+                  style={{ margin: 0 }}
                 >
                   <AccountCircle style={{ fontSize: 30 }} />
                 </MenuItem>

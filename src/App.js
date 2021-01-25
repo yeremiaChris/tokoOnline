@@ -16,6 +16,11 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./redux/rootReducer";
+import IconButton from "@material-ui/core/IconButton";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+
+// add form
+import AddItem from "./components/content/addItem";
 // menu list
 const menuList = [
   {
@@ -110,6 +115,9 @@ const useStyles = makeStyles((theme) => ({
   content: {
     display: "grid",
   },
+  menuButton: {
+    backgroundColor: "red",
+  },
 }));
 
 function App() {
@@ -138,6 +146,17 @@ function App() {
           </div>
           <Switch>
             <Route exact path="/">
+              <div className={styles.content}>
+                <Grid
+                  container
+                  className={styles.container}
+                  style={{ margin: 0 }}
+                >
+                  <IconButton edge="start" coor="inherit" aria-label="menu">
+                    <EditOutlinedIcon fontSize="inherit" />
+                  </IconButton>
+                </Grid>
+              </div>
               <div className={styles.content}>
                 <Grid container className={styles.container}>
                   <Grid item xs={12} lg={8} sm={12} md={8}>
@@ -173,6 +192,13 @@ function App() {
               <div className={styles.content}>
                 <Grid container className={styles.container}>
                   <DetailContent />
+                </Grid>
+              </div>
+            </Route>
+            <Route path="/addItem">
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <AddItem />
                 </Grid>
               </div>
             </Route>

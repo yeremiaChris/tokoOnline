@@ -1,7 +1,8 @@
 import React from "react";
-import { Grid, makeStyles, Button } from "@material-ui/core";
+import { Grid, makeStyles } from "@material-ui/core";
 import Iklan1 from "../image/satu.jpg";
 import Iklan2 from "../image/iklan2.jpg";
+import { Link } from "react-router-dom";
 // styles
 const useStyles = makeStyles((theme) => ({
   // container semuanya
@@ -34,17 +35,6 @@ const useStyles = makeStyles((theme) => ({
     },
     transition: ".2s",
   },
-  btn: {
-    color: "white",
-    borderColor: "white",
-    zIndex: 1,
-  },
-  containerButton: {
-    height: 195,
-    marginBottom: -195,
-    alignItems: "center",
-    justifyContent: "center",
-  },
 }));
 
 // inital state iklan
@@ -53,11 +43,13 @@ const iklanState = [
     key: "1",
     gambar: Iklan1,
     display: "none",
+    jenis: "Shoes",
   },
   {
     key: "2",
     gambar: Iklan2,
     display: "none",
+    jenis: "Shirt",
   },
 ];
 
@@ -101,21 +93,22 @@ function Iklan() {
               sm={6}
               xs={12}
             >
-              <div
-                style={{ display: item.display }}
-                className={styles.containerButton}
+              <Link
+                to={{
+                  pathname: "/content",
+                  state: {
+                    nama: item.jenis,
+                  },
+                }}
               >
-                <Button className={styles.btn} variant="outlined">
-                  View
-                </Button>
-              </div>
-              <img
-                onMouseEnter={() => mouseEnter(item.key)}
-                onMouseLeave={() => mouseLeave(item.key)}
-                alt={item.key}
-                className={styles.img}
-                src={item.gambar}
-              ></img>
+                <img
+                  onMouseEnter={() => mouseEnter(item.key)}
+                  onMouseLeave={() => mouseLeave(item.key)}
+                  alt={item.key}
+                  className={styles.img}
+                  src={item.gambar}
+                ></img>
+              </Link>
             </Grid>
           );
         })}

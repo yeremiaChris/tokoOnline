@@ -8,12 +8,12 @@ import {
   CardActionArea,
   Grid,
 } from "@material-ui/core";
-import Image1 from "../../image/black.jpeg";
-import Image2 from "../../image/white.jpeg";
-import Image3 from "../../image/tan.jpeg";
-import Image4 from "../../image/grey.jpeg";
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "0 0 0 gray",
@@ -59,16 +59,6 @@ const useStyles = makeStyles((theme) => ({
     top: 160,
     zIndex: 9999,
   },
-
-  //   card
-  cardItem: {
-    width: 320,
-    height: 320,
-    backgroundImage: "url(" + Image1 + ")",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  },
   available: {
     textAlign: "center",
     backgroundColor: "black",
@@ -79,129 +69,102 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 5,
   },
 }));
-
-// dummy data
-const data = [
-  {
-    nama: "T-Shirt Black",
-    harga: 52000,
-    stok: 2,
-    image: Image1,
-    key: "1",
-    images: [Image1, Image2, Image3, Image4],
-  },
-  {
-    nama: "T-Shirt White",
-    harga: 52000,
-    stok: 2,
-    image: Image2,
-    key: "2",
-    images: [Image1, Image2, Image3, Image4],
-  },
-  {
-    nama: "T-Shirt Tan",
-    harga: 52000,
-    stok: 2,
-    image: Image3,
-    key: "3",
-    images: [Image1, Image2, Image3, Image4],
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image4,
-    key: "4",
-    images: [Image1, Image2, Image3, Image4],
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image1,
-    key: "5",
-    images: [Image1, Image2, Image3, Image4],
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image2,
-    key: "6",
-    images: [Image1, Image2, Image3, Image4],
-  },
-  {
-    nama: "T-Shirt Grey",
-    harga: 52000,
-    stok: 2,
-    image: Image2,
-    key: "7",
-    images: [Image1, Image2, Image3, Image4],
-  },
-];
-
 export default function ItemContent() {
   // styles
   const classes = useStyles();
-
+  // ambil data dari link react router dom
+  const location = useLocation();
+  // data
+  const items = useSelector((state) => state.item);
+  // filter
+  const filter = items.filter((item) =>
+    location.state === undefined
+      ? item.jenis === "Shirt"
+      : item.jenis === location.state.nama
+  );
   return (
     <>
       <Grid item xs={12} className={classes.card}>
-        {data.map((item) => {
-          return (
-            <Link
-              key={item.key}
-              style={{
-                color: "black",
-                textDecoration: "none",
-                textAlign: "left",
-              }}
-              to={{
-                pathname: `/detail/${item.nama}`,
-                state: {
-                  nama: item.nama,
-                  harga: item.harga,
-                  gambar: item.image,
-                  gambarBanyak: item.images,
-                },
-              }}
-            >
-              <Card className={classes.root}>
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={item.image}
-                    title={item.nama}
-                  />
-                  <div
+        {filter &&
+          filter.map((item) => {
+            return (
+              <Link
+                key={item.key}
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  textAlign: "left",
+                }}
+                to={{
+                  pathname: `/detail/${item.nama}`,
+                  state: {
+                    nama: item.nama,
+                    harga: item.harga,
+                    gambar: item.image,
+                    gambarBanyak: item.images,
+                  },
+                }}
+              >
+                <Card className={classes.root}>
+                  <CardActionArea>
+                    <CardMedia
+                      className={classes.media}
+                      image={item.image}
+                      title={item.nama}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                      }}
+                    >
+                      <p className={classes.available}>Available</p>
+                    </div>
+                  </CardActionArea>
+                  <CardContent
                     style={{
+                      padding: 0,
+                      textAlign: "left",
                       display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "flex-end",
                     }}
                   >
-                    <p className={classes.available}>Available</p>
-                  </div>
-                </CardActionArea>
-                <CardContent
-                  style={{
-                    padding: 0,
-                    textAlign: "left",
-                  }}
-                >
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {item.nama}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                  >
-                    Rp {item.harga}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Link>
-          );
-        })}
+                    <div>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {item.nama}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color="textSecondary"
+                        component="p"
+                      >
+                        Rp {item.harga}
+                      </Typography>
+                    </div>
+
+                    <div>
+                      <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="menu"
+                      >
+                        <EditOutlinedIcon fontSize="inherit" />
+                      </IconButton>
+                      <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="menu"
+                      >
+                        <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                      </IconButton>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
       </Grid>
     </>
   );

@@ -5,6 +5,7 @@ import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import Image1 from "../image/test.jpg";
 import Image2 from "../image/dua.jpg";
+import { Link } from "react-router-dom";
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 // initial state carausel
@@ -12,10 +13,12 @@ const tutorialSteps = [
   {
     label: "San Francisco – Oakland Bay Bridge, United States",
     imgPath: Image1,
+    nama: "T-Shirt",
   },
   {
     label: "Bird",
     imgPath: Image2,
+    nama: "Shirt",
   },
 ];
 const useStyles = makeStyles((theme) => ({
@@ -66,11 +69,6 @@ const useStyles = makeStyles((theme) => ({
     color: "gray",
     fontSize: 60,
   },
-  buttonView: {
-    color: "white",
-    borderColor: "white",
-    marginTop: 100,
-  },
 }));
 function Carausel() {
   // styles
@@ -98,16 +96,6 @@ function Carausel() {
     setActiveStep(step);
   };
   // akhir carausel atau slide
-
-  // state button view mouse enter
-  const [display, setDisplay] = React.useState("none");
-  const mouseEnter = () => {
-    setDisplay("flex");
-  };
-  const mouseLeave = () => {
-    setDisplay("none");
-  };
-
   return (
     <div>
       <AutoPlaySwipeableViews
@@ -118,19 +106,24 @@ function Carausel() {
       >
         {tutorialSteps.map((step, index) => {
           return (
-            <div
-              onMouseEnter={mouseEnter}
-              onMouseLeave={mouseLeave}
-              key={step.label}
-            >
+            <div key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
-                <div className={classes.image}>
-                  <img
-                    alt={step.label}
-                    className={classes.img}
-                    src={step.imgPath}
-                  ></img>
-                </div>
+                <Link
+                  to={{
+                    pathname: "/content",
+                    state: {
+                      nama: step.nama,
+                    },
+                  }}
+                >
+                  <div className={classes.image}>
+                    <img
+                      alt={step.label}
+                      className={classes.img}
+                      src={step.imgPath}
+                    ></img>
+                  </div>
+                </Link>
               ) : null}
             </div>
           );
@@ -139,13 +132,6 @@ function Carausel() {
       <div className={classes.panah}>
         <Button onClick={handleBack}>
           <KeyboardArrowLeft className={classes.iconArrow} />
-        </Button>
-        <Button
-          style={{ display: display }}
-          className={classes.buttonView}
-          variant="outlined"
-        >
-          View
         </Button>
         <Button onClick={handleNext}>
           <KeyboardArrowRight className={classes.iconArrow} />

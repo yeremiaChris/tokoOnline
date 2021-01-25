@@ -12,6 +12,9 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formatRupiah } from "../../redux/formatRupiah";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -75,55 +78,78 @@ export default function Jenis() {
         <div className={classes.terbaru}>
           <h1 className={classes.terbaruText}>REKOMENDASI</h1>
         </div>
-        {onePage.map((item) => {
-          return (
-            <>
-              {item.recomendasi ? (
-                <Link
-                  key={item.key}
+        {onePage.map((item) =>
+          item.recomendasi ? (
+            <Link
+              key={item.key}
+              style={{
+                color: "black",
+                textDecoration: "none",
+                textAlign: "left",
+              }}
+              to={{
+                pathname: `/detail/${item.nama}`,
+                state: {
+                  nama: item.nama,
+                  harga: item.harga,
+                  gambar: item.image,
+                  gambarBanyak: item.images,
+                  key: item.key,
+                  detail: true,
+                },
+              }}
+            >
+              <Card className={classes.root}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={item.image}
+                    title={item.nama}
+                  />
+                </CardActionArea>
+                <CardContent
                   style={{
-                    color: "black",
-                    textDecoration: "none",
-                    textAlign: "left",
-                  }}
-                  to={{
-                    pathname: `/detail/${item.nama}`,
-                    state: {
-                      nama: item.nama,
-                      harga: item.harga,
-                      gambar: item.image,
-                      gambarBanyak: item.images,
-                      key: item.key,
-                      detail: true,
-                    },
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                    padding: 0,
                   }}
                 >
-                  <Card className={classes.root}>
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={item.image}
-                        title={item.nama}
-                      />
-                    </CardActionArea>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {item.nama}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        {formatRupiah(item.harga)}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Link>
-              ) : null}
-            </>
-          );
-        })}
+                  <div>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {item.nama}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {formatRupiah(item.harga)}
+                    </Typography>
+                  </div>
+                  <div>
+                    <IconButton
+                      edge="start"
+                      className={classes.menuButton}
+                      color="inherit"
+                      aria-label="menu"
+                    >
+                      <EditOutlinedIcon fontSize="inherit" />
+                    </IconButton>
+                    <IconButton
+                      edge="start"
+                      className={classes.menuButton}
+                      color="inherit"
+                      aria-label="menu"
+                    >
+                      <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ) : null
+        )}
       </Grid>
       <Grid container justify="center" className={classes.bottom}>
         <Grid item>

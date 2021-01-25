@@ -63,7 +63,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "6",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shirt",
     },
     {
       nama: "T-Shirt Red",
@@ -73,7 +73,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "7",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shirt",
     },
     {
       nama: "T-Shirt Red",
@@ -83,7 +83,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "8",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shirt",
     },
     {
       nama: "T-Shirt Red",
@@ -93,7 +93,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "9",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shirt",
     },
     {
       nama: "T-Shirt Red",
@@ -103,7 +103,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "10",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shirt",
     },
     {
       nama: "T-Shirt Black",
@@ -113,7 +113,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "11",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shoes",
     },
     {
       nama: "T-Shirt White",
@@ -123,7 +123,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "12",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shoes",
     },
     {
       nama: "T-Shirt Tan",
@@ -133,7 +133,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "13",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shoes",
     },
     {
       nama: "T-Shirt BLue",
@@ -143,7 +143,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "14",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shoes",
     },
     {
       nama: "T-Shirt Gray",
@@ -153,7 +153,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "15",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Shoes",
     },
     {
       nama: "T-Shirt Red",
@@ -163,7 +163,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "16",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
     },
     {
       nama: "T-Shirt Red",
@@ -173,7 +173,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "17",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
     },
     {
       nama: "T-Shirt Red",
@@ -183,7 +183,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "18",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
     },
     {
       nama: "T-Shirt Red",
@@ -193,7 +193,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "19",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
     },
     {
       nama: "T-Shirt Red",
@@ -203,7 +203,7 @@ const initState = {
       images: [Image1, Image2, Image3, Image4],
       key: "20",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
     },
   ],
   cart: [],
