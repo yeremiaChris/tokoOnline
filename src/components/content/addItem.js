@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
     justifyContent: "space-between",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      flexWrap: "wrap",
+    },
   },
   gambar: {
     width: 130,
@@ -27,12 +31,50 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     alignItems: "center",
     justifyContent: "center",
+    [theme.breakpoints.down("sm")]: {
+      width: 100,
+      height: 100,
+    },
   },
   buttonForm: {
     display: "flex",
     justifyContent: "flex-end",
     padding: 20,
     paddingRight: 0,
+  },
+  text: {
+    maxWidth: 165,
+    minWidth: 165,
+    textAlign: "right",
+    paddingRight: 10,
+    [theme.breakpoints.down("sm")]: {
+      maxWidth: 100,
+      minWidth: 100,
+      textAlign: "left",
+      marginBottom: 20,
+    },
+  },
+  containerTextInput: {
+    marginBottom: 20,
+    display: "flex",
+    [theme.breakpoints.down("sm")]: {
+      display: "grid",
+    },
+  },
+  container: {
+    maxWidth: "100%",
+  },
+  numberFormat: {
+    height: 50,
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+  },
+  textArea: {
+    [theme.breakpoints.up("md")]: {
+      width: "100%",
+    },
+    padding: 15,
   },
 }));
 
@@ -90,8 +132,8 @@ function AddItem() {
   // state gambar
   const [gambarBanyak, setGambarBanyak] = React.useState(gambars);
 
-  // input click
-  const refGambar = React.useRef(new Array());
+  // ref gambar array of object
+  const refGambar = React.useRef([]);
   // klik to open input element
   const tambahGambar = (index) => {
     refGambar.current[index].click();
@@ -110,20 +152,13 @@ function AddItem() {
   };
   return (
     <Grid container className={styles.container}>
-      <Grid item lg={12}>
+      <Grid item lg={12} md={12} sm={12} xs={12}>
         <h2 style={{ textAlign: "left", marginBottom: 50 }}>Add Item</h2>
       </Grid>
-      <Grid item lg={12}>
-        <div>
-          <div
-            style={{
-              marginBottom: 20,
-              display: "flex",
-            }}
-          >
-            <h3 style={{ width: 200, textAlign: "right", paddingRight: 10 }}>
-              Nama *
-            </h3>
+      <Grid item lg={12} md={12} sm={12} xs={12}>
+        <Grid>
+          <div className={styles.containerTextInput}>
+            <h3 className={styles.text}>Nama *</h3>
             <TextField
               fullWidth
               id="outlined-basic"
@@ -131,37 +166,17 @@ function AddItem() {
               variant="outlined"
             />
           </div>
-          <div
-            style={{
-              marginBottom: 20,
-              display: "flex",
-            }}
-          >
-            <h3 style={{ width: 200, textAlign: "right", paddingRight: 15 }}>
-              Harga *
-            </h3>
+          <div className={styles.containerTextInput}>
+            <h3 className={styles.text}>Harga *</h3>
             <NumberFormat
-              style={{
-                width: "100%",
-                padding: 0,
-                margin: 0,
-                height: 50,
-                fontSize: 15,
-              }}
               placeholder="Harga..."
               thousandSeparator={true}
               prefix={"Rp. "}
+              className={styles.numberFormat}
             />
           </div>
-          <div
-            style={{
-              marginBottom: 20,
-              display: "flex",
-            }}
-          >
-            <h3 style={{ width: 200, textAlign: "right", paddingRight: 10 }}>
-              Jenis *
-            </h3>
+          <div className={styles.containerTextInput}>
+            <h3 className={styles.text}>Jenis *</h3>
             <FormControl style={{ width: "100%" }} variant="outlined">
               <InputLabel htmlFor="outlined-age-native-simple">
                 Jenis...
@@ -171,9 +186,9 @@ function AddItem() {
                 native
                 value={state.age}
                 onChange={handleChange}
-                label="Age"
+                label="Jenis"
                 inputProps={{
-                  name: "age",
+                  name: "Jenis",
                   id: "outlined-age-native-simple",
                 }}
               >
@@ -184,26 +199,19 @@ function AddItem() {
               </Select>
             </FormControl>
           </div>
-          <div
-            style={{
-              marginBottom: 20,
-              display: "flex",
-            }}
-          >
-            <h3 style={{ width: 200, textAlign: "right", paddingRight: 10 }}>
-              Deskripsi *
-            </h3>
+          <div className={styles.containerTextInput}>
+            <h3 className={styles.text}>Deskripsi *</h3>
             <TextareaAutosize
               rowsMax={5}
               rowsMin={3}
               aria-label="empty textarea"
               placeholder="Deskripsi..."
-              style={{ width: "100%", padding: 15, fontSize: 15 }}
+              className={styles.textArea}
             />
           </div>
-        </div>
+        </Grid>
       </Grid>
-      <Grid item lg={12}>
+      <Grid item lg={12} md={12} sm={12} xs={12}>
         <div className={styles.gambarContainer}>
           {gambarBanyak &&
             gambarBanyak.map((item, i) => {
@@ -236,7 +244,7 @@ function AddItem() {
             })}
         </div>
       </Grid>
-      <Grid item lg={12}>
+      <Grid item lg={12} md={12} sm={12} xs={12}>
         <div className={styles.buttonForm}>
           <Button
             variant="contained"
