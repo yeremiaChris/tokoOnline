@@ -138,6 +138,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// menu toolbar
+const menu = [
+  {
+    nama: "Login",
+    icon: <AccountCircle />,
+    key: "1",
+  },
+  {
+    nama: "Register",
+    icon: <PeopleIcon />,
+    key: "2",
+  },
+  {
+    nama: "Tambah Item",
+    icon: <AddIcon />,
+    key: "3",
+  },
+  {
+    nama: "Info Keranjang",
+    icon: <ShoppingBasketOutlinedIcon />,
+    key: "4",
+  },
+  {
+    nama: "Laporan Pendapatan",
+    icon: <DataUsageOutlinedIcon />,
+    key: "5",
+  },
+];
+
 export default function ButtonAppBar() {
   const location = useLocation();
   const history = useHistory();
@@ -197,12 +226,10 @@ export default function ButtonAppBar() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Login", "Register"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <AccountCircle /> : <PeopleIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
+        {menu.map((text, index) => (
+          <ListItem button key={text.key}>
+            <ListItemIcon>{text.icon}</ListItemIcon>
+            <ListItemText primary={text.nama} />
           </ListItem>
         ))}
       </List>

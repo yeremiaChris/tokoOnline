@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     [theme.breakpoints.down("sm")]: {
-      width: 100,
-      height: 100,
+      width: 120,
+      height: 120,
     },
   },
   buttonForm: {
