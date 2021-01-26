@@ -37,30 +37,36 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // gambar state
-const gambar = [
+const gambars = [
   {
     name: "gambar1",
     key: "1",
+    src: "a",
   },
   {
     name: "gambar2",
     key: "2",
+    src: "b",
   },
   {
     name: "gambar3",
     key: "3",
+    src: "c",
   },
   {
     name: "gambar4",
     key: "4",
+    src: "d",
   },
   {
     name: "gambar5",
     key: "5",
+    src: "e",
   },
   {
     name: "gambar6",
     key: "6",
+    src: "f",
   },
 ];
 
@@ -79,6 +85,28 @@ function AddItem() {
       ...state,
       [name]: event.target.value,
     });
+  };
+
+  // state gambar
+  const [gambarBanyak, setGambarBanyak] = React.useState(gambars);
+
+  // input click
+  const refGambar = React.useRef(new Array());
+  // klik to open input element
+  const tambahGambar = (index) => {
+    refGambar.current[index].click();
+  };
+
+  // onchange input image
+  const handleChangeImage = (e, index) => {
+    e.preventDefault();
+    setGambarBanyak([
+      ...gambarBanyak.map((item) =>
+        item.key === index
+          ? { ...item, src: URL.createObjectURL(e.target.files[0]) }
+          : item
+      ),
+    ]);
   };
   return (
     <Grid container className={styles.container}>
@@ -177,12 +205,30 @@ function AddItem() {
       </Grid>
       <Grid item lg={12}>
         <div className={styles.gambarContainer}>
-          {gambar &&
-            gambar.map((item) => {
+          {gambarBanyak &&
+            gambarBanyak.map((item, i) => {
               return (
-                <div key={item.key} style={{ color: "gray" }}>
+                <div
+                  onClick={() => tambahGambar(i)}
+                  key={item.key}
+                  style={{ color: "gray" }}
+                >
                   <p>{item.name}</p>
-                  <div className={styles.gambar}>
+                  <div
+                    style={{
+                      backgroundImage: "url(" + item.src + ")",
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                    }}
+                    className={styles.gambar}
+                  >
+                    <input
+                      onChange={(e) => handleChangeImage(e, item.key)}
+                      style={{ display: "none" }}
+                      type="file"
+                      ref={(e) => refGambar.current.push(e)}
+                    ></input>
                     <AddCircleOutlineIcon fontSize="large" />
                   </div>
                 </div>

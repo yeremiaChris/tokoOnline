@@ -212,7 +212,7 @@ export default function ButtonAppBar() {
 
   // back
   const back = () => {
-    history.goBack();
+    history.push("/");
   };
   return (
     <div className={classes.root}>
@@ -259,13 +259,11 @@ export default function ButtonAppBar() {
                 >
                   <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
                 </MenuItem>
-
-                <MenuItem
-                  onClick={handleProfileMenuOpen}
-                  className={classes.respon}
-                >
-                  <AddIcon style={{ fontSize: 30 }} />
-                </MenuItem>
+                <Link to="/addItem">
+                  <MenuItem className={classes.respon}>
+                    <AddIcon style={{ fontSize: 30, color: "black" }} />
+                  </MenuItem>
+                </Link>
                 <Badge
                   className={classes.respon}
                   badgeContent={4}
