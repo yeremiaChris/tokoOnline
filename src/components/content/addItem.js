@@ -15,6 +15,12 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Button from "@material-ui/core/Button";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import SendIcon from "@material-ui/icons/Send";
+
+// react hook form
+import { useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -112,21 +118,35 @@ const gambars = [
   },
 ];
 
+// schema
+const schema = yup.object().shape({
+  nama: yup.string().required("Harus di isi"),
+  harga: yup.string().required("Required"),
+  jenis: yup.string().required("Harus di isi"),
+  deskripsi: yup.string().required("Harus di isi"),
+  // img: yup
+  //   .mixed()
+  //   .test(
+  //     "fileSize",
+  //     "File size too large, max file size is 1 Mb",
+  //     (file) => file && file.size <= 1100000
+  //   )
+  //   .test(
+  //     "fileType",
+  //     "Incorrect file type",
+  //     (file) =>
+  //       file && ["image/png", "image/jpg", "image/jpeg"].includes(file.type)
+  //   )
+  //   .required("Harus di isi"),
+});
+
 function AddItem() {
   const styles = useStyles();
 
   // select
-  const [state, setState] = React.useState({
-    age: "",
-    name: "hai",
-  });
-
+  const [age, setAge] = React.useState("");
   const handleChange = (event) => {
-    const name = event.target.name;
-    setState({
-      ...state,
-      [name]: event.target.value,
-    });
+    setAge(event.target.value);
   };
 
   // state gambar
@@ -150,119 +170,155 @@ function AddItem() {
       ),
     ]);
   };
+
+  // state form dari react-hook-form
+  const { register, handleSubmit, watch, errors, control } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = (data) => console.log(data);
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
         <h2 style={{ textAlign: "left", marginBottom: 50 }}>Add Item</h2>
       </Grid>
-      <Grid item lg={12} md={12} sm={12} xs={12}>
-        <Grid>
-          <div className={styles.containerTextInput}>
-            <h3 className={styles.text}>Nama *</h3>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              label="Nama..."
-              variant="outlined"
-            />
-          </div>
-          <div className={styles.containerTextInput}>
-            <h3 className={styles.text}>Harga *</h3>
-            <NumberFormat
-              placeholder="Harga..."
-              thousandSeparator={true}
-              prefix={"Rp. "}
-              className={styles.numberFormat}
-            />
-          </div>
-          <div className={styles.containerTextInput}>
-            <h3 className={styles.text}>Jenis *</h3>
-            <FormControl style={{ width: "100%" }} variant="outlined">
-              <InputLabel htmlFor="outlined-age-native-simple">
-                Jenis...
-              </InputLabel>
-              <Select
+      <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <Grid>
+            <div className={styles.containerTextInput}>
+              <h3 className={styles.text}>Nama *</h3>
+              <TextField
                 fullWidth
-                native
-                value={state.age}
-                onChange={handleChange}
-                label="Jenis"
-                inputProps={{
-                  name: "Jenis",
-                  id: "outlined-age-native-simple",
-                }}
-              >
-                <option aria-label="None" value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </Select>
-            </FormControl>
+                id="outlined-basic"
+                label="Nama..."
+                variant="outlined"
+                name="nama"
+                inputRef={register}
+              />
+            </div>
+            <p>{errors.nama?.message}</p>
+            <div className={styles.containerTextInput}>
+              <h3 className={styles.text}>Harga *</h3>
+              <Controller
+                placeholder="Harga..."
+                thousandSeparator={true}
+                className={styles.numberFormat}
+                name="harga"
+                control={control}
+                as={NumberFormat}
+              />
+            </div>
+            <p>{errors.harga?.message}</p>
+            <div className={styles.containerTextInput}>
+              <h3 className={styles.text}>Jenis *</h3>
+              {/* <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="jenis">Jenis...</InputLabel>
+                <Select
+                  native
+                  label="Jenis..."
+                  inputProps={{
+                    name: "jenis",
+                    id: "jenis",
+                  }}
+                >
+                  <option aria-label="None" value="" />
+                  <option value={10}>Ten</option>
+                  <option value={20}>Twenty</option>
+                  <option value={30}>Thirty</option>
+                </Select>
+                
+              </FormControl> */}
+              <FormControl fullWidth variant="outlined">
+                <InputLabel htmlFor="jenis">Jenis...</InputLabel>
+                <Controller
+                  control={control}
+                  name="jenis"
+                  as={
+                    <Select native label="Jenis..." id="jenis">
+                      <option aria-label="None" value="" />
+                      <option value="ten">Ten</option>
+                      <option value="twenty">Twenty</option>
+                      <option value="thirty">Thirty</option>
+                    </Select>
+                  }
+                />
+              </FormControl>
+            </div>
+            <p>{errors.jenis?.message}</p>
+
+            <div className={styles.containerTextInput}>
+              <h3 className={styles.text}>Deskripsi *</h3>
+              <TextareaAutosize
+                ref={register}
+                name="deskripsi"
+                rowsMax={5}
+                rowsMin={3}
+                aria-label="empty textarea"
+                placeholder="Deskripsi..."
+                className={styles.textArea}
+              />
+            </div>
+            <p>{errors.deskripsi?.message}</p>
+          </Grid>
+        </Grid>
+        {/* <Grid item lg={12} md={12} sm={12} xs={12}>
+          <div className={styles.gambarContainer}>
+            {gambarBanyak &&
+              gambarBanyak.map((item, i) => {
+                return (
+                  <div
+                    onClick={() => tambahGambar(i)}
+                    key={item.key}
+                    style={{ color: "gray" }}
+                  >
+                    <p>{errors.img?.message}</p>
+                    <p>{item.name}</p>
+                    <div
+                      style={{
+                        backgroundImage: "url(" + item.src + ")",
+                        backgroundPosition: "center",
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                      }}
+                      className={styles.gambar}
+                    >
+                      <input
+                        name="img"
+                        onChange={(e) => handleChangeImage(e, item.key)}
+                        style={{ display: "none" }}
+                        type="file"
+                        ref={(e) => {
+                          refGambar.current.push(e);
+                          register(e);
+                        }}
+                      ></input>
+                      <AddCircleOutlineIcon fontSize="large" />
+                    </div>
+                  </div>
+                );
+              })}
           </div>
-          <div className={styles.containerTextInput}>
-            <h3 className={styles.text}>Deskripsi *</h3>
-            <TextareaAutosize
-              rowsMax={5}
-              rowsMin={3}
-              aria-label="empty textarea"
-              placeholder="Deskripsi..."
-              className={styles.textArea}
-            />
+        </Grid> */}
+        <Grid item lg={12} md={12} sm={12} xs={12}>
+          <div className={styles.buttonForm}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<RotateLeftIcon />}
+            >
+              Reset
+            </Button>
+            <Button
+              style={{ marginLeft: 10 }}
+              variant="contained"
+              color="primary"
+              type="submit"
+              endIcon={<SendIcon />}
+            >
+              Submit
+            </Button>
           </div>
         </Grid>
-      </Grid>
-      <Grid item lg={12} md={12} sm={12} xs={12}>
-        <div className={styles.gambarContainer}>
-          {gambarBanyak &&
-            gambarBanyak.map((item, i) => {
-              return (
-                <div
-                  onClick={() => tambahGambar(i)}
-                  key={item.key}
-                  style={{ color: "gray" }}
-                >
-                  <p>{item.name}</p>
-                  <div
-                    style={{
-                      backgroundImage: "url(" + item.src + ")",
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                    }}
-                    className={styles.gambar}
-                  >
-                    <input
-                      onChange={(e) => handleChangeImage(e, item.key)}
-                      style={{ display: "none" }}
-                      type="file"
-                      ref={(e) => refGambar.current.push(e)}
-                    ></input>
-                    <AddCircleOutlineIcon fontSize="large" />
-                  </div>
-                </div>
-              );
-            })}
-        </div>
-      </Grid>
-      <Grid item lg={12} md={12} sm={12} xs={12}>
-        <div className={styles.buttonForm}>
-          <Button
-            variant="contained"
-            color="secondary"
-            startIcon={<RotateLeftIcon />}
-          >
-            Reset
-          </Button>
-          <Button
-            style={{ marginLeft: 10 }}
-            variant="contained"
-            color="primary"
-            endIcon={<SendIcon />}
-          >
-            Submit
-          </Button>
-        </div>
-      </Grid>
+      </form>
     </Grid>
   );
 }
