@@ -20,7 +20,7 @@ import SendIcon from "@material-ui/icons/Send";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { ErrorMessage } from "@hookform/error-message";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -90,54 +90,128 @@ const gambars = [
     name: "gambar1",
     key: "1",
     src: "a",
+    nameForYup: "img",
   },
   {
     name: "gambar2",
     key: "2",
     src: "b",
+    nameForYup: "gambar2",
   },
   {
     name: "gambar3",
     key: "3",
     src: "c",
+    nameForYup: "gambar3",
   },
   {
     name: "gambar4",
     key: "4",
     src: "d",
+    nameForYup: "gambar4",
   },
   {
     name: "gambar5",
     key: "5",
     src: "e",
+    nameForYup: "gambar5",
   },
   {
     name: "gambar6",
     key: "6",
     src: "f",
+    nameForYup: "gambar6",
   },
 ];
 
 // schema
+const FILE_SIZE = 1000 * 1024;
+const SUPPORTED_FORMATS = ["image/jpg", "image/jpeg", "image/png"];
 const schema = yup.object().shape({
-  nama: yup.string().required("Harus di isi"),
-  harga: yup.string().required("Required"),
-  jenis: yup.string().required("Harus di isi"),
-  deskripsi: yup.string().required("Harus di isi"),
-  // img: yup
-  //   .mixed()
-  //   .test(
-  //     "fileSize",
-  //     "File size too large, max file size is 1 Mb",
-  //     (file) => file && file.size <= 1100000
-  //   )
-  //   .test(
-  //     "fileType",
-  //     "Incorrect file type",
-  //     (file) =>
-  //       file && ["image/png", "image/jpg", "image/jpeg"].includes(file.type)
-  //   )
-  //   .required("Harus di isi"),
+  // nama: yup.string().required("Harus di isi"),
+  // harga: yup.string().required("Required"),
+  // jenis: yup.string().required("Harus di isi"),
+  // deskripsi: yup.string().required("Harus di isi"),
+  img: yup
+    .mixed()
+    .test("type", "Format = .jpeg, .jpg, .bmp, .pdf and .doc", (value) => {
+      return (
+        value &&
+        (value[0].type === "image/jpeg" ||
+          value[0].type === "image/jpg" ||
+          value[0].type === "image/png")
+      );
+    }),
+  gambar2: yup
+    .mixed()
+    .test(
+      "type",
+      "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc",
+      (value) => {
+        return (
+          value &&
+          (value[0].type === "image/jpeg" ||
+            value[0].type === "image/jpg" ||
+            value[0].type === "image/png")
+        );
+      }
+    ),
+  gambar3: yup
+    .mixed()
+    .test(
+      "type",
+      "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc",
+      (value) => {
+        return (
+          value &&
+          (value[0].type === "image/jpeg" ||
+            value[0].type === "image/jpg" ||
+            value[0].type === "image/png")
+        );
+      }
+    ),
+  gambar4: yup
+    .mixed()
+    .test(
+      "type",
+      "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc",
+      (value) => {
+        return (
+          value &&
+          (value[0].type === "image/jpeg" ||
+            value[0].type === "image/jpg" ||
+            value[0].type === "image/png")
+        );
+      }
+    ),
+  gambar5: yup
+    .mixed()
+    .test(
+      "type",
+      "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc",
+      (value) => {
+        return (
+          value &&
+          (value[0].type === "image/jpeg" ||
+            value[0].type === "image/jpg" ||
+            value[0].type === "image/png")
+        );
+      }
+    ),
+  gambar6: yup
+    .mixed()
+    .test(
+      "type",
+      "Only the following formats are accepted: .jpeg, .jpg, .bmp, .pdf and .doc",
+      (value) => {
+        return (
+          value &&
+          (value[0].type === "image/jpeg" ||
+            value[0].type === "image/jpg" ||
+            value[0].type === "image/png")
+        );
+      }
+    ),
 });
 
 function AddItem() {
@@ -165,7 +239,11 @@ function AddItem() {
     setGambarBanyak([
       ...gambarBanyak.map((item) =>
         item.key === index
-          ? { ...item, src: URL.createObjectURL(e.target.files[0]) }
+          ? {
+              ...item,
+              src: URL.createObjectURL(e.target.files[0]),
+              name: e.target.files[0].name,
+            }
           : item
       ),
     ]);
@@ -175,14 +253,19 @@ function AddItem() {
   const { register, handleSubmit, watch, errors, control } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => console.log(data);
+  // const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
         <h2 style={{ textAlign: "left", marginBottom: 50 }}>Add Item</h2>
       </Grid>
       <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
+        {/* <Grid item lg={12} md={12} sm={12} xs={12}>
           <Grid>
             <div className={styles.containerTextInput}>
               <h3 className={styles.text}>Nama *</h3>
@@ -210,23 +293,6 @@ function AddItem() {
             <p>{errors.harga?.message}</p>
             <div className={styles.containerTextInput}>
               <h3 className={styles.text}>Jenis *</h3>
-              {/* <FormControl fullWidth variant="outlined">
-                <InputLabel htmlFor="jenis">Jenis...</InputLabel>
-                <Select
-                  native
-                  label="Jenis..."
-                  inputProps={{
-                    name: "jenis",
-                    id: "jenis",
-                  }}
-                >
-                  <option aria-label="None" value="" />
-                  <option value={10}>Ten</option>
-                  <option value={20}>Twenty</option>
-                  <option value={30}>Thirty</option>
-                </Select>
-                
-              </FormControl> */}
               <FormControl fullWidth variant="outlined">
                 <InputLabel htmlFor="jenis">Jenis...</InputLabel>
                 <Controller
@@ -259,8 +325,8 @@ function AddItem() {
             </div>
             <p>{errors.deskripsi?.message}</p>
           </Grid>
-        </Grid>
-        {/* <Grid item lg={12} md={12} sm={12} xs={12}>
+        </Grid> */}
+        <Grid item lg={12} md={12} sm={12} xs={12}>
           <div className={styles.gambarContainer}>
             {gambarBanyak &&
               gambarBanyak.map((item, i) => {
@@ -270,8 +336,34 @@ function AddItem() {
                     key={item.key}
                     style={{ color: "gray" }}
                   >
-                    <p>{errors.img?.message}</p>
-                    <p>{item.name}</p>
+                    <ErrorMessage
+                      render={({ message }) => (
+                        <p
+                          style={{
+                            color: "red",
+                            width: 150,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {message}
+                        </p>
+                      )}
+                      errors={errors}
+                      name={item.nameForYup}
+                    />
+                    <p
+                      style={{
+                        width: 100,
+                        height: "1.2em",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item.name}
+                    </p>
                     <div
                       style={{
                         backgroundImage: "url(" + item.src + ")",
@@ -282,7 +374,7 @@ function AddItem() {
                       className={styles.gambar}
                     >
                       <input
-                        name="img"
+                        name={item.nameForYup}
                         onChange={(e) => handleChangeImage(e, item.key)}
                         style={{ display: "none" }}
                         type="file"
@@ -297,7 +389,7 @@ function AddItem() {
                 );
               })}
           </div>
-        </Grid> */}
+        </Grid>
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <div className={styles.buttonForm}>
             <Button
