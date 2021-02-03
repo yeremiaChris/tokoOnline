@@ -213,10 +213,6 @@ const initState = {
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
     case "addCart":
-      const exists = (key) => {
-        return state.cart.some((item) => item.key === action.item.key);
-      };
-      exists(action.key);
       return {
         // "spread" the original state object
         ...state,
@@ -257,6 +253,11 @@ const rootReducer = (state = initState, action) => {
       return {
         ...state,
         cart: [...state.cart.filter((item) => item.key !== action.key)],
+      };
+    case "addItem":
+      return {
+        ...state,
+        item: [...state.item, action.item],
       };
     default:
       return state;

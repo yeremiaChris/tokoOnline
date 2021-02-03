@@ -1,7 +1,6 @@
 // formik
 import React from "react";
 import { Grid, makeStyles, TextField } from "@material-ui/core";
-import NumberFormat from "react-number-format";
 
 // select
 import FormControl from "@material-ui/core/FormControl";
@@ -13,9 +12,10 @@ import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import SendIcon from "@material-ui/icons/Send";
 
 // react hook form
-import * as yup from "yup";
 import { Formik, ErrorMessage } from "formik";
-import PropTypes from "prop-types";
+import { gambars, schema, jenis, NumberFormatCustom } from "../stateDiAddItem";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -120,203 +120,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// gambar state
-const gambars = [
-  {
-    name: "gambar1",
-    key: "1",
-    src: "a",
-    nameForYup: "gambar1",
-    error: "",
-  },
-  {
-    name: "gambar2",
-    key: "2",
-    src: "b",
-    nameForYup: "gambar2",
-    error: "",
-  },
-  {
-    name: "gambar3",
-    key: "3",
-    src: "c",
-    nameForYup: "gambar3",
-    error: "",
-  },
-  {
-    name: "gambar4",
-    key: "4",
-    src: "d",
-    nameForYup: "gambar4",
-    error: "",
-  },
-  {
-    name: "gambar5",
-    key: "5",
-    src: "e",
-    nameForYup: "gambar5",
-    error: "",
-  },
-  {
-    name: "gambar6",
-    key: "6",
-    src: "f",
-    nameForYup: "gambar6",
-    error: "",
-  },
-];
-
-// schema
-const FILE_SIZE = 1000 * 1000;
-const schema = yup.object().shape({
-  nama: yup
-    .string()
-    .required("Field nama harus di isi")
-    .min(5, "Minimal huruf ada 5"),
-  harga: yup.string().required("Field harga harus di isi"),
-  jenis: yup.string().required("Field jenis harus di isi"),
-  deskripsi: yup
-    .string()
-    .required("Field deskripsi harus di isi")
-    .min(10, "Minimal huruf ada 10"),
-  gambar1: yup
-    .mixed()
-    .required("harus ada")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar2: yup
-    .mixed()
-    .required("harus ada")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar3: yup
-    .mixed()
-    .required("harus ada")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar4: yup
-    .mixed()
-    .required("harus ada")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar5: yup
-    .mixed()
-    .required("harus ada")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar6: yup
-    .mixed()
-    .required("harus ada")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-});
-
-// jenis
-const jenis = [
-  {
-    name: "Shoes",
-    key: "1",
-  },
-  {
-    name: "Pants",
-    key: "2",
-  },
-  {
-    name: "Shirt",
-    key: "3",
-  },
-  {
-    name: "T-Shirt",
-    key: "4",
-  },
-  {
-    name: "T-Shirt",
-    key: "4",
-  },
-];
-// number
-function NumberFormatCustom(props) {
-  const { inputRef, onChange, ...other } = props;
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      prefix="Rp. "
-    />
-  );
-}
-
-NumberFormatCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
 function AddItem() {
   const styles = useStyles();
 
@@ -347,8 +150,33 @@ function AddItem() {
   };
 
   // onsubmit
+  const dispatch = useDispatch();
+  const history = useHistory()
   const onSubmit = (data) => {
     console.log(data);
+    const key = Math.random();
+    dispatch({
+      type: "addItem",
+      item: {
+        nama: data.nama,
+        harga: data.harga,
+        stok: 0,
+        image: URL.createObjectURL(data.gambar1),
+        images: [
+          URL.createObjectURL(data.gambar1),
+          URL.createObjectURL(data.gambar2),
+          URL.createObjectURL(data.gambar3),
+          URL.createObjectURL(data.gambar4),
+          URL.createObjectURL(data.gambar5),
+          URL.createObjectURL(data.gambar6),
+        ],
+        key: key.toString(),
+        recomendasi: true,
+        jenis: data.jenis,
+      },
+    });
+    // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
+    history.push("/");
   };
   return (
     <Grid container className={styles.container}>
@@ -379,6 +207,7 @@ function AddItem() {
           handleBlur,
           handleSubmit,
           setFieldValue,
+          resetForm,
         }) => (
           <form style={{ width: "100%" }} onSubmit={handleSubmit}>
             <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -463,7 +292,9 @@ function AddItem() {
                         {jenis &&
                           jenis.map((item) => {
                             return (
-                              <option value={item.name}>{item.name}</option>
+                              <option key={item.key} value={item.name}>
+                                {item.name}
+                              </option>
                             );
                           })}
                       </Select>
@@ -559,6 +390,7 @@ function AddItem() {
             <Grid item lg={12} md={12} sm={12} xs={12}>
               <div className={styles.buttonForm}>
                 <Button
+                  onClick={resetForm}
                   variant="contained"
                   color="secondary"
                   startIcon={<RotateLeftIcon />}
