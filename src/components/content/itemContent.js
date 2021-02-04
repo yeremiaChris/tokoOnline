@@ -143,14 +143,28 @@ export default function ItemContent() {
                     </div>
 
                     <div>
-                      <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
+                      <Link
+                        style={{ color: "black" }}
+                        to={{
+                          pathname: "/addItem",
+                          state: {
+                            nama: item.nama,
+                            harga: item.harga,
+                            deskripsi: item.deskripsi,
+                            jenis: item.jenis,
+                            images: item.images,
+                          },
+                        }}
                       >
-                        <EditOutlinedIcon fontSize="inherit" />
-                      </IconButton>
+                        <IconButton
+                          edge="start"
+                          className={classes.menuButton}
+                          color="inherit"
+                          aria-label="menu"
+                        >
+                          <EditOutlinedIcon fontSize="inherit" />
+                        </IconButton>
+                      </Link>
                       <IconButton
                         edge="start"
                         className={classes.menuButton}

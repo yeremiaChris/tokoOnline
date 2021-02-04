@@ -72,6 +72,9 @@ export default function Jenis() {
   };
   // 6 data yang di tampilkan
   const onePage = items.slice(0, nextPage);
+
+  // edit
+
   return (
     <>
       <Grid item xs={12} className={classes.card}>
@@ -128,14 +131,28 @@ export default function Jenis() {
                     </Typography>
                   </div>
                   <div>
-                    <IconButton
-                      edge="start"
-                      className={classes.menuButton}
-                      color="inherit"
-                      aria-label="menu"
+                    <Link
+                      style={{ color: "black" }}
+                      to={{
+                        pathname: "/addItem",
+                        state: {
+                          nama: item.nama,
+                          harga: item.harga,
+                          deskripsi: item.deskripsi,
+                          jenis: item.jenis,
+                          images: item.images,
+                        },
+                      }}
                     >
-                      <EditOutlinedIcon fontSize="inherit" />
-                    </IconButton>
+                      <IconButton
+                        edge="start"
+                        className={classes.menuButton}
+                        color="inherit"
+                        aria-label="menu"
+                      >
+                        <EditOutlinedIcon fontSize="inherit" />
+                      </IconButton>
+                    </Link>
                     <IconButton
                       edge="start"
                       className={classes.menuButton}

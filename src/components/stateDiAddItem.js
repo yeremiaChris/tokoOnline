@@ -2,52 +2,6 @@
 import * as yup from "yup";
 import NumberFormat from "react-number-format";
 import PropTypes from "prop-types";
-
-export const gambars = [
-  {
-    name: "gambar1",
-    key: "1",
-    src: "a",
-    nameForYup: "gambar1",
-    error: "",
-  },
-  {
-    name: "gambar2",
-    key: "2",
-    src: "b",
-    nameForYup: "gambar2",
-    error: "",
-  },
-  {
-    name: "gambar3",
-    key: "3",
-    src: "c",
-    nameForYup: "gambar3",
-    error: "",
-  },
-  {
-    name: "gambar4",
-    key: "4",
-    src: "d",
-    nameForYup: "gambar4",
-    error: "",
-  },
-  {
-    name: "gambar5",
-    key: "5",
-    src: "e",
-    nameForYup: "gambar5",
-    error: "",
-  },
-  {
-    name: "gambar6",
-    key: "6",
-    src: "f",
-    nameForYup: "gambar6",
-    error: "",
-  },
-];
-// akhir gambar
 // jenis
 export const jenis = [
   {

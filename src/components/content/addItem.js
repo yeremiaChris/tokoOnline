@@ -13,9 +13,11 @@ import SendIcon from "@material-ui/icons/Send";
 
 // react hook form
 import { Formik, ErrorMessage } from "formik";
-import { gambars, schema, jenis, NumberFormatCustom } from "../stateDiAddItem";
-import { useDispatch } from "react-redux";
+import { schema, jenis, NumberFormatCustom } from "../stateDiAddItem";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#b7b9bb",
       cursor: "pointer",
+      filter: "brightness(90%)",
     },
     transition: ".5s",
   },
@@ -122,9 +125,14 @@ const useStyles = makeStyles((theme) => ({
 
 function AddItem() {
   const styles = useStyles();
-
+  // edit
+  const location = useLocation();
   // state gambar
-  const [gambarBanyak, setGambarBanyak] = React.useState(gambars);
+  const gambars = useSelector((state) => state.gambars);
+  const [gambarBanyak, setGambarBanyak] = React.useState(
+    location.state === undefined ? gambars : location.state.images
+  );
+  console.log(gambarBanyak);
 
   // ref gambar array of object
   const refGambar = React.useRef([]);
@@ -151,9 +159,8 @@ function AddItem() {
 
   // onsubmit
   const dispatch = useDispatch();
-  const history = useHistory()
+  const history = useHistory();
   const onSubmit = (data) => {
-    console.log(data);
     const key = Math.random();
     dispatch({
       type: "addItem",
@@ -163,40 +170,89 @@ function AddItem() {
         stok: 0,
         image: URL.createObjectURL(data.gambar1),
         images: [
-          URL.createObjectURL(data.gambar1),
-          URL.createObjectURL(data.gambar2),
-          URL.createObjectURL(data.gambar3),
-          URL.createObjectURL(data.gambar4),
-          URL.createObjectURL(data.gambar5),
-          URL.createObjectURL(data.gambar6),
+          {
+            name: "gambar1",
+            key: "1",
+            src: URL.createObjectURL(data.gambar1),
+            nameForYup: "gambar1",
+            error: "",
+          },
+          {
+            name: "gambar2",
+            key: "2",
+            src: URL.createObjectURL(data.gambar2),
+            nameForYup: "gambar2",
+            error: "",
+          },
+          {
+            name: "gambar3",
+            key: "3",
+            src: URL.createObjectURL(data.gambar3),
+            nameForYup: "gambar3",
+            error: "",
+          },
+          {
+            name: "gambar4",
+            key: "4",
+            src: URL.createObjectURL(data.gambar4),
+            nameForYup: "gambar4",
+            error: "",
+          },
+          {
+            name: "gambar5",
+            key: "5",
+            src: URL.createObjectURL(data.gambar5),
+            nameForYup: "gambar5",
+            error: "",
+          },
+          {
+            name: "gambar6",
+            key: "6",
+            src: URL.createObjectURL(data.gambar6),
+            nameForYup: "gambar6",
+            error: "",
+          },
         ],
         key: key.toString(),
         recomendasi: true,
         jenis: data.jenis,
+        deskripsi: data.deskripsi,
       },
     });
     // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
     history.push("/");
   };
+
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
-        <h2 style={{ textAlign: "left", marginBottom: 50 }}>Add Item</h2>
+        <h2 style={{ textAlign: "left", marginBottom: 50 }}>
+          {location.state === undefined ? "Add Item" : "Update Item"}
+        </h2>
       </Grid>
       <Formik
         validationSchema={schema}
-        initialValues={{
-          nama: "",
-          harga: "",
-          jenis: "",
-          deskripsi: "",
-          gambar1: "",
-          gambar2: "",
-          gambar3: "",
-          gambar4: "",
-          gambar5: "",
-          gambar6: "",
-        }}
+        initialValues={
+          location.state === undefined
+            ? {
+                nama: "",
+                harga: "",
+                jenis: "",
+                deskripsi: "",
+                gambar1: "",
+                gambar2: "",
+                gambar3: "",
+                gambar4: "",
+                gambar5: "",
+                gambar6: "",
+              }
+            : {
+                nama: location.state.nama,
+                harga: location.state.harga,
+                jenis: location.state.jenis,
+                deskripsi: location.state.deskripsi,
+              }
+        }
         onSubmit={onSubmit}
       >
         {({
