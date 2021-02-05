@@ -18,7 +18,6 @@ import { Provider } from "react-redux";
 import rootReducer from "./redux/rootReducer";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-
 // add form
 import AddItem from "./components/content/addItem";
 // menu list

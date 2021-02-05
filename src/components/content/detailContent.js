@@ -104,11 +104,11 @@ function DetailContent() {
                   small.map((item) => {
                     return (
                       <div
-                        key={item}
-                        onClick={() => clickSmallImage(item)}
+                        key={item.key}
+                        onClick={() => clickSmallImage(item.src)}
                         className={styles.smallImage}
                         style={{
-                          backgroundImage: "url(" + item + ")",
+                          backgroundImage: "url(" + item.src + ")",
                         }}
                       ></div>
                     );

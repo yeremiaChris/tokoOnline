@@ -265,7 +265,7 @@ export default function ButtonAppBar() {
                     style={{
                       color: "black",
                       margin: 0,
-                    }}    
+                    }}
                     fontSize="large"
                   />
                 </MenuItem>

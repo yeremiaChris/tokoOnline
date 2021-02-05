@@ -1221,7 +1221,26 @@ const rootReducer = (state = initState, action) => {
     case "addItem":
       return {
         ...state,
-        item: [...state.item, action.item],
+        item: [action.item, ...state.item],
+      };
+    case "updateItem":
+      return {
+        ...state,
+        item: [
+          ...state.item.map((item) =>
+            item.key === action.key
+              ? {
+                  ...item,
+                  nama: action.nama,
+                  harga: action.harga,
+                  image: action.image,
+                  images: action.images,
+                  deskripsi: action.deskripsi,
+                  jenis: action.jenis,
+                }
+              : item
+          ),
+        ],
       };
     default:
       return state;

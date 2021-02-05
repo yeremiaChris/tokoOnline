@@ -27,7 +27,7 @@ export const jenis = [
 ];
 // akhir jenis
 // schema
-const FILE_SIZE = 1000 * 1000;
+const FILE_SIZE = 1000 * 2000;
 export const schema = yup.object().shape({
   nama: yup
     .string()
@@ -39,90 +39,27 @@ export const schema = yup.object().shape({
     .string()
     .required("Field deskripsi harus di isi")
     .min(10, "Minimal huruf ada 10"),
-  gambar1: yup
-    .mixed()
-    .required("Masukan Gambar")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
+  images: yup.array().of(
+    yup.object().shape({
+      name: yup.string(),
+      key: yup.string(),
+      src: yup
+        .mixed()
+        .required("Masukan Gambar")
+        .test("type", "harus jpeg,jpg atau png", (value) => {
+          return (
+            value &&
+            (value.type === "image/jpeg" ||
+              value.type === "image/jpg" ||
+              value.type === "image/png")
+          );
+        })
+        .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
+          return value && value.size <= FILE_SIZE;
+        }),
+      nameForYup: yup.string(),
     })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar2: yup
-    .mixed()
-    .required("Masukan Gambar")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar3: yup
-    .mixed()
-    .required("Masukan Gambar")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar4: yup
-    .mixed()
-    .required("Masukan Gambar")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar5: yup
-    .mixed()
-    .required("Masukan Gambar")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
-  gambar6: yup
-    .mixed()
-    .required("Masukan Gambar")
-    .test("type", "harus jpeg,jpg atau png", (value) => {
-      return (
-        value &&
-        (value.type === "image/jpeg" ||
-          value.type === "image/jpg" ||
-          value.type === "image/png")
-      );
-    })
-    .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-      return value && value.size <= FILE_SIZE;
-    }),
+  ),
 });
 // akhir schema
 // number

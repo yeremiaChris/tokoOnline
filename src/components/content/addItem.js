@@ -14,9 +14,10 @@ import SendIcon from "@material-ui/icons/Send";
 // react hook form
 import { Formik, ErrorMessage } from "formik";
 import { schema, jenis, NumberFormatCustom } from "../stateDiAddItem";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import swal from "sweetalert";
 
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
@@ -123,104 +124,188 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialValues = {
+  nama: "",
+  harga: "",
+  jenis: "",
+  deskripsi: "",
+  images: [
+    {
+      name: "gambar1",
+      key: "1",
+      src: "",
+      nameForYup: "gambar1",
+    },
+    {
+      name: "gambar2",
+      key: "2",
+      src: "",
+      nameForYup: "gambar2",
+    },
+    {
+      name: "gambar3",
+      key: "3",
+      src: "",
+      nameForYup: "gambar3",
+    },
+    {
+      name: "gambar4",
+      key: "4",
+      src: "",
+      nameForYup: "gambar4",
+    },
+    {
+      name: "gambar5",
+      key: "5",
+      src: "",
+      nameForYup: "gambar5",
+    },
+    {
+      name: "gambar6",
+      key: "6",
+      src: "",
+      nameForYup: "gambar6",
+    },
+  ],
+};
+
 function AddItem() {
   const styles = useStyles();
   // edit
   const location = useLocation();
-  // state gambar
-  const gambars = useSelector((state) => state.gambars);
-  const [gambarBanyak, setGambarBanyak] = React.useState(
-    location.state === undefined ? gambars : location.state.images
-  );
-  console.log(gambarBanyak);
-
   // ref gambar array of object
   const refGambar = React.useRef([]);
   // klik to open input element
   const tambahGambar = (index) => {
     refGambar.current[index].click();
   };
-
-  // onchange input image
-  const handleChangeImage = (e, index) => {
-    e.preventDefault();
-    setGambarBanyak([
-      ...gambarBanyak.map((item) =>
-        item.key === index
-          ? {
-              ...item,
-              src: URL.createObjectURL(e.target.files[0]),
-              name: e.target.files[0].name,
-            }
-          : item
-      ),
-    ]);
-  };
-
   // onsubmit
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (data) => {
-    const key = Math.random();
-    dispatch({
-      type: "addItem",
-      item: {
-        nama: data.nama,
-        harga: data.harga,
-        stok: 0,
-        image: URL.createObjectURL(data.gambar1),
-        images: [
-          {
-            name: "gambar1",
-            key: "1",
-            src: URL.createObjectURL(data.gambar1),
-            nameForYup: "gambar1",
-            error: "",
-          },
-          {
-            name: "gambar2",
-            key: "2",
-            src: URL.createObjectURL(data.gambar2),
-            nameForYup: "gambar2",
-            error: "",
-          },
-          {
-            name: "gambar3",
-            key: "3",
-            src: URL.createObjectURL(data.gambar3),
-            nameForYup: "gambar3",
-            error: "",
-          },
-          {
-            name: "gambar4",
-            key: "4",
-            src: URL.createObjectURL(data.gambar4),
-            nameForYup: "gambar4",
-            error: "",
-          },
-          {
-            name: "gambar5",
-            key: "5",
-            src: URL.createObjectURL(data.gambar5),
-            nameForYup: "gambar5",
-            error: "",
-          },
-          {
-            name: "gambar6",
-            key: "6",
-            src: URL.createObjectURL(data.gambar6),
-            nameForYup: "gambar6",
-            error: "",
-          },
-        ],
-        key: key.toString(),
-        recomendasi: true,
-        jenis: data.jenis,
-        deskripsi: data.deskripsi,
-      },
-    });
-    // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
-    history.push("/");
+    // const key = Math.random();
+    console.log(data);
+    // location.state === undefined
+    //   ? dispatch({
+    //       type: "addItem",
+    //       item: {
+    //         nama: data.nama,
+    //         harga: data.harga,
+    //         stok: 0,
+    //         image: URL.createObjectURL(data.gambar1),
+    //         images: [
+    //           {
+    //             name: "gambar1",
+    //             key: "1",
+    //             src: URL.createObjectURL(data.gambar1),
+    //             nameForYup: "gambar1",
+    //             error: "",
+    //           },
+    //           {
+    //             name: "gambar2",
+    //             key: "2",
+    //             src: URL.createObjectURL(data.gambar2),
+    //             nameForYup: "gambar2",
+    //             error: "",
+    //           },
+    //           {
+    //             name: "gambar3",
+    //             key: "3",
+    //             src: URL.createObjectURL(data.gambar3),
+    //             nameForYup: "gambar3",
+    //             error: "",
+    //           },
+    //           {
+    //             name: "gambar4",
+    //             key: "4",
+    //             src: URL.createObjectURL(data.gambar4),
+    //             nameForYup: "gambar4",
+    //             error: "",
+    //           },
+    //           {
+    //             name: "gambar5",
+    //             key: "5",
+    //             src: URL.createObjectURL(data.gambar5),
+    //             nameForYup: "gambar5",
+    //             error: "",
+    //           },
+    //           {
+    //             name: "gambar6",
+    //             key: "6",
+    //             src: URL.createObjectURL(data.gambar6),
+    //             nameForYup: "gambar6",
+    //             error: "",
+    //           },
+    //         ],
+    //         key: key.toString(),
+    //         recomendasi: true,
+    //         jenis: data.jenis,
+    //         deskripsi: data.deskripsi,
+    //       },
+    //     })
+    //   : dispatch({
+    //       type: "updateItem",
+    //       key: data.key,
+    //       nama: data.nama,
+    //       harga: data.harga,
+    //       image: URL.createObjectURL(data.gambar1),
+    //       images: [
+    //         {
+    //           name: "gambar1",
+    //           key: "1",
+    //           src: URL.createObjectURL(data.gambar1),
+    //           nameForYup: "gambar1",
+    //           error: "",
+    //         },
+    //         {
+    //           name: "gambar2",
+    //           key: "2",
+    //           src: URL.createObjectURL(data.gambar2),
+    //           nameForYup: "gambar2",
+    //           error: "",
+    //         },
+    //         {
+    //           name: "gambar3",
+    //           key: "3",
+    //           src: URL.createObjectURL(data.gambar3),
+    //           nameForYup: "gambar3",
+    //           error: "",
+    //         },
+    //         {
+    //           name: "gambar4",
+    //           key: "4",
+    //           src: URL.createObjectURL(data.gambar4),
+    //           nameForYup: "gambar4",
+    //           error: "",
+    //         },
+    //         {
+    //           name: "gambar5",
+    //           key: "5",
+    //           src: URL.createObjectURL(data.gambar5),
+    //           nameForYup: "gambar5",
+    //           error: "",
+    //         },
+    //         {
+    //           name: "gambar6",
+    //           key: "6",
+    //           src: URL.createObjectURL(data.gambar6),
+    //           nameForYup: "gambar6",
+    //           error: "",
+    //         },
+    //       ],
+    //       jenis: data.jenis,
+    //       deskripsi: data.deskripsi,
+    //     });
+    // // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
+    // swal({
+    //   title: `BERHASIL ${
+    //     location.state === undefined ? "MENAMBAH" : "UPDATE"
+    //   } ITEM`,
+    //   text: null,
+    //   icon: "success",
+    //   button: "Close",
+    // });
+    // history.push("/");
   };
 
   return (
@@ -232,27 +317,8 @@ function AddItem() {
       </Grid>
       <Formik
         validationSchema={schema}
-        initialValues={
-          location.state === undefined
-            ? {
-                nama: "",
-                harga: "",
-                jenis: "",
-                deskripsi: "",
-                gambar1: "",
-                gambar2: "",
-                gambar3: "",
-                gambar4: "",
-                gambar5: "",
-                gambar6: "",
-              }
-            : {
-                nama: location.state.nama,
-                harga: location.state.harga,
-                jenis: location.state.jenis,
-                deskripsi: location.state.deskripsi,
-              }
-        }
+        initialValues={initialValues}
+        enableReinitialize={true}
         onSubmit={onSubmit}
       >
         {({
@@ -264,208 +330,210 @@ function AddItem() {
           handleSubmit,
           setFieldValue,
           resetForm,
-        }) => (
-          <form style={{ width: "100%" }} onSubmit={handleSubmit}>
-            <Grid item lg={12} md={12} sm={12} xs={12}>
-              <Grid>
-                <div className={styles.containerTextInput}>
-                  <h3 className={styles.text}>Nama *</h3>
-                  <div style={{ width: "100%" }}>
-                    <TextField
-                      value={values.nama}
-                      fullWidth
-                      id="outlined-basic"
-                      label="Nama..."
-                      variant="outlined"
-                      name="nama"
-                      onChange={handleChange("nama")}
-                      onBlur={handleBlur("nama")}
-                    />
-                    <p
-                      style={{
-                        width: "100%",
-                        textAlign: "left",
-                        color: "red",
-                      }}
-                    >
-                      {touched.nama && errors.nama}
-                    </p>
-                  </div>
-                </div>
-                <div className={styles.containerTextInput}>
-                  <h3 className={styles.text}>Harga *</h3>
-                  <div
-                    style={{
-                      width: "100%",
-                      padding: 0,
-                      margin: 0,
-                    }}
-                  >
-                    <TextField
-                      fullWidth
-                      variant="outlined"
-                      label="Harga"
-                      value={values.harga}
-                      onBlur={handleBlur("harga")}
-                      onChange={handleChange("harga")}
-                      name="numberformat"
-                      id="formatted-numberformat-input"
-                      InputProps={{
-                        inputComponent: NumberFormatCustom,
-                      }}
-                    />
-                    <p
-                      style={{
-                        width: "100%",
-                        textAlign: "left",
-                        color: "red",
-                      }}
-                    >
-                      {touched.harga && errors.harga}
-                    </p>
-                  </div>
-                </div>
-
-                <div className={styles.containerTextInput}>
-                  <h3 className={styles.text}>Jenis *</h3>
-                  <div style={{ width: "100%" }}>
-                    <FormControl fullWidth variant="outlined">
-                      <InputLabel htmlFor="outlined-age-native-simple">
-                        Jenis...
-                      </InputLabel>
-                      <Select
-                        value={values.jenis}
-                        onChange={handleChange("jenis")}
-                        native
-                        onBlur={handleBlur("jenis")}
-                        label="Jenis..."
-                        inputProps={{
-                          name: "jenis...",
-                          id: "outlined-age-native-simple",
+        }) => {
+          return (
+            <form style={{ width: "100%" }} onSubmit={handleSubmit}>
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <Grid>
+                  <div className={styles.containerTextInput}>
+                    <h3 className={styles.text}>Nama *</h3>
+                    <div style={{ width: "100%" }}>
+                      <TextField
+                        value={values.nama}
+                        fullWidth
+                        id="outlined-basic"
+                        label="Nama..."
+                        variant="outlined"
+                        name="nama"
+                        onChange={handleChange("nama")}
+                        onBlur={handleBlur("nama")}
+                      />
+                      <p
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          color: "red",
                         }}
                       >
-                        <option aria-label="None" value="" />
-                        {jenis &&
-                          jenis.map((item) => {
-                            return (
-                              <option key={item.key} value={item.name}>
-                                {item.name}
-                              </option>
-                            );
-                          })}
-                      </Select>
-                    </FormControl>
-                    <p
+                        {touched.nama && errors.nama}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.containerTextInput}>
+                    <h3 className={styles.text}>Harga *</h3>
+                    <div
                       style={{
                         width: "100%",
-                        textAlign: "left",
-                        color: "red",
+                        padding: 0,
+                        margin: 0,
                       }}
                     >
-                      {touched.jenis && errors.jenis}
-                    </p>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Harga"
+                        value={values.harga}
+                        onBlur={handleBlur("harga")}
+                        onChange={handleChange("harga")}
+                        name="numberformat"
+                        id="formatted-numberformat-input"
+                        InputProps={{
+                          inputComponent: NumberFormatCustom,
+                        }}
+                      />
+                      <p
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          color: "red",
+                        }}
+                      >
+                        {touched.harga && errors.harga}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <div className={styles.containerTextInput}>
-                  <h3 className={styles.text}>Deskripsi *</h3>
-                  <div style={{ width: "100%" }}>
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="Deskripsi"
-                      fullWidth
-                      multiline
-                      rows={4}
-                      value={values.deskripsi}
-                      onChange={handleChange("deskripsi")}
-                      onBlur={handleBlur("deskripsi")}
-                      variant="outlined"
-                    />
-                    <p
-                      style={{
-                        width: "100%",
-                        textAlign: "left",
-                        color: "red",
-                      }}
-                    >
-                      {touched.deskripsi && errors.deskripsi}
-                    </p>
+
+                  <div className={styles.containerTextInput}>
+                    <h3 className={styles.text}>Jenis *</h3>
+                    <div style={{ width: "100%" }}>
+                      <FormControl fullWidth variant="outlined">
+                        <InputLabel htmlFor="outlined-age-native-simple">
+                          Jenis...
+                        </InputLabel>
+                        <Select
+                          value={values.jenis}
+                          onChange={handleChange("jenis")}
+                          native
+                          onBlur={handleBlur("jenis")}
+                          label="Jenis..."
+                          inputProps={{
+                            name: "jenis...",
+                            id: "outlined-age-native-simple",
+                          }}
+                        >
+                          <option aria-label="None" value="" />
+                          {jenis &&
+                            jenis.map((item) => {
+                              return (
+                                <option key={item.key} value={item.name}>
+                                  {item.name}
+                                </option>
+                              );
+                            })}
+                        </Select>
+                      </FormControl>
+                      <p
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          color: "red",
+                        }}
+                      >
+                        {touched.jenis && errors.jenis}
+                      </p>
+                    </div>
                   </div>
+                  <div className={styles.containerTextInput}>
+                    <h3 className={styles.text}>Deskripsi *</h3>
+                    <div style={{ width: "100%" }}>
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="Deskripsi"
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={values.deskripsi}
+                        onChange={handleChange("deskripsi")}
+                        onBlur={handleBlur("deskripsi")}
+                        variant="outlined"
+                      />
+                      <p
+                        style={{
+                          width: "100%",
+                          textAlign: "left",
+                          color: "red",
+                        }}
+                      >
+                        {touched.deskripsi && errors.deskripsi}
+                      </p>
+                    </div>
+                  </div>
+                </Grid>
+              </Grid>
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <div className={styles.gambarContainer}>
+                  {values.images &&
+                    values.images.map((item, i) => {
+                      return (
+                        <div
+                          onClick={() => tambahGambar(i)}
+                          key={item.key}
+                          style={{ color: "gray" }}
+                        >
+                          <p className={styles.name}>{item.name}</p>
+                          <div
+                            style={{
+                              backgroundImage: "url(" + item.nameForYup + ")",
+                              backgroundPosition: "center",
+                              backgroundSize: "cover",
+                              backgroundRepeat: "no-repeat",
+                            }}
+                            className={styles.gambar}
+                          >
+                            <input
+                              style={{ display: "none" }}
+                              type="file"
+                              ref={(e) => {
+                                refGambar.current.push(e);
+                              }}
+                              onChange={(event) => {
+                                setFieldValue(
+                                  `images.${i}.src`,
+                                  event.target.files[0]
+                                );
+                                setFieldValue(
+                                  `images.${i}.nameForYup`,
+                                  URL.createObjectURL(event.target.files[0])
+                                );
+                              }}
+                              onBlur={handleBlur(`images.${i}.src`)}
+                            ></input>
+                            <AddCircleOutlineIcon fontSize="large" />
+                          </div>
+                          <ErrorMessage name={`images.${i}.src`}>
+                            {(msg) => (
+                              <p className={styles.errorContainer}>{msg}</p>
+                            )}
+                          </ErrorMessage>
+                        </div>
+                      );
+                    })}
                 </div>
               </Grid>
-            </Grid>
-            <Grid item lg={12} md={12} sm={12} xs={12}>
-              <div className={styles.gambarContainer}>
-                {gambarBanyak &&
-                  gambarBanyak.map((item, i) => {
-                    return (
-                      <div
-                        onClick={() => tambahGambar(i)}
-                        key={item.key}
-                        style={{ color: "gray" }}
-                      >
-                        <p className={styles.name}>{item.name}</p>
-                        <div
-                          style={{
-                            backgroundImage: "url(" + item.src + ")",
-                            backgroundPosition: "center",
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                          }}
-                          className={styles.gambar}
-                        >
-                          <input
-                            name={item.nameForYup}
-                            style={{ display: "none" }}
-                            type="file"
-                            ref={(e) => {
-                              refGambar.current.push(e);
-                            }}
-                            id={item.nameForYup}
-                            onChange={(event) => {
-                              setFieldValue(
-                                item.nameForYup,
-                                event.currentTarget.files[0]
-                              );
-                              handleChangeImage(event, item.key);
-                            }}
-                            onBlur={handleBlur(item.nameForYup)}
-                          ></input>
-                          <AddCircleOutlineIcon fontSize="large" />
-                        </div>
-
-                        <ErrorMessage name={item.nameForYup}>
-                          {(msg) => (
-                            <p className={styles.errorContainer}>{msg}</p>
-                          )}
-                        </ErrorMessage>
-                      </div>
-                    );
-                  })}
-              </div>
-            </Grid>
-            <Grid item lg={12} md={12} sm={12} xs={12}>
-              <div className={styles.buttonForm}>
-                <Button
-                  onClick={resetForm}
-                  variant="contained"
-                  color="secondary"
-                  startIcon={<RotateLeftIcon />}
-                >
-                  Reset
-                </Button>
-                <Button
-                  style={{ marginLeft: 10 }}
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  endIcon={<SendIcon />}
-                >
-                  Submit
-                </Button>
-              </div>
-            </Grid>
-          </form>
-        )}
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <div className={styles.buttonForm}>
+                  <Button
+                    onClick={resetForm}
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<RotateLeftIcon />}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    style={{ marginLeft: 10 }}
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    endIcon={<SendIcon />}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </Grid>
+            </form>
+          );
+        }}
       </Formik>
     </Grid>
   );
