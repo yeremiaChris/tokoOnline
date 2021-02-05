@@ -23,7 +23,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
-
+import Image from "../../image/1.jpg";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -165,51 +165,8 @@ function AddItem() {
           key: data.key,
           nama: data.nama,
           harga: data.harga,
-          image: URL.createObjectURL(data.gambar1),
-          images: [
-            {
-              name: "gambar1",
-              key: "1",
-              src: URL.createObjectURL(data.gambar1),
-              srcImage: "gambar1",
-              error: "",
-            },
-            {
-              name: "gambar2",
-              key: "2",
-              src: URL.createObjectURL(data.gambar2),
-              srcImage: "gambar2",
-              error: "",
-            },
-            {
-              name: "gambar3",
-              key: "3",
-              src: URL.createObjectURL(data.gambar3),
-              srcImage: "gambar3",
-              error: "",
-            },
-            {
-              name: "gambar4",
-              key: "4",
-              src: URL.createObjectURL(data.gambar4),
-              srcImage: "gambar4",
-              error: "",
-            },
-            {
-              name: "gambar5",
-              key: "5",
-              src: URL.createObjectURL(data.gambar5),
-              srcImage: "gambar5",
-              error: "",
-            },
-            {
-              name: "gambar6",
-              key: "6",
-              src: URL.createObjectURL(data.gambar6),
-              srcImage: "gambar6",
-              error: "",
-            },
-          ],
+          image: data.images[0].srcImage,
+          images: data.images,
           jenis: data.jenis,
           deskripsi: data.deskripsi,
         });
@@ -224,7 +181,7 @@ function AddItem() {
     });
     history.push("/");
   };
-
+  console.log(Image);
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
