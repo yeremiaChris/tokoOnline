@@ -119,7 +119,7 @@ function DetailContent() {
           <Grid item lg={6} md={6} sm={12} xs={12}>
             <div className={styles.kanan}>
               <div>
-                <h3 className={styles.name}>
+                <h3 style={{ fontSize: 35 }} className={styles.name}>
                   {location.state === undefined ? null : location.state.nama}
                 </h3>
                 <h5 className={styles.name} style={{ marginTop: 10 }}>

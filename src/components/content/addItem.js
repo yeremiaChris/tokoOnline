@@ -181,7 +181,6 @@ function AddItem() {
     });
     history.push("/");
   };
-  console.log(Image);
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
