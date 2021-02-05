@@ -13,7 +13,12 @@ import SendIcon from "@material-ui/icons/Send";
 
 // react hook form
 import { Formik, ErrorMessage } from "formik";
-import { schema, jenis, NumberFormatCustom } from "../stateDiAddItem";
+import {
+  initialValues,
+  schema,
+  jenis,
+  NumberFormatCustom,
+} from "../stateDiAddItem";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -124,51 +129,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const initialValues = {
-  nama: "",
-  harga: "",
-  jenis: "",
-  deskripsi: "",
-  images: [
-    {
-      name: "gambar1",
-      key: "1",
-      src: "",
-      nameForYup: "gambar1",
-    },
-    {
-      name: "gambar2",
-      key: "2",
-      src: "",
-      nameForYup: "gambar2",
-    },
-    {
-      name: "gambar3",
-      key: "3",
-      src: "",
-      nameForYup: "gambar3",
-    },
-    {
-      name: "gambar4",
-      key: "4",
-      src: "",
-      nameForYup: "gambar4",
-    },
-    {
-      name: "gambar5",
-      key: "5",
-      src: "",
-      nameForYup: "gambar5",
-    },
-    {
-      name: "gambar6",
-      key: "6",
-      src: "",
-      nameForYup: "gambar6",
-    },
-  ],
-};
-
 function AddItem() {
   const styles = useStyles();
   // edit
@@ -183,129 +143,86 @@ function AddItem() {
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (data) => {
-    // const key = Math.random();
+    const key = Math.random();
     console.log(data);
-    // location.state === undefined
-    //   ? dispatch({
-    //       type: "addItem",
-    //       item: {
-    //         nama: data.nama,
-    //         harga: data.harga,
-    //         stok: 0,
-    //         image: URL.createObjectURL(data.gambar1),
-    //         images: [
-    //           {
-    //             name: "gambar1",
-    //             key: "1",
-    //             src: URL.createObjectURL(data.gambar1),
-    //             nameForYup: "gambar1",
-    //             error: "",
-    //           },
-    //           {
-    //             name: "gambar2",
-    //             key: "2",
-    //             src: URL.createObjectURL(data.gambar2),
-    //             nameForYup: "gambar2",
-    //             error: "",
-    //           },
-    //           {
-    //             name: "gambar3",
-    //             key: "3",
-    //             src: URL.createObjectURL(data.gambar3),
-    //             nameForYup: "gambar3",
-    //             error: "",
-    //           },
-    //           {
-    //             name: "gambar4",
-    //             key: "4",
-    //             src: URL.createObjectURL(data.gambar4),
-    //             nameForYup: "gambar4",
-    //             error: "",
-    //           },
-    //           {
-    //             name: "gambar5",
-    //             key: "5",
-    //             src: URL.createObjectURL(data.gambar5),
-    //             nameForYup: "gambar5",
-    //             error: "",
-    //           },
-    //           {
-    //             name: "gambar6",
-    //             key: "6",
-    //             src: URL.createObjectURL(data.gambar6),
-    //             nameForYup: "gambar6",
-    //             error: "",
-    //           },
-    //         ],
-    //         key: key.toString(),
-    //         recomendasi: true,
-    //         jenis: data.jenis,
-    //         deskripsi: data.deskripsi,
-    //       },
-    //     })
-    //   : dispatch({
-    //       type: "updateItem",
-    //       key: data.key,
-    //       nama: data.nama,
-    //       harga: data.harga,
-    //       image: URL.createObjectURL(data.gambar1),
-    //       images: [
-    //         {
-    //           name: "gambar1",
-    //           key: "1",
-    //           src: URL.createObjectURL(data.gambar1),
-    //           nameForYup: "gambar1",
-    //           error: "",
-    //         },
-    //         {
-    //           name: "gambar2",
-    //           key: "2",
-    //           src: URL.createObjectURL(data.gambar2),
-    //           nameForYup: "gambar2",
-    //           error: "",
-    //         },
-    //         {
-    //           name: "gambar3",
-    //           key: "3",
-    //           src: URL.createObjectURL(data.gambar3),
-    //           nameForYup: "gambar3",
-    //           error: "",
-    //         },
-    //         {
-    //           name: "gambar4",
-    //           key: "4",
-    //           src: URL.createObjectURL(data.gambar4),
-    //           nameForYup: "gambar4",
-    //           error: "",
-    //         },
-    //         {
-    //           name: "gambar5",
-    //           key: "5",
-    //           src: URL.createObjectURL(data.gambar5),
-    //           nameForYup: "gambar5",
-    //           error: "",
-    //         },
-    //         {
-    //           name: "gambar6",
-    //           key: "6",
-    //           src: URL.createObjectURL(data.gambar6),
-    //           nameForYup: "gambar6",
-    //           error: "",
-    //         },
-    //       ],
-    //       jenis: data.jenis,
-    //       deskripsi: data.deskripsi,
-    //     });
-    // // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
-    // swal({
-    //   title: `BERHASIL ${
-    //     location.state === undefined ? "MENAMBAH" : "UPDATE"
-    //   } ITEM`,
-    //   text: null,
-    //   icon: "success",
-    //   button: "Close",
-    // });
-    // history.push("/");
+    location.state === undefined
+      ? dispatch({
+          type: "addItem",
+          item: {
+            nama: data.nama,
+            harga: data.harga,
+            stok: 0,
+            image: data.images[0].srcImage,
+            images: data.images,
+            key: key.toString(),
+            recomendasi: true,
+            jenis: data.jenis,
+            deskripsi: data.deskripsi,
+          },
+        })
+      : dispatch({
+          type: "updateItem",
+          key: data.key,
+          nama: data.nama,
+          harga: data.harga,
+          image: URL.createObjectURL(data.gambar1),
+          images: [
+            {
+              name: "gambar1",
+              key: "1",
+              src: URL.createObjectURL(data.gambar1),
+              srcImage: "gambar1",
+              error: "",
+            },
+            {
+              name: "gambar2",
+              key: "2",
+              src: URL.createObjectURL(data.gambar2),
+              srcImage: "gambar2",
+              error: "",
+            },
+            {
+              name: "gambar3",
+              key: "3",
+              src: URL.createObjectURL(data.gambar3),
+              srcImage: "gambar3",
+              error: "",
+            },
+            {
+              name: "gambar4",
+              key: "4",
+              src: URL.createObjectURL(data.gambar4),
+              srcImage: "gambar4",
+              error: "",
+            },
+            {
+              name: "gambar5",
+              key: "5",
+              src: URL.createObjectURL(data.gambar5),
+              srcImage: "gambar5",
+              error: "",
+            },
+            {
+              name: "gambar6",
+              key: "6",
+              src: URL.createObjectURL(data.gambar6),
+              srcImage: "gambar6",
+              error: "",
+            },
+          ],
+          jenis: data.jenis,
+          deskripsi: data.deskripsi,
+        });
+    // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
+    swal({
+      title: `BERHASIL ${
+        location.state === undefined ? "MENAMBAH" : "UPDATE"
+      } ITEM`,
+      text: null,
+      icon: "success",
+      button: "Close",
+    });
+    history.push("/");
   };
 
   return (
@@ -317,7 +234,17 @@ function AddItem() {
       </Grid>
       <Formik
         validationSchema={schema}
-        initialValues={initialValues}
+        initialValues={
+          location.state === undefined
+            ? initialValues
+            : {
+                nama: location.state.nama,
+                harga: location.state.harga,
+                jenis: location.state.jenis,
+                deskripsi: location.state.deskripsi,
+                images: location.state.images,
+              }
+        }
         enableReinitialize={true}
         onSubmit={onSubmit}
       >
@@ -473,7 +400,7 @@ function AddItem() {
                           <p className={styles.name}>{item.name}</p>
                           <div
                             style={{
-                              backgroundImage: "url(" + item.nameForYup + ")",
+                              backgroundImage: "url(" + item.srcImage + ")",
                               backgroundPosition: "center",
                               backgroundSize: "cover",
                               backgroundRepeat: "no-repeat",
@@ -492,8 +419,12 @@ function AddItem() {
                                   event.target.files[0]
                                 );
                                 setFieldValue(
-                                  `images.${i}.nameForYup`,
+                                  `images.${i}.srcImage`,
                                   URL.createObjectURL(event.target.files[0])
+                                );
+                                setFieldValue(
+                                  `images.${i}.name`,
+                                  event.target.files[0].name
                                 );
                               }}
                               onBlur={handleBlur(`images.${i}.src`)}

@@ -2,6 +2,52 @@
 import * as yup from "yup";
 import NumberFormat from "react-number-format";
 import PropTypes from "prop-types";
+
+export const initialValues = {
+  nama: "",
+  harga: "",
+  jenis: "",
+  deskripsi: "",
+  images: [
+    {
+      name: "gambar1",
+      key: "1",
+      src: "",
+      srcImage: "gambar1",
+    },
+    {
+      name: "gambar2",
+      key: "2",
+      src: "",
+      srcImage: "gambar2",
+    },
+    {
+      name: "gambar3",
+      key: "3",
+      src: "",
+      srcImage: "gambar3",
+    },
+    {
+      name: "gambar4",
+      key: "4",
+      src: "",
+      srcImage: "gambar4",
+    },
+    {
+      name: "gambar5",
+      key: "5",
+      src: "",
+      srcImage: "gambar5",
+    },
+    {
+      name: "gambar6",
+      key: "6",
+      src: "",
+      srcImage: "gambar6",
+    },
+  ],
+};
+
 // jenis
 export const jenis = [
   {
@@ -57,7 +103,7 @@ export const schema = yup.object().shape({
         .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
           return value && value.size <= FILE_SIZE;
         }),
-      nameForYup: yup.string(),
+      srcImage: yup.string(),
     })
   ),
 });

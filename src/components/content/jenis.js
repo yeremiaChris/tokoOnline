@@ -96,7 +96,7 @@ export default function Jenis() {
                   nama: item.nama,
                   harga: item.harga,
                   gambar: item.image,
-                  gambarBanyak: item.images,
+                  images: item.images,
                   key: item.key,
                   detail: true,
                 },

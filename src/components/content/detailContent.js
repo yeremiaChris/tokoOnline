@@ -75,7 +75,7 @@ function DetailContent() {
   const styles = useStyles();
   // state small image
   const [small] = React.useState(
-    location.state === undefined ? null : location.state.gambarBanyak
+    location.state === undefined ? null : location.state.images
   );
 
   // state bigImage
@@ -105,10 +105,10 @@ function DetailContent() {
                     return (
                       <div
                         key={item.key}
-                        onClick={() => clickSmallImage(item.src)}
+                        onClick={() => clickSmallImage(item.srcImage)}
                         className={styles.smallImage}
                         style={{
-                          backgroundImage: "url(" + item.src + ")",
+                          backgroundImage: "url(" + item.srcImage + ")",
                         }}
                       ></div>
                     );
