@@ -12,7 +12,7 @@ import ButtonSortCategori from "./components/content/ButtonSortCategori";
 import DetailContent from "./components/content/detailContent";
 import NotFound from "./components/notFound";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import { createBrowserHistory } from "history";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./redux/rootReducer";
@@ -20,6 +20,7 @@ import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 // add form
 import AddItem from "./components/content/addItem";
+import ScrollToTop from "./scrollTop";
 // menu list
 const menuList = [
   {
@@ -124,8 +125,15 @@ function App() {
 
   // redux
   const store = createStore(rootReducer);
+
+  // scroll ont the top
+  const history = createBrowserHistory();
+
   return (
-    <Router>
+    <Router
+      onUpdate={() => window.scrollTo(0, 0)}
+      history={createBrowserHistory()}
+    >
       <Provider store={store}>
         <div className="App">
           <Topbar />
@@ -143,6 +151,7 @@ function App() {
               />
             </Grid>
           </div>
+          <ScrollToTop />
           <Switch>
             <Route exact path="/">
               <div className={styles.content}>

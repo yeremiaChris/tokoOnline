@@ -3,6 +3,7 @@ import ItemContent from "./itemContent";
 import { Grid, makeStyles } from "@material-ui/core";
 // sortbyprice
 import SortbyPrice from "../sortbyPrice";
+import { useLocation } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   kiri: {
     backgroundColor: "#ebebeb",
@@ -49,10 +50,19 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: 0,
     },
   },
+  kategoriName: {
+    marginBottom: 30,
+    fontWeight: "normal",
+    textAlign: "left",
+    margin: 0,
+    color: "gray",
+  },
 }));
 function Content({ sideButton, sideButtonDua }) {
   const styles = useStyles();
 
+  // ambil state dari react router ketika link di klik
+  const location = useLocation();
   return (
     <>
       <Grid className={styles.sideTool} item xs={12} sm={3} md={3} lg={3}>
@@ -97,6 +107,10 @@ function Content({ sideButton, sideButtonDua }) {
         </div>
       </Grid>
       <Grid className={styles.content} item xs={12} sm={12} md={12} lg={9}>
+        <h1 className={styles.kategoriName}
+        >
+          {location.state !== undefined ? location.state.nama : null}
+        </h1>
         <div>
           <ItemContent />
         </div>
