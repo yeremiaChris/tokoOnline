@@ -3,6 +3,7 @@ import { Grid, makeStyles } from "@material-ui/core";
 import CardShop from "./cardShopDrawer";
 import { useLocation } from "react-router-dom";
 import NotFound from "../notFound";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     // backgroundColor: "red",
@@ -87,7 +88,6 @@ function DetailContent() {
   const clickSmallImage = (image) => {
     setBig(image);
   };
-
   return (
     <>
       {location.state === undefined ? (

@@ -1116,6 +1116,15 @@ const rootReducer = (state = initState, action) => {
           ),
         ],
       };
+    case "deleteItem":
+      return {
+        ...state,
+        item: [
+          ...state.item.filter((item) =>
+            item.key === action.key ? item.key !== action.key : item
+          ),
+        ],
+      };
     default:
       return state;
   }

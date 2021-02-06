@@ -9,11 +9,12 @@ import {
   Grid,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
+import { deleteItem } from "./action";
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "0 0 0 gray",
@@ -82,30 +83,32 @@ export default function ItemContent() {
       ? item.jenis === "Shirt"
       : item.jenis === location.state.nama
   );
+
+  // dispatch
+  const dispatch = useDispatch();
   return (
     <>
       <Grid item xs={12} className={classes.card}>
         {filter &&
           filter.map((item) => {
             return (
-              <Link
-                key={item.key}
-                style={{
-                  color: "black",
-                  textDecoration: "none",
-                  textAlign: "left",
-                }}
-                to={{
-                  pathname: `/detail/${item.nama}`,
-                  state: {
-                    nama: item.nama,
-                    harga: item.harga,
-                    gambar: item.image,
-                    gambarBanyak: item.images,
-                  },
-                }}
-              >
-                <Card className={classes.root}>
+              <Card key={item.key} className={classes.root}>
+                <Link
+                  style={{
+                    color: "black",
+                    textDecoration: "none",
+                    textAlign: "left",
+                  }}
+                  to={{
+                    pathname: `/detail/${item.nama}`,
+                    state: {
+                      nama: item.nama,
+                      harga: item.harga,
+                      gambar: item.image,
+                      gambarBanyak: item.images,
+                    },
+                  }}
+                >
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
@@ -120,63 +123,64 @@ export default function ItemContent() {
                       <p className={classes.available}>Available</p>
                     </div>
                   </CardActionArea>
-                  <CardContent
-                    style={{
-                      padding: 0,
-                      textAlign: "left",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "flex-end",
-                    }}
-                  >
-                    <div>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        {item.nama}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Rp {item.harga}
-                      </Typography>
-                    </div>
+                </Link>
+                <CardContent
+                  style={{
+                    padding: 0,
+                    textAlign: "left",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-end",
+                  }}
+                >
+                  <div>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {item.nama}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Rp {item.harga}
+                    </Typography>
+                  </div>
 
-                    <div>
-                      <Link
-                        style={{ color: "black" }}
-                        to={{
-                          pathname: "/addItem",
-                          state: {
-                            nama: item.nama,
-                            harga: item.harga,
-                            deskripsi: item.deskripsi,
-                            jenis: item.jenis,
-                            images: item.images,
-                          },
-                        }}
-                      >
-                        <IconButton
-                          edge="start"
-                          className={classes.menuButton}
-                          color="inherit"
-                          aria-label="menu"
-                        >
-                          <EditOutlinedIcon fontSize="inherit" />
-                        </IconButton>
-                      </Link>
+                  <div>
+                    <Link
+                      style={{ color: "black" }}
+                      to={{
+                        pathname: "/addItem",
+                        state: {
+                          nama: item.nama,
+                          harga: item.harga,
+                          deskripsi: item.deskripsi,
+                          jenis: item.jenis,
+                          images: item.images,
+                        },
+                      }}
+                    >
                       <IconButton
                         edge="start"
                         className={classes.menuButton}
                         color="inherit"
                         aria-label="menu"
                       >
-                        <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                        <EditOutlinedIcon fontSize="inherit" />
                       </IconButton>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                    </Link>
+                    <IconButton
+                      onClick={() => deleteItem(item.nama, item.key, dispatch)}
+                      edge="start"
+                      className={classes.menuButton}
+                      color="inherit"
+                      aria-label="menu"
+                    >
+                      <DeleteOutlineOutlinedIcon fontSize="inherit" />
+                    </IconButton>
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
       </Grid>
