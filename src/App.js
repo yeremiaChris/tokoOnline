@@ -22,7 +22,6 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 // add form
 import AddItem from "./components/content/addItem";
 import ScrollToTop from "./scrollTop";
-import { useSelector } from "react-redux";
 
 // menu list
 const menuList = [
@@ -123,6 +122,7 @@ function App() {
   const styles = useStyles();
   // redux
   const store = createStore(rootReducer);
+
   return (
     <Router
       onUpdate={() => window.scrollTo(0, 0)}
@@ -145,7 +145,7 @@ function App() {
               />
             </Grid>
           </div>
-          <ScrollToTop />
+          <ScrollToTop history={createBrowserHistory()} />
           <Switch>
             <Route exact path="/">
               <div className={styles.content}>

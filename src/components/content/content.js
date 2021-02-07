@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
   },
 }));
-function Content({ sideButton, sideButtonDua, data, setData }) {
+function Content({ sideButton, sideButtonDua }) {
   const styles = useStyles();
 
   // ambil state dari react router ketika link di klik
@@ -85,6 +85,11 @@ function Content({ sideButton, sideButtonDua, data, setData }) {
   // data
   const items = useSelector((state) => state.item);
 
+  const [data, setData] = React.useState(
+    location.state === undefined
+      ? items
+      : items.filter((item) => item.jenis === location.state.nama)
+  );
   const sortBy = (value) => {
     setSort({
       by: value,
