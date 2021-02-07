@@ -23,7 +23,6 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
-import Image from "../../image/1.jpg";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",

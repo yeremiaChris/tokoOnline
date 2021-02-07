@@ -1,3 +1,4 @@
+import React from "react";
 import Topbar from "./components/topBar";
 import Carausel from "./components/carausel";
 import { Grid, makeStyles } from "@material-ui/core";
@@ -21,6 +22,8 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 // add form
 import AddItem from "./components/content/addItem";
 import ScrollToTop from "./scrollTop";
+import { useSelector } from "react-redux";
+
 // menu list
 const menuList = [
   {
@@ -72,27 +75,23 @@ const sideButton = [
     key: "2",
     name: "Featured Products",
   },
-  {
-    key: "3",
-    name: "Bundled Products",
-  },
 ];
 const sideButtonDua = [
   {
     key: "1",
-    name: "Tops",
+    name: "T-Shirt",
   },
   {
     key: "2",
-    name: "Bottoms",
+    name: "Shirt",
   },
   {
     key: "3",
-    name: "Latest",
+    name: "Shoes",
   },
   {
     key: "4",
-    name: "Cheapest",
+    name: "Pants",
   },
 ];
 
@@ -122,13 +121,8 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const styles = useStyles();
-
   // redux
   const store = createStore(rootReducer);
-
-  // scroll ont the top
-  const history = createBrowserHistory();
-
   return (
     <Router
       onUpdate={() => window.scrollTo(0, 0)}

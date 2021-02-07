@@ -17,15 +17,18 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 5,
     },
     padding: 10,
+    cursor: "pointer",
   },
   sideButton: {
     textDecoration: "none",
     color: "black",
     width: "100%",
     fontWeight: "normal",
+    margin: 0,
+    cursor: "pointer",
   },
 }));
-function SortbyPrice() {
+function SortbyPrice({ sortBy, sort }) {
   const styles = useStyles();
   return (
     <>
@@ -38,15 +41,23 @@ function SortbyPrice() {
         >
           Sort by Price
         </li>
-        <li className={styles.list}>
-          <a className={styles.sideButton} href="/#">
-            High to low
-          </a>
+        <li
+          style={{
+            backgroundColor: sort.by === "highToLow" ? "#dadada" : null,
+          }}
+          onClick={() => sortBy("highToLow")}
+          className={styles.list}
+        >
+          <p className={styles.sideButton}>High to low</p>
         </li>
-        <li className={styles.list}>
-          <a className={styles.sideButton} href="/#">
-            Low to high
-          </a>
+        <li
+          style={{
+            backgroundColor: sort.by === "lowToHigh" ? "#dadada" : null,
+          }}
+          onClick={() => sortBy("lowToHigh")}
+          className={styles.list}
+        >
+          <p className={styles.sideButton}>Low to high</p>
         </li>
       </ul>
     </>

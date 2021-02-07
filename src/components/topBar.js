@@ -239,7 +239,7 @@ export default function ButtonAppBar() {
 
   // back
   const back = () => {
-    history.push("/");
+    history.goBack();
   };
   return (
     <div className={classes.root}>

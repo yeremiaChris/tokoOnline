@@ -7,7 +7,7 @@ const initState = {
   item: [
     {
       nama: "T-Shirt Black",
-      harga: 52000,
+      harga: 2000,
       stok: 2,
       image: Image1,
       images: [
@@ -57,7 +57,7 @@ const initState = {
     },
     {
       nama: "T-Shirt White",
-      harga: 52000,
+      harga: 25000,
       stok: 2,
       image: Image2,
       images: [
@@ -107,7 +107,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Tan",
-      harga: 52000,
+      harga: 39999,
       stok: 2,
       image: Image3,
       images: [
@@ -157,7 +157,7 @@ const initState = {
     },
     {
       nama: "T-Shirt BLue",
-      harga: 52000,
+      harga: 200000,
       stok: 2,
       image: Image4,
       images: [
@@ -207,7 +207,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Gray",
-      harga: 52000,
+      harga: 210000,
       stok: 2,
       image: Image1,
       images: [
@@ -257,7 +257,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 23333,
       stok: 2,
       image: Image2,
       images: [
@@ -307,7 +307,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 30000,
       stok: 2,
       image: Image2,
       images: [
@@ -357,7 +357,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 250000,
       stok: 2,
       image: Image2,
       images: [
@@ -407,7 +407,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 125000,
       stok: 2,
       image: Image2,
       images: [
@@ -457,7 +457,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 3000000,
       stok: 2,
       image: Image2,
       images: [
@@ -507,7 +507,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Black",
-      harga: 52000,
+      harga: 200400,
       stok: 2,
       image: Image1,
       images: [
@@ -557,7 +557,7 @@ const initState = {
     },
     {
       nama: "T-Shirt White",
-      harga: 52000,
+      harga: 222000,
       stok: 2,
       image: Image2,
       images: [
@@ -607,7 +607,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Tan",
-      harga: 52000,
+      harga: 200000,
       stok: 2,
       image: Image3,
       images: [
@@ -657,7 +657,7 @@ const initState = {
     },
     {
       nama: "T-Shirt BLue",
-      harga: 52000,
+      harga: 224000,
       stok: 2,
       image: Image4,
       images: [
@@ -707,7 +707,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Gray",
-      harga: 52000,
+      harga: 110000,
       stok: 2,
       image: Image1,
       images: [
@@ -757,7 +757,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 200079,
       stok: 2,
       image: Image2,
       images: [
@@ -807,7 +807,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 110000,
       stok: 2,
       image: Image2,
       images: [
@@ -857,7 +857,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 135000,
       stok: 2,
       image: Image2,
       images: [
@@ -907,7 +907,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 302000,
       stok: 2,
       image: Image2,
       images: [
@@ -957,7 +957,7 @@ const initState = {
     },
     {
       nama: "T-Shirt Red",
-      harga: 52000,
+      harga: 240000,
       stok: 2,
       image: Image2,
       images: [

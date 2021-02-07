@@ -9,12 +9,12 @@ import {
   Grid,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import { deleteItem } from "./action";
+import { formatRupiah } from "../../redux/formatRupiah";
 const useStyles = makeStyles((theme) => ({
   root: {
     boxShadow: "0 0 0 gray",
@@ -70,27 +70,16 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 5,
   },
 }));
-export default function ItemContent() {
+export default function ItemContent({ data, filter }) {
+  const dispatch = useDispatch();
   // styles
   const classes = useStyles();
-  // ambil data dari link react router dom
-  const location = useLocation();
-  // data
-  const items = useSelector((state) => state.item);
   // filter
-  const filter = items.filter((item) =>
-    location.state === undefined
-      ? item.jenis === "Shirt"
-      : item.jenis === location.state.nama
-  );
-
-  // dispatch
-  const dispatch = useDispatch();
   return (
     <>
       <Grid item xs={12} className={classes.card}>
-        {filter &&
-          filter.map((item) => {
+        {data &&
+          data.map((item) => {
             return (
               <Card key={item.key} className={classes.root}>
                 <Link
@@ -142,7 +131,7 @@ export default function ItemContent() {
                       color="textSecondary"
                       component="p"
                     >
-                      Rp {item.harga}
+                      {formatRupiah(item.harga)}
                     </Typography>
                   </div>
 

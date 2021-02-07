@@ -1,9 +1,11 @@
 import React from "react";
 import ItemContent from "./itemContent";
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Button } from "@material-ui/core";
 // sortbyprice
 import SortbyPrice from "../sortbyPrice";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   kiri: {
     backgroundColor: "#ebebeb",
@@ -21,10 +23,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "left",
   },
   sideButton: {
-    textDecoration: "none",
     color: "black",
     width: "100%",
     fontWeight: "normal",
+    margin: 0,
+    cursor: "pointer",
   },
   list: {
     "&:hover": {
@@ -32,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 5,
     },
     padding: 10,
+    cursor: "pointer",
   },
   kiriKananContainer: {
     display: "flex",
@@ -57,12 +61,55 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     color: "gray",
   },
+  bottom: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  lihat: {
+    alignItems: "center",
+    justifyContent: "center",
+    display: "grid",
+  },
 }));
-function Content({ sideButton, sideButtonDua }) {
+function Content({ sideButton, sideButtonDua, data, setData }) {
   const styles = useStyles();
 
   // ambil state dari react router ketika link di klik
   const location = useLocation();
+  console.log(location.state);
+  // sort
+  const [sort, setSort] = React.useState({
+    by: "",
+    tanda: false,
+  });
+  // data
+  const items = useSelector((state) => state.item);
+
+  const sortBy = (value) => {
+    setSort({
+      by: value,
+      tanda: true,
+    });
+    if (value === "All Products") {
+      return setData(items);
+    } else if (value === "Featured Products") {
+      return setData(items.filter((item) => item.recomendasi === true));
+    } else if (value === "lowToHigh") {
+      return setData(items.sort((a, b) => a.harga - b.harga));
+    } else if (value === "highToLow") {
+      return setData(items.sort((a, b) => a.harga + b.harga));
+    } else {
+      return setData(items.filter((item) => item.jenis === value));
+    }
+  };
+  // state untuk next data
+  const [nextPage, setNextPage] = React.useState(12);
+  const next = () => {
+    setNextPage((prev) => prev + 3);
+  };
+  // 6 data yang di tampilkan
+  const onePage = data.slice(0, nextPage);
+
   return (
     <>
       <Grid className={styles.sideTool} item xs={12} sm={3} md={3} lg={3}>
@@ -71,10 +118,15 @@ function Content({ sideButton, sideButtonDua }) {
             {sideButton &&
               sideButton.map((item) => {
                 return (
-                  <li className={styles.list} key={item.key}>
-                    <a className={styles.sideButton} href="/#">
-                      {item.name}
-                    </a>
+                  <li
+                    onClick={() => sortBy(item.name)}
+                    className={styles.list}
+                    key={item.key}
+                    style={{
+                      backgroundColor: sort.by === item.name ? "#dadada" : null,
+                    }}
+                  >
+                    <p className={styles.sideButton}>{item.name}</p>
                   </li>
                 );
               })}
@@ -93,27 +145,42 @@ function Content({ sideButton, sideButtonDua }) {
             {sideButtonDua &&
               sideButtonDua.map((item) => {
                 return (
-                  <li className={styles.list} key={item.key}>
-                    <a className={styles.sideButton} href="/#">
-                      {item.name}
-                    </a>
+                  <li
+                    style={{
+                      backgroundColor: sort.by === item.name ? "#dadada" : null,
+                    }}
+                    onClick={() => sortBy(item.name)}
+                    className={styles.list}
+                    key={item.key}
+                  >
+                    <p className={styles.sideButton}>{item.name}</p>
                   </li>
                 );
               })}
           </ul>
         </div>
         <div className={styles.kiri}>
-          <SortbyPrice />
+          <SortbyPrice sort={sort} sortBy={sortBy} />
         </div>
       </Grid>
       <Grid className={styles.content} item xs={12} sm={12} md={12} lg={9}>
-        <h1 className={styles.kategoriName}
-        >
-          {location.state !== undefined ? location.state.nama : null}
+        <h1 className={styles.kategoriName}>
+          {location.state !== undefined && sort.tanda === false
+            ? location.state.nama
+            : sort.by}
         </h1>
         <div>
-          <ItemContent />
+          <ItemContent data={onePage} />
         </div>
+        {onePage.length === data.length ? null : (
+          <Grid container justify="center" className={styles.bottom}>
+            <Grid item>
+              <Button onClick={next} className={styles.lihat}>
+                LIHAT LAINNYA
+              </Button>
+            </Grid>
+          </Grid>
+        )}
       </Grid>
     </>
   );
