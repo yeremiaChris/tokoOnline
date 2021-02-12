@@ -31,19 +31,10 @@ const menuList = [
     icon: false,
   },
   {
-    name: "Collaboration",
-    key: "2",
-    icon: true,
-  },
-  {
-    name: "Collection",
-    key: "3",
-    icon: true,
-  },
-  {
     name: "All Products",
     key: "4",
     icon: true,
+    menu: ["T-Shirt", "Shirt", "Shoes", "Pants"],
   },
   {
     name: "New Normal Essentials",
@@ -53,11 +44,6 @@ const menuList = [
   {
     name: "Mix and Match",
     key: "6",
-    icon: false,
-  },
-  {
-    name: "Payment Confirmation",
-    key: "7",
     icon: false,
   },
 ];
@@ -124,10 +110,7 @@ function App() {
   const store = createStore(rootReducer);
 
   return (
-    <Router
-      onUpdate={() => window.scrollTo(0, 0)}
-      history={createBrowserHistory()}
-    >
+    <Router>
       <Provider store={store}>
         <div className="App">
           <Topbar />

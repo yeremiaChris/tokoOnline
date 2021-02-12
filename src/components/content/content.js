@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     "&:hover": {
-      backgroundColor: "#dadada",
+      backgroundColor: "#e3e2e2",
       borderRadius: 5,
     },
     padding: 10,
@@ -76,7 +76,6 @@ function Content({ sideButton, sideButtonDua }) {
 
   // ambil state dari react router ketika link di klik
   const location = useLocation();
-  console.log(location.state);
   // sort
   const [sort, setSort] = React.useState({
     by: "",

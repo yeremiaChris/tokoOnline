@@ -19,10 +19,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   link: {
-    textDecoration: "none",
     "&:hover": {
       backgroundColor: "#e8ecee",
       borderRadius: 10,
+      cursor: "pointer",
     },
     padding: 10,
     color: "black",
@@ -53,17 +53,19 @@ export default function TopMenu({ menuList }) {
                   {item.icon ? (
                     <Menu
                       menuButton={
-                        <a className={styles.link} href="/#">
+                        <p className={styles.link} href="/#">
                           {item.name}
                           <ArrowDropDownIcon
                             fontSize="small"
                             className={styles.icon}
                           />
-                        </a>
+                        </p>
                       }
                     >
-                      <MenuItem>New File</MenuItem>
-                      <SubMenu label="Open">
+                      {item.menu.map((item) => {
+                        return <MenuItem key={item}>{item}</MenuItem>;
+                      })}
+                      {/* <SubMenu label="Open">
                         <MenuItem>index.html</MenuItem>
                         <MenuItem>example.js</MenuItem>
                         <SubMenu label="Styles">
@@ -71,13 +73,13 @@ export default function TopMenu({ menuList }) {
                           <MenuItem>home.css</MenuItem>
                           <MenuItem>index.css</MenuItem>
                         </SubMenu>
-                      </SubMenu>
-                      <MenuItem>Save</MenuItem>
+                      </SubMenu> */}
+                      {/* <MenuItem>Save</MenuItem> */}
                     </Menu>
                   ) : (
-                    <a className={styles.link} href="/#">
+                    <p className={styles.link} href="/#">
                       {item.name}
-                    </a>
+                    </p>
                   )}
                 </li>
               );

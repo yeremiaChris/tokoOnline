@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
   list: {
     "&:hover": {
-      backgroundColor: "#dadada",
+      backgroundColor: "#e3e2e2",
       borderRadius: 5,
     },
     padding: 10,
