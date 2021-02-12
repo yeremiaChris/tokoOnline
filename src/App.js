@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: "grid",
+    marginBottom: 120,
   },
   menuButton: {
     backgroundColor: "red",
@@ -115,11 +116,18 @@ function App() {
         <div className="App">
           <Topbar />
           <div className={styles.content}>
-            <Grid container className={styles.container}>
+            <Grid
+              container
+              className={styles.container}
+              style={{
+                position: "fixed",
+                zIndex: 1,
+              }}
+            >
               <TopMenu menuList={menuList} />
             </Grid>
           </div>
-          <div className={styles.content}>
+          <div className={styles.content} style={{ marginBottom: 0 }}>
             <Grid container className={styles.container}>
               <ButtonSortCategori
                 menuList={menuList}
@@ -131,7 +139,7 @@ function App() {
           <ScrollToTop history={createBrowserHistory()} />
           <Switch>
             <Route exact path="/">
-              <div className={styles.content}>
+              {/* <div className={styles.content}>
                 <Grid
                   container
                   className={styles.container}
@@ -141,7 +149,7 @@ function App() {
                     <EditOutlinedIcon fontSize="inherit" />
                   </IconButton>
                 </Grid>
-              </div>
+              </div> */}
               <div className={styles.content}>
                 <Grid container className={styles.container}>
                   <Grid item xs={12} lg={8} sm={12} md={8}>

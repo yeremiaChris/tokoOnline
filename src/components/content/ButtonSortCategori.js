@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-    marginTop: 50,
+    // marginTop: 50,
   },
   button: {
     backgroundColor: "#ebebeb",

@@ -1,14 +1,13 @@
 import React from "react";
 import { Grid, makeStyles } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-import { Menu, MenuItem, SubMenu } from "@szhsin/react-menu";
+import { Menu, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
-    marginTop: 10,
-    marginBottom: 10,
-    [theme.breakpoints.down("md")]: {},
+    backgroundColor: "white",
+    marginTop: 14,
   },
   ul: {
     listStyle: "none",
@@ -36,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
-    marginTop: 60,
+    marginTop: 40,
   },
 }));
 
