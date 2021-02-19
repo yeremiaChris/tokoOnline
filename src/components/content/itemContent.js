@@ -95,6 +95,7 @@ export default function ItemContent({ data, filter }) {
                       harga: item.harga,
                       gambar: item.image,
                       gambarBanyak: item.images,
+                      key: item.key,
                     },
                   }}
                 >
@@ -135,7 +136,7 @@ export default function ItemContent({ data, filter }) {
                     </Typography>
                   </div>
 
-                  <div>
+                  {/* <div>
                     <Link
                       style={{ color: "black" }}
                       to={{
@@ -167,7 +168,7 @@ export default function ItemContent({ data, filter }) {
                     >
                       <DeleteOutlineOutlinedIcon fontSize="inherit" />
                     </IconButton>
-                  </div>
+                  </div> */}
                 </CardContent>
               </Card>
             );

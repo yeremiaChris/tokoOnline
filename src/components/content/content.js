@@ -4,8 +4,8 @@ import { Grid, makeStyles, Button } from "@material-ui/core";
 // sortbyprice
 import SortbyPrice from "../sortbyPrice";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { sideButton, sideButtonDua } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   kiri: {
     backgroundColor: "#ebebeb",
@@ -71,39 +71,40 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
   },
 }));
-function Content({ sideButton, sideButtonDua }) {
+function Content() {
   const styles = useStyles();
 
   // ambil state dari react router ketika link di klik
   const location = useLocation();
+
   // sort
   const [sort, setSort] = React.useState({
     by: "",
     tanda: false,
   });
+
   // data
   const items = useSelector((state) => state.item);
-
+  const dispatch = useDispatch();
   const [data, setData] = React.useState(
     location.state === undefined
       ? items
       : items.filter((item) => item.jenis === location.state.nama)
   );
   const sortBy = (value) => {
+    console.log(value);
     setSort({
       by: value,
       tanda: true,
     });
     if (value === "All Products") {
-      return setData(items);
-    } else if (value === "Featured Products") {
-      return setData(items.filter((item) => item.recomendasi === true));
+      dispatch({ type: "allProducts" });
     } else if (value === "lowToHigh") {
-      return setData(items.sort((a, b) => a.harga - b.harga));
+      dispatch({ type: "lowestPrice" });
     } else if (value === "highToLow") {
-      return setData(items.sort((a, b) => a.harga + b.harga));
+      dispatch({ type: "highestPrice" });
     } else {
-      return setData(items.filter((item) => item.jenis === value));
+      dispatch({ type: "filterByValue", value: value });
     }
   };
   // state untuk next data
@@ -112,8 +113,7 @@ function Content({ sideButton, sideButtonDua }) {
     setNextPage((prev) => prev + 3);
   };
   // 6 data yang di tampilkan
-  const onePage = data.slice(0, nextPage);
-
+  const onePage = items.slice(0, nextPage);
   return (
     <>
       <Grid className={styles.sideTool} item xs={12} sm={3} md={3} lg={3}>

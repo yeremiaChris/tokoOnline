@@ -10,7 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Dialog from "@material-ui/core/Dialog";
 import PropTypes from "prop-types";
-
+import { menuList, sideButton, sideButtonDua } from "../../utils/utils";
 // sortbyprice
 import SortbyPrice from "../sortbyPrice";
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-    // marginTop: 50,
+    marginTop: -60,
   },
   button: {
     backgroundColor: "#ebebeb",
@@ -88,7 +88,7 @@ SimpleDialog.propTypes = {
   selectedValue: PropTypes.string.isRequired,
 };
 
-function ButtonSortCategori({ menuList, sideButton, sideButtonDua }) {
+function ButtonSortCategori() {
   const styles = useStyles();
 
   // dialog state

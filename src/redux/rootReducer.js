@@ -6,58 +6,8 @@ import Image4 from "../image/grey.jpeg";
 const initState = {
   item: [
     {
-      nama: "T-Shirt Black",
-      harga: 2000,
-      stok: 2,
-      image: Image1,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
-      key: "1",
-      recomendasi: true,
-      jenis: "T-Shirt",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt White",
-      harga: 25000,
+      nama: "T-Shirt Red",
+      harga: 240000,
       stok: 2,
       image: Image2,
       images: [
@@ -100,16 +50,66 @@ const initState = {
           src: Image4,
         },
       ],
-      key: "2",
+      key: "1",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Tan",
-      harga: 39999,
+      nama: "T-Shirt Black",
+      harga: 240000,
       stok: 2,
-      image: Image3,
+      image: Image1,
+      images: [
+        {
+          name: "gambar1",
+          key: "1",
+          srcImage: Image1,
+          src: Image1,
+        },
+
+        {
+          name: "gambar2",
+          key: "2",
+          srcImage: Image2,
+          src: Image2,
+        },
+
+        {
+          name: "gambar3",
+          key: "3",
+          srcImage: Image3,
+          src: Image3,
+        },
+        {
+          name: "gambar4",
+          key: "4",
+          srcImage: Image4,
+          src: Image4,
+        },
+        {
+          name: "gambar5",
+          key: "5",
+          srcImage: Image3,
+          src: Image3,
+        },
+        {
+          name: "gambar6",
+          key: "6",
+          srcImage: Image4,
+          src: Image4,
+        },
+      ],
+      key: "2",
+      recomendasi: true,
+      jenis: "Pants",
+      deskripsi: "Barang bagus murah meriah",
+    },
+    {
+      nama: "T-Shirt White",
+      harga: 240000,
+      stok: 2,
+      image: Image4,
       images: [
         {
           name: "gambar1",
@@ -152,12 +152,12 @@ const initState = {
       ],
       key: "3",
       recomendasi: true,
-      jenis: "T-Shirt",
+      jenis: "Pants",
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt BLue",
-      harga: 200000,
+      nama: "T-Shirt Tan",
+      harga: 240000,
       stok: 2,
       image: Image4,
       images: [
@@ -206,8 +206,8 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Gray",
-      harga: 210000,
+      nama: "T-Shirt Blue",
+      harga: 240000,
       stok: 2,
       image: Image1,
       images: [
@@ -256,8 +256,8 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Red",
-      harga: 23333,
+      nama: "T-Shirt Brown",
+      harga: 240000,
       stok: 2,
       image: Image2,
       images: [
@@ -302,12 +302,12 @@ const initState = {
       ],
       key: "6",
       recomendasi: true,
-      jenis: "Shirt",
+      jenis: "T-Shirt",
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Red",
-      harga: 30000,
+      nama: "T-Shirt Blue",
+      harga: 240000,
       stok: 2,
       image: Image2,
       images: [
@@ -356,10 +356,10 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Red",
-      harga: 250000,
+      nama: "T-Shirt Black",
+      harga: 240000,
       stok: 2,
-      image: Image2,
+      image: Image3,
       images: [
         {
           name: "gambar1",
@@ -406,10 +406,10 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Red",
-      harga: 125000,
+      nama: "T-Shirt White",
+      harga: 240000,
       stok: 2,
-      image: Image2,
+      image: Image3,
       images: [
         {
           name: "gambar1",
@@ -456,10 +456,10 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Red",
-      harga: 3000000,
+      nama: "T-Shirt Tan",
+      harga: 240000,
       stok: 2,
-      image: Image2,
+      image: Image4,
       images: [
         {
           name: "gambar1",
@@ -506,8 +506,8 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Black",
-      harga: 200400,
+      nama: "T-Shirt Blue",
+      harga: 240000,
       stok: 2,
       image: Image1,
       images: [
@@ -552,14 +552,14 @@ const initState = {
       ],
       key: "11",
       recomendasi: true,
-      jenis: "Shoes",
+      jenis: "Shirt",
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt White",
-      harga: 222000,
+      nama: "Shoes Brown",
+      harga: 240000,
       stok: 2,
-      image: Image2,
+      image: Image1,
       images: [
         {
           name: "gambar1",
@@ -606,10 +606,10 @@ const initState = {
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt Tan",
-      harga: 200000,
+      nama: "Shoes Tan",
+      harga: 240,
       stok: 2,
-      image: Image3,
+      image: Image2,
       images: [
         {
           name: "gambar1",
@@ -650,14 +650,14 @@ const initState = {
           src: Image4,
         },
       ],
-      key: "13",
+      key: "21",
       recomendasi: true,
       jenis: "Shoes",
       deskripsi: "Barang bagus murah meriah",
     },
     {
-      nama: "T-Shirt BLue",
-      harga: 224000,
+      nama: "Shoes Red",
+      harga: 240000,
       stok: 2,
       image: Image4,
       images: [
@@ -700,309 +700,9 @@ const initState = {
           src: Image4,
         },
       ],
-      key: "14",
-      recomendasi: true,
-      jenis: "Shoes",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt Gray",
-      harga: 110000,
-      stok: 2,
-      image: Image1,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
-      key: "15",
-      recomendasi: true,
-      jenis: "Shoes",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt Red",
-      harga: 200079,
-      stok: 2,
-      image: Image2,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
       key: "16",
       recomendasi: true,
-      jenis: "Pants",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt Red",
-      harga: 110000,
-      stok: 2,
-      image: Image2,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
-      key: "17",
-      recomendasi: true,
-      jenis: "Pants",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt Red",
-      harga: 135000,
-      stok: 2,
-      image: Image2,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
-      key: "18",
-      recomendasi: true,
-      jenis: "Pants",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt Red",
-      harga: 302000,
-      stok: 2,
-      image: Image2,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
-      key: "19",
-      recomendasi: true,
-      jenis: "Pants",
-      deskripsi: "Barang bagus murah meriah",
-    },
-    {
-      nama: "T-Shirt Red",
-      harga: 240000,
-      stok: 2,
-      image: Image2,
-      images: [
-        {
-          name: "gambar1",
-          key: "1",
-          srcImage: Image1,
-          src: Image1,
-        },
-
-        {
-          name: "gambar2",
-          key: "2",
-          srcImage: Image2,
-          src: Image2,
-        },
-
-        {
-          name: "gambar3",
-          key: "3",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar4",
-          key: "4",
-          srcImage: Image4,
-          src: Image4,
-        },
-        {
-          name: "gambar5",
-          key: "5",
-          srcImage: Image3,
-          src: Image3,
-        },
-        {
-          name: "gambar6",
-          key: "6",
-          srcImage: Image4,
-          src: Image4,
-        },
-      ],
-      key: "20",
-      recomendasi: true,
-      jenis: "Pants",
+      jenis: "Shoes",
       deskripsi: "Barang bagus murah meriah",
     },
   ],
@@ -1050,6 +750,11 @@ const initState = {
 
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
+    case "fetchData":
+      return {
+        ...state,
+        item: action.data,
+      };
     case "addCart":
       return {
         // "spread" the original state object
@@ -1124,6 +829,23 @@ const rootReducer = (state = initState, action) => {
             item.key === action.key ? item.key !== action.key : item
           ),
         ],
+      };
+    case "allProducts":
+      return state;
+    case "lowestPrice":
+      return {
+        ...state,
+        item: [...state.item.sort((a, b) => a.harga - b.harga)],
+      };
+    case "highestPrice":
+      return {
+        ...state,
+        item: [...state.item.sort((a, b) => a.harga + b.harga)],
+      };
+    case "filterByValue":
+      return {
+        ...state,
+        item: [...state.item.filter((item) => item.jenis === action.value)],
       };
     default:
       return state;

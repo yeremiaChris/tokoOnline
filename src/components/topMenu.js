@@ -3,6 +3,11 @@ import { Grid, makeStyles } from "@material-ui/core";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
+import { menuList } from "../utils/utils";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 const useStyles = makeStyles((theme) => ({
   container: {
     width: "100%",
@@ -39,8 +44,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TopMenu({ menuList }) {
+export default function TopMenu() {
   const styles = useStyles();
+  // linking
+  const location = useLocation();
+  console.log(location);
+  const history = useHistory();
+  const goTo = (nama) => {
+    history.push({
+      pathname: `/content`,
+      state: {
+        nama,
+      },
+    });
+  };
+
   return (
     <Grid container className={styles.containerFull}>
       <div className={styles.container}>
@@ -62,18 +80,12 @@ export default function TopMenu({ menuList }) {
                       }
                     >
                       {item.menu.map((item) => {
-                        return <MenuItem key={item}>{item}</MenuItem>;
+                        return (
+                          <MenuItem onClick={() => goTo(item)} key={item}>
+                            {item}
+                          </MenuItem>
+                        );
                       })}
-                      {/* <SubMenu label="Open">
-                        <MenuItem>index.html</MenuItem>
-                        <MenuItem>example.js</MenuItem>
-                        <SubMenu label="Styles">
-                          <MenuItem>about.css</MenuItem>
-                          <MenuItem>home.css</MenuItem>
-                          <MenuItem>index.css</MenuItem>
-                        </SubMenu>
-                      </SubMenu> */}
-                      {/* <MenuItem>Save</MenuItem> */}
                     </Menu>
                   ) : (
                     <p className={styles.link} href="/#">

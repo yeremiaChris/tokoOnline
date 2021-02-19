@@ -280,12 +280,11 @@ export default function ButtonAppBar() {
                 {list("top")}
               </SwipeableDrawer>
               <div className={classes.kanan}>
-                <MenuItem
-                  onClick={handleProfileMenuOpen}
-                  className={classes.respon}
-                >
-                  <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
-                </MenuItem>
+                <Link className={classes.link} to="/daftar">
+                  <MenuItem className={classes.respon}>
+                    <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
+                  </MenuItem>
+                </Link>
                 <Link to="/addItem">
                   <MenuItem className={classes.respon}>
                     <AddIcon style={{ fontSize: 30, color: "black" }} />

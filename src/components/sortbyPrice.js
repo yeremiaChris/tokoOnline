@@ -35,20 +35,12 @@ function SortbyPrice({ sortBy, sort }) {
       <ul className={styles.ul}>
         <li
           style={{
-            borderRadius: 5,
-            padding: 10,
-          }}
-        >
-          Sort by Price
-        </li>
-        <li
-          style={{
             backgroundColor: sort.by === "highToLow" ? "#dadada" : null,
           }}
           onClick={() => sortBy("highToLow")}
           className={styles.list}
         >
-          <p className={styles.sideButton}>High to low</p>
+          <p className={styles.sideButton}>Highest Price</p>
         </li>
         <li
           style={{
@@ -57,7 +49,7 @@ function SortbyPrice({ sortBy, sort }) {
           onClick={() => sortBy("lowToHigh")}
           className={styles.list}
         >
-          <p className={styles.sideButton}>Low to high</p>
+          <p className={styles.sideButton}>Lowest Price</p>
         </li>
       </ul>
     </>

@@ -74,6 +74,7 @@ function DetailContent() {
   // ambil data untuk detail
   let location = useLocation();
   const styles = useStyles();
+
   // state small image
   const [small] = React.useState(
     location.state === undefined ? null : location.state.images

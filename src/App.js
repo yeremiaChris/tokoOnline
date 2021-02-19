@@ -17,71 +17,10 @@ import { createBrowserHistory } from "history";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import rootReducer from "./redux/rootReducer";
-import IconButton from "@material-ui/core/IconButton";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 // add form
 import AddItem from "./components/content/addItem";
 import ScrollToTop from "./scrollTop";
-
-// menu list
-const menuList = [
-  {
-    name: "New Arrivals",
-    key: "1",
-    icon: false,
-  },
-  {
-    name: "All Products",
-    key: "4",
-    icon: true,
-    menu: ["T-Shirt", "Shirt", "Shoes", "Pants"],
-  },
-  {
-    name: "New Normal Essentials",
-    key: "5",
-    icon: false,
-  },
-  {
-    name: "Mix and Match",
-    key: "6",
-    icon: false,
-  },
-];
-// akhir menu list
-
-// awal side menu categories
-// side button
-const sideButton = [
-  {
-    key: "1",
-    name: "All Products",
-  },
-  {
-    key: "2",
-    name: "Featured Products",
-  },
-];
-const sideButtonDua = [
-  {
-    key: "1",
-    name: "T-Shirt",
-  },
-  {
-    key: "2",
-    name: "Shirt",
-  },
-  {
-    key: "3",
-    name: "Shoes",
-  },
-  {
-    key: "4",
-    name: "Pants",
-  },
-];
-
-// akhir sidebar categoris
-
+import DaftarItem from "./components/content/daftarItem";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1050,
@@ -98,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     display: "grid",
-    marginBottom: 120,
   },
   menuButton: {
     backgroundColor: "red",
@@ -106,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function App() {
+  console.log(new Date());
   const styles = useStyles();
   // redux
   const store = createStore(rootReducer);
@@ -115,7 +54,7 @@ function App() {
       <Provider store={store}>
         <div className="App">
           <Topbar />
-          <div className={styles.content}>
+          <div className={styles.content} style={{ marginBottom: 120 }}>
             <Grid
               container
               className={styles.container}
@@ -124,32 +63,17 @@ function App() {
                 zIndex: 1,
               }}
             >
-              <TopMenu menuList={menuList} />
+              <TopMenu />
             </Grid>
           </div>
           <div className={styles.content} style={{ marginBottom: 0 }}>
             <Grid container className={styles.container}>
-              <ButtonSortCategori
-                menuList={menuList}
-                sideButtonDua={sideButtonDua}
-                sideButton={sideButton}
-              />
+              <ButtonSortCategori />
             </Grid>
           </div>
           <ScrollToTop history={createBrowserHistory()} />
           <Switch>
             <Route exact path="/">
-              {/* <div className={styles.content}>
-                <Grid
-                  container
-                  className={styles.container}
-                  style={{ margin: 0 }}
-                >
-                  <IconButton edge="start" coor="inherit" aria-label="menu">
-                    <EditOutlinedIcon fontSize="inherit" />
-                  </IconButton>
-                </Grid>
-              </div> */}
               <div className={styles.content}>
                 <Grid container className={styles.container}>
                   <Grid item xs={12} lg={8} sm={12} md={8}>
@@ -174,10 +98,14 @@ function App() {
             <Route path="/content">
               <div className={styles.content}>
                 <Grid container className={styles.container}>
-                  <Content
-                    sideButton={sideButton}
-                    sideButtonDua={sideButtonDua}
-                  />
+                  <Content />
+                </Grid>
+              </div>
+            </Route>
+            <Route path="/daftar">
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <DaftarItem />
                 </Grid>
               </div>
             </Route>
@@ -189,6 +117,13 @@ function App() {
               </div>
             </Route>
             <Route path="/addItem">
+              <div className={styles.content}>
+                <Grid container className={styles.container}>
+                  <AddItem />
+                </Grid>
+              </div>
+            </Route>
+            <Route path="/editItem/:slug">
               <div className={styles.content}>
                 <Grid container className={styles.container}>
                   <AddItem />

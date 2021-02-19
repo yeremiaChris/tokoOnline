@@ -10,7 +10,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Button from "@material-ui/core/Button";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import SendIcon from "@material-ui/icons/Send";
-
+import axios from "axios";
 // react hook form
 import { Formik, ErrorMessage } from "formik";
 import {
@@ -141,44 +141,58 @@ function AddItem() {
   // onsubmit
   const dispatch = useDispatch();
   const history = useHistory();
+  const [file, setFile] = React.useState("");
   const onSubmit = (data) => {
-    const key = Math.random();
-    console.log(data);
-    location.state === undefined
-      ? dispatch({
-          type: "addItem",
-          item: {
-            nama: data.nama,
-            harga: data.harga,
-            stok: 0,
-            image: data.images[0].srcImage,
-            images: data.images,
-            key: key.toString(),
-            recomendasi: true,
-            jenis: data.jenis,
-            deskripsi: data.deskripsi,
-          },
-        })
-      : dispatch({
-          type: "updateItem",
-          key: data.key,
-          nama: data.nama,
-          harga: data.harga,
-          image: data.images[0].srcImage,
-          images: data.images,
-          jenis: data.jenis,
-          deskripsi: data.deskripsi,
+    // const key = Math.random();
+    // console.log(data);
+    // location.state === undefined
+    //   ? dispatch({
+    //       type: "addItem",
+    //       item: {
+    //         nama: data.nama,
+    //         harga: data.harga,
+    //         stok: 0,
+    //         image: data.images[0].srcImage,
+    //         images: data.images,
+    //         key: key.toString(),
+    //         recomendasi: true,
+    //         jenis: data.jenis,
+    //         deskripsi: data.deskripsi,
+    //       },
+    //     })
+    //   : dispatch({
+    //       type: "updateItem",
+    //       key: data.key,
+    //       nama: data.nama,
+    //       harga: data.harga,
+    //       image: data.images[0].srcImage,
+    //       images: data.images,
+    //       jenis: data.jenis,
+    //       deskripsi: data.deskripsi,
+    //     });
+    // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake   redirect component dari react router lebih bagus
+
+    let formData = new FormData();
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    formData.append("test", file);
+    axios
+      .post("http://localhost:5000/api/items", formData, config)
+      .then((data) => {
+        swal({
+          title: `BERHASIL ${
+            location.state === undefined ? "MENAMBAH" : "UPDATE"
+          } ITEM`,
+          text: null,
+          icon: "success",
+          button: "Close",
         });
-    // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake redirect component dari react router lebih bagus
-    swal({
-      title: `BERHASIL ${
-        location.state === undefined ? "MENAMBAH" : "UPDATE"
-      } ITEM`,
-      text: null,
-      icon: "success",
-      button: "Close",
-    });
-    history.push("/");
+        // history.push("/");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <Grid container className={styles.container}>
@@ -188,18 +202,21 @@ function AddItem() {
         </h2>
       </Grid>
       <Formik
-        validationSchema={schema}
-        initialValues={
-          location.state === undefined
-            ? initialValues
-            : {
-                nama: location.state.nama,
-                harga: location.state.harga,
-                jenis: location.state.jenis,
-                deskripsi: location.state.deskripsi,
-                images: location.state.images,
-              }
-        }
+        // validationSchema={schema}
+        // initialValues={
+        //   location.state === undefined
+        //     ? initialValues
+        //     : {
+        //         nama: location.state.nama,
+        //         harga: location.state.harga,
+        //         jenis: location.state.jenis,
+        //         deskripsi: location.state.deskripsi,
+        //         images: location.state.images,
+        //       }
+        // }
+        initialValues={{
+          test: "",
+        }}
         enableReinitialize={true}
         onSubmit={onSubmit}
       >
@@ -215,7 +232,7 @@ function AddItem() {
         }) => {
           return (
             <form style={{ width: "100%" }} onSubmit={handleSubmit}>
-              <Grid item lg={12} md={12} sm={12} xs={12}>
+              {/* <Grid item lg={12} md={12} sm={12} xs={12}>
                 <Grid>
                   <div className={styles.containerTextInput}>
                     <h3 className={styles.text}>Nama *</h3>
@@ -364,6 +381,7 @@ function AddItem() {
                           >
                             <input
                               style={{ display: "none" }}
+                              name="img"
                               type="file"
                               ref={(e) => {
                                 refGambar.current.push(e);
@@ -395,7 +413,17 @@ function AddItem() {
                       );
                     })}
                 </div>
-              </Grid>
+
+                
+              </Grid> */}
+              <input
+                type="file"
+                name="test"
+                value={values.test}
+                onChange={(e) => {
+                  setFile(e.target.files[0]);
+                }}
+              ></input>
               <Grid item lg={12} md={12} sm={12} xs={12}>
                 <div className={styles.buttonForm}>
                   <Button

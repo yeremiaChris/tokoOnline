@@ -128,11 +128,14 @@ export default function Jenis() {
                     variant="body2"
                     color="textSecondary"
                     component="p"
+                    style={{
+                      textAlign: "left",
+                    }}
                   >
                     {formatRupiah(item.harga)}
                   </Typography>
                 </div>
-                <div>
+                {/* <div>
                   <Link
                     style={{ color: "black" }}
                     to={{
@@ -166,7 +169,7 @@ export default function Jenis() {
                   >
                     <DeleteOutlineOutlinedIcon fontSize="inherit" />
                   </IconButton>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           ) : null
