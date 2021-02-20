@@ -23,10 +23,12 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import CloseIcon from "@material-ui/icons/Close";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     width: "100%",
     [theme.breakpoints.down("md")]: {
       flexWrap: "wrap",
@@ -44,9 +46,10 @@ const useStyles = makeStyles((theme) => ({
     width: 140,
     height: 140,
     backgroundColor: "#e9ecee",
+    color: "maroon",
     display: "grid",
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-end",
     [theme.breakpoints.down("sm")]: {
       width: 150,
       height: 150,
@@ -126,6 +129,12 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
   },
+  close: {
+    marginRight: -15,
+    marginTop: -15,
+    backgroundColor: "gray",
+    borderRadius: "50%",
+  },
 }));
 
 function AddItem() {
@@ -136,12 +145,14 @@ function AddItem() {
   const refGambar = React.useRef([]);
   // klik to open input element
   const tambahGambar = (index) => {
-    refGambar.current[index].click();
+    // refGambar.current[index].click();
+    refGambar.current.click();
   };
   // onsubmit
   const dispatch = useDispatch();
   const history = useHistory();
-  const [file, setFile] = React.useState("");
+  const [file, setFile] = React.useState({});
+  const [error, setError] = React.useState("");
   const onSubmit = (data) => {
     // const key = Math.random();
     // console.log(data);
@@ -171,28 +182,36 @@ function AddItem() {
     //       deskripsi: data.deskripsi,
     //     });
     // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake   redirect component dari react router lebih bagus
-
-    let formData = new FormData();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    formData.append("test", file);
-    axios
-      .post("http://localhost:5000/api/items", formData, config)
-      .then((data) => {
-        swal({
-          title: `BERHASIL ${
-            location.state === undefined ? "MENAMBAH" : "UPDATE"
-          } ITEM`,
-          text: null,
-          icon: "success",
-          button: "Close",
-        });
-        // history.push("/");
-      })
-      .catch((err) => console.log(err));
+    console.log(data);
+    // if (file.length !== 6) {
+    //   setError("Gambar harus di inputkan dan berjumlah 6");
+    // } else {
+    //   file.forEach((element) => {
+    //     console.log(element.error);
+    //   });
+    // }
+    // let formData = new FormData();
+    // const config = {
+    //   headers: {
+    //     "content-type": "multipart/form-data",
+    //   },
+    // };
+    // formData.append("test", file);
+    // formData.append("image", data.test);
+    // axios
+    //   .post("http://localhost:5000/api/items", formData, config)
+    //   .then((data) => {
+    //     swal({
+    //       title: `BERHASIL ${
+    //         location.state === undefined ? "MENAMBAH" : "UPDATE"
+    //       } ITEM`,
+    //       text: null,
+    //       icon: "success",
+    //       button: "Close",
+    //     });
+    //     // history.push("/");
+    //   })
+    //   .catch((err) => console.log(err));
   };
   return (
     <Grid container className={styles.container}>
@@ -202,21 +221,18 @@ function AddItem() {
         </h2>
       </Grid>
       <Formik
-        // validationSchema={schema}
-        // initialValues={
-        //   location.state === undefined
-        //     ? initialValues
-        //     : {
-        //         nama: location.state.nama,
-        //         harga: location.state.harga,
-        //         jenis: location.state.jenis,
-        //         deskripsi: location.state.deskripsi,
-        //         images: location.state.images,
-        //       }
-        // }
-        initialValues={{
-          test: "",
-        }}
+        validationSchema={schema}
+        initialValues={
+          location.state === undefined
+            ? initialValues
+            : {
+                nama: location.state.nama,
+                harga: location.state.harga,
+                jenis: location.state.jenis,
+                deskripsi: location.state.deskripsi,
+                images: location.state.images,
+              }
+        }
         enableReinitialize={true}
         onSubmit={onSubmit}
       >
@@ -231,8 +247,8 @@ function AddItem() {
           resetForm,
         }) => {
           return (
-            <form style={{ width: "100%" }} onSubmit={handleSubmit}>
-              {/* <Grid item lg={12} md={12} sm={12} xs={12}>
+            <form style={{ width: "100%" }}>
+              <Grid item lg={12} md={12} sm={12} xs={12}>
                 <Grid>
                   <div className={styles.containerTextInput}>
                     <h3 className={styles.text}>Nama *</h3>
@@ -360,14 +376,37 @@ function AddItem() {
                 </Grid>
               </Grid>
               <Grid item lg={12} md={12} sm={12} xs={12}>
+                <div
+                  style={{
+                    justifyContent: "flex-end",
+                    display: "grid",
+                  }}
+                >
+                  <p className={styles.errorContainer}>{error}</p>
+                  <p className={styles.errorContainer}>{errors.images}</p>
+                  {values.images.length >= 6 ? null : (
+                    <Button
+                      variant="contained"
+                      color="default"
+                      startIcon={<CloudUploadIcon />}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        tambahGambar();
+                      }}
+                    >
+                      Upload Gambar
+                    </Button>
+                  )}
+                </div>
                 <div className={styles.gambarContainer}>
                   {values.images &&
                     values.images.map((item, i) => {
                       return (
                         <div
-                          onClick={() => tambahGambar(i)}
+                          // onClick={() => tambahGambar(i)}
+
                           key={item.key}
-                          style={{ color: "gray" }}
+                          style={{ color: "gray", marginRight: 40 }}
                         >
                           <p className={styles.name}>{item.name}</p>
                           <div
@@ -379,7 +418,7 @@ function AddItem() {
                             }}
                             className={styles.gambar}
                           >
-                            <input
+                            {/* <input
                               style={{ display: "none" }}
                               name="img"
                               type="file"
@@ -401,9 +440,21 @@ function AddItem() {
                                 );
                               }}
                               onBlur={handleBlur(`images.${i}.src`)}
-                            ></input>
-                            <AddCircleOutlineIcon fontSize="large" />
+                            ></input> */}
+
+                            <CloseIcon
+                              onClick={() => {
+                                setFieldValue("images", [
+                                  ...values.images.filter(
+                                    (items) => items.key != item.key
+                                  ),
+                                ]);
+                              }}
+                              className={styles.close}
+                              fontSize="large"
+                            />
                           </div>
+
                           <ErrorMessage name={`images.${i}.src`}>
                             {(msg) => (
                               <p className={styles.errorContainer}>{msg}</p>
@@ -413,15 +464,32 @@ function AddItem() {
                       );
                     })}
                 </div>
-
-                
-              </Grid> */}
+              </Grid>
               <input
+                style={{ display: "none" }}
+                name="img"
                 type="file"
-                name="test"
-                value={values.test}
+                ref={refGambar}
+                onBlur={handleBlur(`images`)}
                 onChange={(e) => {
-                  setFile(e.target.files[0]);
+                  if (
+                    e.target.files[0].type === "image/jpg" ||
+                    e.target.files[0].type === "image/jpeg" ||
+                    e.target.files[0].type === "image/png"
+                  ) {
+                    setFieldValue(
+                      "images",
+                      values.images.concat({
+                        name: e.target.files[0].name,
+                        key: `${e.target.files[0].name} + ${Date.now()} `,
+                        src: e.target.files[0],
+                        srcImage: URL.createObjectURL(e.target.files[0]),
+                      })
+                    );
+                    setError("");
+                  } else {
+                    setError("tipe gambar salah");
+                  }
                 }}
               ></input>
               <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -439,6 +507,7 @@ function AddItem() {
                     variant="contained"
                     color="primary"
                     type="submit"
+                    onClick={handleSubmit}
                     endIcon={<SendIcon />}
                   >
                     Submit

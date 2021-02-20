@@ -8,44 +8,7 @@ export const initialValues = {
   harga: "",
   jenis: "",
   deskripsi: "",
-  images: [
-    {
-      name: "gambar1",
-      key: "1",
-      src: "",
-      srcImage: "gambar1",
-    },
-    {
-      name: "gambar2",
-      key: "2",
-      src: "",
-      srcImage: "gambar2",
-    },
-    {
-      name: "gambar3",
-      key: "3",
-      src: "",
-      srcImage: "gambar3",
-    },
-    {
-      name: "gambar4",
-      key: "4",
-      src: "",
-      srcImage: "gambar4",
-    },
-    {
-      name: "gambar5",
-      key: "5",
-      src: "",
-      srcImage: "gambar5",
-    },
-    {
-      name: "gambar6",
-      key: "6",
-      src: "",
-      srcImage: "gambar6",
-    },
-  ],
+  images: [],
 };
 
 // jenis
@@ -85,27 +48,18 @@ export const schema = yup.object().shape({
     .string()
     .required("Field deskripsi harus di isi")
     .min(10, "Minimal huruf ada 10"),
-  images: yup.array().of(
-    yup.object().shape({
-      name: yup.string(),
-      key: yup.string(),
-      src: yup
-        .mixed()
-        .required("Masukan Gambar")
-        .test("type", "harus jpeg,jpg atau png", (value) => {
-          return (
-            value &&
-            (value.type === "image/jpeg" ||
-              value.type === "image/jpg" ||
-              value.type === "image/png")
-          );
-        })
-        .test("fileSize", "File tidak boleh lebih dari 1 mb", (value) => {
-          return value && value.size <= FILE_SIZE;
-        }),
-      srcImage: yup.string(),
-    })
-  ),
+  images: yup
+    .array()
+    .of(
+      yup.object().shape({
+        name: yup.string().required("perlu"),
+        key: yup.string().required("perlu"),
+        src: yup.mixed(),
+        srcImage: yup.string(),
+      })
+    )
+    .min(6, "6 gambar harus di inputkan")
+    .max(6, "6 gambar harus di inputkan"),
 });
 // akhir schema
 // number
