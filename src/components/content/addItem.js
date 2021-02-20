@@ -182,7 +182,6 @@ function AddItem() {
     //       deskripsi: data.deskripsi,
     //     });
     // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake   redirect component dari react router lebih bagus
-    console.log(data);
     // if (file.length !== 6) {
     //   setError("Gambar harus di inputkan dan berjumlah 6");
     // } else {
@@ -190,28 +189,37 @@ function AddItem() {
     //     console.log(element.error);
     //   });
     // }
-    // let formData = new FormData();
-    // const config = {
-    //   headers: {
-    //     "content-type": "multipart/form-data",
-    //   },
-    // };
-    // formData.append("test", file);
-    // formData.append("image", data.test);
-    // axios
-    //   .post("http://localhost:5000/api/items", formData, config)
-    //   .then((data) => {
-    //     swal({
-    //       title: `BERHASIL ${
-    //         location.state === undefined ? "MENAMBAH" : "UPDATE"
-    //       } ITEM`,
-    //       text: null,
-    //       icon: "success",
-    //       button: "Close",
-    //     });
-    //     // history.push("/");
-    //   })
-    //   .catch((err) => console.log(err));
+
+    console.log(data.images);
+
+    let formData = new FormData();
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+    data.images.map((item) => {
+      formData.append("images", item.src);
+    });
+    formData.append("name", data.nama);
+    formData.append("harga", data.harga);
+    formData.append("jenis", data.jenis);
+    formData.append("deskripsi", data.deskripsi);
+    axios
+      .post("http://localhost:5000/api/items", formData, config)
+      .then((data) => {
+        console.log(data);
+        swal({
+          title: `BERHASIL ${
+            location.state === undefined ? "MENAMBAH" : "UPDATE"
+          } ITEM`,
+          text: null,
+          icon: "success",
+          button: "Close",
+        });
+        // history.push("/");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <Grid container className={styles.container}>
@@ -467,7 +475,7 @@ function AddItem() {
               </Grid>
               <input
                 style={{ display: "none" }}
-                name="img"
+                name="images"
                 type="file"
                 ref={refGambar}
                 onBlur={handleBlur(`images`)}
@@ -490,6 +498,7 @@ function AddItem() {
                   } else {
                     setError("tipe gambar salah");
                   }
+                  setFile(values.images);
                 }}
               ></input>
               <Grid item lg={12} md={12} sm={12} xs={12}>

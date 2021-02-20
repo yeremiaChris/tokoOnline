@@ -6,7 +6,9 @@ require("dotenv/config");
 const multer = require("multer");
 const path = require("path");
 const multipart = require("connect-multiparty");
+const util = require("util");
 const multipartMiddleware = multipart();
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "../../src/image");
@@ -33,7 +35,7 @@ const upload = multer({
       return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
     }
   },
-});
+}).array("images");
 // get list of ninjas from db
 router.get("/items", (req, res, next) => {
   Ninja.find({})
@@ -43,9 +45,25 @@ router.get("/items", (req, res, next) => {
     .catch(next);
 });
 
-// add list of ninjas to db
-router.post("/items", upload.single("test"), (req, res, next) => {
-  console.log(req.file);
+router.post("/items", (req, res, next) => {
+  upload(req, res, function (err) {
+    console.log(req.files);
+    if (err) {
+      return res.send("Ocurrio un error al subir el archivo.");
+    }
+    res.send("test");
+  });
+
+  // upload(req, res, (err) => {
+  //   if (err) {
+  //     console.log(err);
+  //     return;
+  //   }
+  //   console.log(req.files);
+  //   res.end("Your files uploaded.");
+  //   console.log("Yep yep!");
+  // });
+  // console.log(req.body);
   // adding data and save to db
   // const obj = {
   //   name: req.body.nama,

@@ -36,7 +36,7 @@ const NinjaSchema = new Schema({
     type: String,
     required: [true, "Field ini harus di isi"],
   },
-  // images: [ImageSchema],
+  images: [ImageSchema],
 });
 
 // create a model
