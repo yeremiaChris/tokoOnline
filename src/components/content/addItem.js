@@ -189,9 +189,6 @@ function AddItem() {
     //     console.log(element.error);
     //   });
     // }
-
-    console.log(data.images);
-
     let formData = new FormData();
     const config = {
       headers: {
@@ -390,8 +387,12 @@ function AddItem() {
                     display: "grid",
                   }}
                 >
-                  <p className={styles.errorContainer}>{error}</p>
-                  <p className={styles.errorContainer}>{errors.images}</p>
+                  <p style={{ margin: 0 }} className={styles.errorContainer}>
+                    {error}
+                  </p>
+                  <p style={{ margin: 0 }} className={styles.errorContainer}>
+                    {errors.images}
+                  </p>
                   {values.images.length >= 6 ? null : (
                     <Button
                       variant="contained"
