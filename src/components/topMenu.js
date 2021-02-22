@@ -48,7 +48,10 @@ export default function TopMenu({ items, setSort, setData, data, sort }) {
   const styles = useStyles();
   // linking
   const history = useHistory();
+
+  // sorting d content
   const goTo = (nama) => {
+    sorting(items, setSort, setData, nama);
     history.push({
       pathname: `/content`,
       state: {
@@ -73,7 +76,7 @@ export default function TopMenu({ items, setSort, setData, data, sort }) {
                     <Menu
                       menuButton={
                         <p className={styles.link} href="/#">
-                          {item.name}
+                          {sort.by}
                           <ArrowDropDownIcon
                             fontSize="small"
                             className={styles.icon}
@@ -83,11 +86,11 @@ export default function TopMenu({ items, setSort, setData, data, sort }) {
                     >
                       {item.menu.map((item) => (
                         <MenuItem
-                          onClick={() =>
-                            location.pathname === "/content"
-                              ? sortButton(item.jenis)
-                              : goTo(item.jenis)
-                          }
+                          onClick={() => {
+                            location.pathname === "/"
+                              ? goTo(item.jenis)
+                              : sortButton(item.jenis);
+                          }}
                           key={item.key}
                         >
                           {item.jenis}

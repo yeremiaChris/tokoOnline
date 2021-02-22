@@ -132,40 +132,6 @@ export default function ItemContent({ data, filter }) {
                       {formatRupiah(item.harga)}
                     </Typography>
                   </div>
-
-                  {/* <div>
-                    <Link
-                      style={{ color: "black" }}
-                      to={{
-                        pathname: "/addItem",
-                        state: {
-                          nama: item.nama,
-                          harga: item.harga,
-                          deskripsi: item.deskripsi,
-                          jenis: item.jenis,
-                          images: item.images,
-                        },
-                      }}
-                    >
-                      <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                      >
-                        <EditOutlinedIcon fontSize="inherit" />
-                      </IconButton>
-                    </Link>
-                    <IconButton
-                      onClick={() => deleteItem(item.nama, item.key, dispatch)}
-                      edge="start"
-                      className={classes.menuButton}
-                      color="inherit"
-                      aria-label="menu"
-                    >
-                      <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                    </IconButton>
-                  </div> */}
                 </CardContent>
               </Card>
             );

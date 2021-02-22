@@ -2,7 +2,9 @@ import React from "react";
 import { Grid, makeStyles } from "@material-ui/core";
 import Iklan1 from "../image/satu.jpg";
 import Iklan2 from "../image/iklan2.jpg";
-import { Link } from "react-router-dom";
+import { sorting } from "../utils/utils";
+import { useHistory } from "react-router-dom";
+
 // styles
 const useStyles = makeStyles((theme) => ({
   // container semuanya
@@ -53,7 +55,7 @@ const iklanState = [
   },
 ];
 
-function Iklan() {
+function Iklan({ items, setSort, setData }) {
   // var styles
   const styles = useStyles();
 
@@ -74,6 +76,18 @@ function Iklan() {
     );
   };
 
+  // ke content
+  const history = useHistory();
+
+  const goTo = (nama) => {
+    sorting(items, setSort, setData, nama);
+    history.push({
+      pathname: `/content`,
+      state: {
+        jenis: nama,
+      },
+    });
+  };
   return (
     <Grid
       container
@@ -85,6 +99,7 @@ function Iklan() {
         iklan.map((item) => {
           return (
             <Grid
+              onClick={() => goTo(item.jenis)}
               key={item.key}
               className={styles.coverItem}
               item
@@ -93,22 +108,13 @@ function Iklan() {
               sm={6}
               xs={12}
             >
-              <Link
-                to={{
-                  pathname: "/content",
-                  state: {
-                    jenis: item.jenis,
-                  },
-                }}
-              >
-                <img
-                  onMouseEnter={() => mouseEnter(item.key)}
-                  onMouseLeave={() => mouseLeave(item.key)}
-                  alt={item.key}
-                  className={styles.img}
-                  src={item.gambar}
-                ></img>
-              </Link>
+              <img
+                onMouseEnter={() => mouseEnter(item.key)}
+                onMouseLeave={() => mouseLeave(item.key)}
+                alt={item.key}
+                className={styles.img}
+                src={item.gambar}
+              ></img>
             </Grid>
           );
         })}

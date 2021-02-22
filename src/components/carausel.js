@@ -5,7 +5,9 @@ import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
 import Image1 from "../image/test.jpg";
 import Image2 from "../image/dua.jpg";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { sorting } from "../utils/utils";
+
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
 // initial state carausel
@@ -18,7 +20,7 @@ const tutorialSteps = [
   {
     label: "Bird",
     imgPath: Image2,
-    nama: "Shirt",
+    nama: "Pants",
   },
 ];
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 60,
   },
 }));
-function Carausel() {
+function Carausel({ items, setSort, setData }) {
   // styles
   const classes = useStyles();
 
@@ -96,6 +98,17 @@ function Carausel() {
     setActiveStep(step);
   };
   // akhir carausel atau slide
+  const history = useHistory();
+
+  const goTo = (nama) => {
+    sorting(items, setSort, setData, nama);
+    history.push({
+      pathname: `/content`,
+      state: {
+        jenis: nama,
+      },
+    });
+  };
   return (
     <div>
       <AutoPlaySwipeableViews
@@ -106,24 +119,15 @@ function Carausel() {
       >
         {tutorialSteps.map((step, index) => {
           return (
-            <div key={step.label}>
+            <div onClick={() => goTo(step.nama)} key={step.label}>
               {Math.abs(activeStep - index) <= 2 ? (
-                <Link
-                  to={{
-                    pathname: "/content",
-                    state: {
-                      jenis: step.nama,
-                    },
-                  }}
-                >
-                  <div className={classes.image}>
-                    <img
-                      alt={step.label}
-                      className={classes.img}
-                      src={step.imgPath}
-                    ></img>
-                  </div>
-                </Link>
+                <div className={classes.image}>
+                  <img
+                    alt={step.label}
+                    className={classes.img}
+                    src={step.imgPath}
+                  ></img>
+                </div>
               ) : null}
             </div>
           );

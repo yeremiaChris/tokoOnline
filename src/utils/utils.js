@@ -11,6 +11,10 @@ export const menuList = [
     icon: true,
     menu: [
       {
+        jenis: "All Products",
+        key: "5",
+      },
+      {
         jenis: "T-Shirt",
         key: "1",
       },
@@ -62,10 +66,10 @@ export const sideButtonDua = [
 export const sorting = (items, setSort, setData, jenis) => {
   const value = items.filter((item) => item.jenis === jenis);
   const filterByPrice = items.sort((a, b) => {
-    if (jenis === "lowToHigh") {
+    if (jenis === "Lowest Price") {
       if (a.harga < b.harga) return -1;
       if (a.harga > b.harga) return 1;
-    } else if (jenis === "highToLow") {
+    } else if (jenis === "Highest Price") {
       if (a.harga > b.harga) return -1;
       if (a.harga < b.harga) return 1;
     }
@@ -76,9 +80,9 @@ export const sorting = (items, setSort, setData, jenis) => {
   });
   if (jenis === "All Products") {
     setData(items);
-  } else if (jenis === "lowToHigh") {
+  } else if (jenis === "Lowest Price") {
     setData(filterByPrice);
-  } else if (jenis === "highToLow") {
+  } else if (jenis === "Highest Price") {
     setData(filterByPrice);
   } else {
     setData(value);

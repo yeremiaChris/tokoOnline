@@ -46,32 +46,30 @@ export default function Routes() {
 
   // fetchData
   React.useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/items")
-      .then((data) => {
-        dispatch({ type: "fetchData", data: data.data });
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    const fetchData = () => {
+      return axios
+        .get("http://localhost:5000/api/items")
+        .then((data) => {
+          dispatch({ type: "fetchData", data: data.data });
+          setData(data.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, [dispatch]);
 
   // sort
   const [sort, setSort] = React.useState({
-    by: "",
+    by: "All Products",
     tanda: false,
   });
 
   // data
   const items = useSelector((state) => state.item);
-
-  const [data, setData] = React.useState(
-    location.state === undefined
-      ? items
-      : items.filter((item) => item.jenis === location.state.jenis)
-  );
-
+  const [data, setData] = React.useState(items);
   return (
     <>
-      <Topbar />
+      <Topbar items={items} setSort={setSort} setData={setData} />
       <div className={styles.content} style={{ marginBottom: 120 }}>
         <Grid
           container
@@ -101,16 +99,16 @@ export default function Routes() {
           <div className={styles.content}>
             <Grid container className={styles.container}>
               <Grid item xs={12} lg={8} sm={12} md={8}>
-                <Carausel />
+                <Carausel items={items} setSort={setSort} setData={setData} />
               </Grid>
               <Grid item xs={12} lg={4} sm={12} md={4}>
-                <Iklan />
+                <Iklan items={items} setSort={setSort} setData={setData} />
               </Grid>
             </Grid>
           </div>
           <div className={styles.content}>
             <Grid container className={styles.container}>
-              <Kategori />
+              <Kategori items={items} setSort={setSort} setData={setData} />
             </Grid>
           </div>
           <div className={styles.content}>
@@ -135,7 +133,7 @@ export default function Routes() {
         <Route path="/daftar">
           <div className={styles.content}>
             <Grid container className={styles.container}>
-              <DaftarItem />
+              <DaftarItem data={data} />
             </Grid>
           </div>
         </Route>

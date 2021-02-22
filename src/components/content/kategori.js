@@ -13,6 +13,8 @@ import Image1 from "../../image/black.jpeg";
 import Image2 from "../../image/white.jpeg";
 import Image3 from "../../image/tan.jpeg";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { sorting } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -79,10 +81,22 @@ const data = [
     key: "3",
   },
 ];
-export default function Kategori() {
+export default function Kategori({ items, setSort, setData }) {
   // styles
   const classes = useStyles();
 
+  // ke content
+  const history = useHistory();
+
+  const goTo = (nama) => {
+    sorting(items, setSort, setData, nama);
+    history.push({
+      pathname: `/content`,
+      state: {
+        jenis: nama,
+      },
+    });
+  };
   //
   return (
     <>
@@ -102,19 +116,13 @@ export default function Kategori() {
                   {item.nama}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  <Link
-                    to={{
-                      pathname: `/content`,
-                      state: {
-                        jenis: item.nama,
-                      },
-                    }}
-                    style={{ textDecoration: "none" }}
+                  <Button
+                    onClick={() => goTo(item.nama)}
+                    className={classes.button}
+                    variant="outlined"
                   >
-                    <Button className={classes.button} variant="outlined">
-                      Shop Now
-                    </Button>
-                  </Link>
+                    Shop Now
+                  </Button>
                 </Typography>
               </CardContent>
             </Card>

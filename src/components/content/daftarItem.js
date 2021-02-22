@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 20,
   },
 }));
-export default function DaftarItem() {
+export default function DaftarItem({ data }) {
   const styles = useStyles();
   const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function DaftarItem() {
     setNextPage((prev) => prev + 3);
   };
   // 6 data yang di tampilkan
-  const onePage = items.slice(0, nextPage);
+  const onePage = data.slice(0, nextPage);
   return (
     <Grid container className={styles.container}>
       <Grid
@@ -93,7 +93,6 @@ export default function DaftarItem() {
                   <IconButton
                     edge="start"
                     className={styles.menuButton}
-                    color="gray"
                     aria-label="menu"
                   >
                     <EditOutlinedIcon fontSize="inherit" />
@@ -103,7 +102,6 @@ export default function DaftarItem() {
                   edge="start"
                   className={styles.menuButton}
                   onClick={() => deleteItem(item.nama, item.key, dispatch)}
-                  color="gray"
                   aria-label="menu"
                 >
                   <DeleteOutlineOutlinedIcon fontSize="inherit" />

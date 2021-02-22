@@ -27,7 +27,7 @@ import DataUsageOutlinedIcon from "@material-ui/icons/DataUsageOutlined";
 import Badge from "@material-ui/core/Badge";
 import { useLocation, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-
+import { sorting } from "../utils/utils";
 const useStyles = makeStyles((theme) => ({
   // style pada topbar
   root: {
@@ -167,12 +167,22 @@ const menu = [
   },
 ];
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar({ items, setSort, setData }) {
   const location = useLocation();
   const history = useHistory();
   // variabel buat class
   const classes = useStyles();
+  // akhir carausel atau slide
 
+  const goTo = () => {
+    sorting(items, setSort, setData, "All Products");
+    history.push({
+      pathname: `/daftar`,
+      state: {
+        jenis: "All Products",
+      },
+    });
+  };
   // klik menu profile
   const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
@@ -280,11 +290,9 @@ export default function ButtonAppBar() {
                 {list("top")}
               </SwipeableDrawer>
               <div className={classes.kanan}>
-                <Link className={classes.link} to="/daftar">
-                  <MenuItem className={classes.respon}>
-                    <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
-                  </MenuItem>
-                </Link>
+                <MenuItem onClick={() => goTo()} className={classes.respon}>
+                  <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
+                </MenuItem>
                 <Link to="/addItem">
                   <MenuItem className={classes.respon}>
                     <AddIcon style={{ fontSize: 30, color: "black" }} />

@@ -33,7 +33,7 @@ const NinjaSchema = new Schema({
     required: [true, "Field ini harus di isi"],
   },
   images: [ImageSchema],
-});
+},{ timestamps: true });
 
 // create a model
 const Ninja = mongoose.model("ninja", NinjaSchema);
