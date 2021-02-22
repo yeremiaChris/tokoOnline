@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
     padding: 0,
-    marginRight: 30,
+    marginRight: 20,
   },
   responDua: {
     display: "none",
@@ -292,19 +292,32 @@ export default function ButtonAppBar({ items, setSort, setData }) {
               <div className={classes.kanan}>
                 <MenuItem onClick={() => goTo()} className={classes.respon}>
                   <DataUsageOutlinedIcon style={{ fontSize: 30 }} />
+                  <p style={{ marginLeft: 10 }}>Daftar Item</p>
                 </MenuItem>
-                <Link to="/addItem">
+                <Link className={classes.link} to="/addItem">
                   <MenuItem className={classes.respon}>
                     <AddIcon style={{ fontSize: 30, color: "black" }} />
+                    <p style={{ marginLeft: 10 }}>Tambah Item</p>
                   </MenuItem>
                 </Link>
-                <Badge
-                  className={classes.respon}
-                  badgeContent={4}
-                  color="secondary"
+                <Link
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  className={classes.link}
+                  to="/addItem"
                 >
-                  <ShoppingBasketOutlinedIcon style={{ fontSize: 30 }} />
-                </Badge>
+                  <Badge
+                    className={classes.respon}
+                    badgeContent={4}
+                    color="secondary"
+                  >
+                    <ShoppingBasketOutlinedIcon style={{ fontSize: 30 }} />
+                  </Badge>
+                  <p>Daftar Item</p>
+                </Link>
                 <div className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />

@@ -98,7 +98,14 @@ export default function TopMenu({ items, setSort, setData, data, sort }) {
                       ))}
                     </Menu>
                   ) : (
-                    <p className={styles.link} href="/#">
+                    <p
+                      onClick={() => {
+                        location.pathname === "/"
+                          ? goTo("New Arrivals")
+                          : sortButton("New Arrivals");
+                      }}
+                      className={styles.link}
+                    >
                       {item.name}
                     </p>
                   )}

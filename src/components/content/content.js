@@ -4,7 +4,6 @@ import { Grid, makeStyles, Button } from "@material-ui/core";
 // sortbyprice
 import SortbyPrice from "../sortbyPrice";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { sideButton, sideButtonDua, sorting } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   kiri: {

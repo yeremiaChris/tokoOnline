@@ -25,6 +25,7 @@ import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloseIcon from "@material-ui/icons/Close";
+import { sorting } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -137,7 +138,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function AddItem() {
+function AddItem({ setSort, setData }) {
   const styles = useStyles();
   // edit
   const location = useLocation();
@@ -204,21 +205,25 @@ function AddItem() {
     formData.append("deskripsi", data.deskripsi);
     axios
       .post("http://localhost:5000/api/items", formData, config)
-      .then((data) => {
-        console.log(data);
-        swal({
-          title: `BERHASIL ${
-            location.state === undefined ? "MENAMBAH" : "UPDATE"
-          } ITEM`,
-          text: null,
-          icon: "success",
-          button: "Close",
-        });
+      .then((datas) => {
         axios
           .get("http://localhost:5000/api/items")
           .then((data) => {
+            swal({
+              title: `BERHASIL ${
+                location.state === undefined ? "MENAMBAH" : "UPDATE"
+              } ITEM`,
+              text: null,
+              icon: "success",
+              button: "Close",
+            });
             dispatch({ type: "fetchData", data: data.data });
-            history.push("/daftar");
+            history.push({
+              pathname: `/daftar`,
+              state: {
+                jenis: "All Products",
+              },
+            });
           })
           .catch((err) => console.log(err));
       })
@@ -258,7 +263,11 @@ function AddItem() {
           resetForm,
         }) => {
           return (
-            <form style={{ width: "100%" }}>
+            <form
+              style={{ width: "100%" }}
+              onSubmit={handleSubmit}
+              encType="multipart/form-data"
+            >
               <Grid item lg={12} md={12} sm={12} xs={12}>
                 <Grid>
                   <div className={styles.containerTextInput}>
@@ -433,30 +442,6 @@ function AddItem() {
                             }}
                             className={styles.gambar}
                           >
-                            {/* <input
-                              style={{ display: "none" }}
-                              name="img"
-                              type="file"
-                              ref={(e) => {
-                                refGambar.current.push(e);
-                              }}
-                              onChange={(event) => {
-                                setFieldValue(
-                                  `images.${i}.src`,
-                                  event.target.files[0]
-                                );
-                                setFieldValue(
-                                  `images.${i}.srcImage`,
-                                  URL.createObjectURL(event.target.files[0])
-                                );
-                                setFieldValue(
-                                  `images.${i}.name`,
-                                  event.target.files[0].name
-                                );
-                              }}
-                              onBlur={handleBlur(`images.${i}.src`)}
-                            ></input> */}
-
                             <CloseIcon
                               onClick={() => {
                                 setFieldValue("images", [
@@ -523,7 +508,6 @@ function AddItem() {
                     variant="contained"
                     color="primary"
                     type="submit"
-                    onClick={handleSubmit}
                     endIcon={<SendIcon />}
                   >
                     Submit

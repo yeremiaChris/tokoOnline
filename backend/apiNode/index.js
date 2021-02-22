@@ -28,5 +28,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(process.env.port || 5000, () => {
-  console.log("ada di port 4000");
+  console.log("ada di port 5000");
 });

@@ -72,6 +72,8 @@ export const sorting = (items, setSort, setData, jenis) => {
     } else if (jenis === "Highest Price") {
       if (a.harga > b.harga) return -1;
       if (a.harga < b.harga) return 1;
+    } else if (jenis === "New Arrivals") {
+      return a.createdAt + b.createdAt;
     }
   });
   setSort({
@@ -83,6 +85,8 @@ export const sorting = (items, setSort, setData, jenis) => {
   } else if (jenis === "Lowest Price") {
     setData(filterByPrice);
   } else if (jenis === "Highest Price") {
+    setData(filterByPrice);
+  } else if (jenis === "New Arrivals") {
     setData(filterByPrice);
   } else {
     setData(value);
