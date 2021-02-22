@@ -16,7 +16,7 @@ db.once("open", function () {
 });
 app.use(cors());
 
-app.use(express.static("../../src"));
+app.use(express.static("../../public"));
 
 // middleware untuk mengakses response data
 app.use(bodyParser.json());

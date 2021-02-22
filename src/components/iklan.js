@@ -97,7 +97,7 @@ function Iklan() {
                 to={{
                   pathname: "/content",
                   state: {
-                    nama: item.jenis,
+                    jenis: item.jenis,
                   },
                 }}
               >

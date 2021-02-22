@@ -27,7 +27,7 @@ import DataUsageOutlinedIcon from "@material-ui/icons/DataUsageOutlined";
 import Badge from "@material-ui/core/Badge";
 import { useLocation, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
-import TopMenu from "./topMenu";
+
 const useStyles = makeStyles((theme) => ({
   // style pada topbar
   root: {

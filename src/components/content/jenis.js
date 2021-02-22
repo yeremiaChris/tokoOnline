@@ -10,12 +10,9 @@ import {
   Button,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { formatRupiah } from "../../redux/formatRupiah";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import { deleteItem } from "./action";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -63,19 +60,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Jenis() {
   // styles
   const classes = useStyles();
-
   // ambil data dari reducer
   const items = useSelector((state) => state.item);
-  // state untuk next data
-  const [nextPage, setNextPage] = React.useState(6);
+
+  const [nextPage, setNextPage] = React.useState(12);
   const next = () => {
     setNextPage((prev) => prev + 3);
   };
+
   // 6 data yang di tampilkan
   const onePage = items.slice(0, nextPage);
-
-  // dispatch
-  const dispatch = useDispatch();
 
   return (
     <>
@@ -83,105 +77,75 @@ export default function Jenis() {
         <div className={classes.terbaru}>
           <h1 className={classes.terbaruText}>REKOMENDASI</h1>
         </div>
-        {onePage.map((item) =>
-          item.recomendasi ? (
-            <Card key={item.key} className={classes.root}>
-              <Link
-                style={{
-                  color: "black",
-                  textDecoration: "none",
-                  textAlign: "left",
-                }}
-                to={{
-                  pathname: `/detail/${item.nama}`,
-                  state: {
-                    nama: item.nama,
-                    harga: item.harga,
-                    gambar: item.image,
-                    images: item.images,
-                    key: item.key,
-                    detail: true,
-                  },
-                }}
-              >
-                <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={item.image}
-                    title={item.nama}
-                  />
-                </CardActionArea>
-              </Link>
-              <CardContent
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "flex-end",
-                  padding: 0,
-                }}
-              >
-                <div>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {item.nama}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
-                    style={{
-                      textAlign: "left",
-                    }}
-                  >
-                    {formatRupiah(item.harga)}
-                  </Typography>
-                </div>
-                {/* <div>
-                  <Link
-                    style={{ color: "black" }}
-                    to={{
-                      pathname: "/addItem",
-                      state: {
-                        nama: item.nama,
-                        harga: item.harga,
-                        deskripsi: item.deskripsi,
-                        jenis: item.jenis,
-                        images: item.images,
-                      },
-                    }}
-                  >
-                    <IconButton
-                      edge="start"
-                      className={classes.menuButton}
-                      color="inherit"
-                      aria-label="menu"
-                    >
-                      <EditOutlinedIcon fontSize="inherit" />
-                    </IconButton>
-                  </Link>
-                  <IconButton
-                    onClick={() => {
-                      deleteItem(item.nama, item.key, dispatch);
-                    }}
-                    edge="start"
-                    className={classes.menuButton}
-                    color="inherit"
-                    aria-label="menu"
-                  >
-                    <DeleteOutlineOutlinedIcon fontSize="inherit" />
-                  </IconButton>
-                </div> */}
-              </CardContent>
-            </Card>
-          ) : null
-        )}
+        {onePage.map((item) => (
+          <Card key={item._id} className={classes.root}>
+            <Link
+              style={{
+                color: "black",
+                textDecoration: "none",
+                textAlign: "left",
+              }}
+              to={{
+                pathname: `/detail/${item.name}`,
+                state: {
+                  nama: item.name,
+                  harga: item.harga,
+                  images: item.images,
+                  key: item._id,
+                  detail: true,
+                },
+              }}
+            >
+              <CardActionArea>
+                <CardMedia
+                  className={classes.media}
+                  image={`/uploads/${item.images[0].fileName}`}
+                  title={item.nama}
+                />
+              </CardActionArea>
+            </Link>
+            <CardContent
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                padding: 0,
+              }}
+            >
+              <div>
+                <Typography
+                  style={{ marginTop: 20 }}
+                  gutterBottom
+                  variant="h5"
+                  component="h2"
+                >
+                  {item.name}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  component="p"
+                  style={{
+                    textAlign: "left",
+                    fontSize: 20,
+                  }}
+                >
+                  {formatRupiah(item.harga)}
+                </Typography>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </Grid>
-      <Grid container justify="center" className={classes.bottom}>
-        <Grid item>
-          <Button onClick={next} className={classes.lihat}>
-            LIHAT LAINNYA
-          </Button>
+      {onePage.length <= 3 ? null : (
+        <Grid container justify="center" className={classes.bottom}>
+          <Grid item>
+            <Button onClick={next} className={classes.lihat}>
+              LIHAT LAINNYA
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      )}
     </>
   );
 }

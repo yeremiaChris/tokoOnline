@@ -36,7 +36,6 @@ export const jenis = [
 ];
 // akhir jenis
 // schema
-const FILE_SIZE = 1000 * 2000;
 export const schema = yup.object().shape({
   nama: yup
     .string()

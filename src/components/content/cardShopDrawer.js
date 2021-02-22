@@ -190,13 +190,14 @@ export default function TemporaryDrawer({ key, data }) {
         <div className={classes.containerCart}>
           {cart &&
             cart.map((item) => {
+              console.log(item);
               return (
                 <div key={item.data.key}>
                   <div style={{ marginTop: 20 }}>
                     <div className={classes.iconMenu}>
                       <div
                         style={{
-                          backgroundImage: "url(" + item.data.gambar + ")",
+                          backgroundImage: `url('/uploads/${item.data.images[0].fileName}')`,
                         }}
                         className={classes.gambarCart}
                       ></div>

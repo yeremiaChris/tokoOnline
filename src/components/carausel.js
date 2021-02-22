@@ -112,7 +112,7 @@ function Carausel() {
                   to={{
                     pathname: "/content",
                     state: {
-                      nama: step.nama,
+                      jenis: step.nama,
                     },
                   }}
                 >

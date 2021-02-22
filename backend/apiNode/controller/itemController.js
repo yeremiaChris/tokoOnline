@@ -9,7 +9,7 @@ const util = require("util");
 const multipartMiddleware = multipart();
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "../../src/image");
+    cb(null, "../../public/uploads");
   },
   filename: (req, file, cb) => {
     cb(
@@ -50,7 +50,23 @@ module.exports.items_post = (req, res, next) => {
     if (err) {
       return res.send("Ocurrio un error al subir el archivo.");
     }
-    res.send("test");
+    const obj = {
+      name: req.body.name,
+      harga: req.body.harga,
+      jenis: req.body.jenis,
+      deskripsi: req.body.deskripsi,
+      images: req.files.map((item, index) => {
+        return {
+          name: item.originalname,
+          fileName: item.filename,
+        };
+      }),
+    };
+    Ninja.create(obj)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch(next);
   });
 
   // upload(req, res, (err) => {

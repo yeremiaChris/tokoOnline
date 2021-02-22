@@ -9,11 +9,6 @@ import {
   Grid,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
-import { deleteItem } from "./action";
 import { formatRupiah } from "../../redux/formatRupiah";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,17 +66,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function ItemContent({ data, filter }) {
-  const dispatch = useDispatch();
   // styles
   const classes = useStyles();
   // filter
   return (
     <>
       <Grid item xs={12} className={classes.card}>
-        {data &&
+        {data.length <= 0 ? (
+          <p>Data kosong</p>
+        ) : (
+          data &&
           data.map((item) => {
             return (
-              <Card key={item.key} className={classes.root}>
+              <Card key={item._id} className={classes.root}>
                 <Link
                   style={{
                     color: "black",
@@ -89,21 +86,21 @@ export default function ItemContent({ data, filter }) {
                     textAlign: "left",
                   }}
                   to={{
-                    pathname: `/detail/${item.nama}`,
+                    pathname: `/detail/${item.name}`,
                     state: {
-                      nama: item.nama,
+                      nama: item.name,
                       harga: item.harga,
-                      gambar: item.image,
-                      gambarBanyak: item.images,
-                      key: item.key,
+                      images: item.images,
+                      key: item._id,
+                      detail: true,
                     },
                   }}
                 >
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      image={item.image}
-                      title={item.nama}
+                      image={`/uploads/${item.images[0].fileName}`}
+                      title={item.name}
                     />
                     <div
                       style={{
@@ -125,7 +122,7 @@ export default function ItemContent({ data, filter }) {
                 >
                   <div>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {item.nama}
+                      {item.name}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -172,7 +169,8 @@ export default function ItemContent({ data, filter }) {
                 </CardContent>
               </Card>
             );
-          })}
+          })
+        )}
       </Grid>
     </>
   );

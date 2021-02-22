@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
 
 function DetailContent() {
   // ambil data untuk detail
-  let location = useLocation();
+  const location = useLocation();
   const styles = useStyles();
 
   // state small image
@@ -82,9 +82,8 @@ function DetailContent() {
 
   // state bigImage
   const [big, setBig] = React.useState(
-    location.state === undefined ? null : location.state.gambar
+    location.state === undefined ? null : location.state.images[0].fileName
   );
-
   // click small image
   const clickSmallImage = (image) => {
     setBig(image);
@@ -98,7 +97,11 @@ function DetailContent() {
           <Grid item lg={6} md={6} sm={12} xs={12} className={styles.kiri}>
             <div>
               <div className={styles.bigImage}>
-                <img alt="" className={styles.img} src={big}></img>
+                <img
+                  alt=""
+                  className={styles.img}
+                  src={`/uploads/${big}`}
+                ></img>
               </div>
               <div className={styles.smallImageContainer}>
                 {small &&
@@ -106,10 +109,10 @@ function DetailContent() {
                     return (
                       <div
                         key={item.key}
-                        onClick={() => clickSmallImage(item.srcImage)}
+                        onClick={() => clickSmallImage(item.fileName)}
                         className={styles.smallImage}
                         style={{
-                          backgroundImage: "url(" + item.srcImage + ")",
+                          backgroundImage: `url('/uploads/${item.fileName}')`,
                         }}
                       ></div>
                     );

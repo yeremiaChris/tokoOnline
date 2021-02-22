@@ -1,6 +1,5 @@
 import React from "react";
-import { makeStyles, Grid } from "@material-ui/core";
-import Image1 from "../../image/1.jpg";
+import { makeStyles, Grid, Button } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { formatRupiah } from "../../redux/formatRupiah";
 import { Link } from "react-router-dom";
@@ -8,7 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import { deleteItem } from "./action";
-import axios from "axios";
+
 const useStyles = makeStyles((theme) => ({
   container: {},
   wraper: {
@@ -33,14 +32,6 @@ export default function DaftarItem() {
   const styles = useStyles();
   const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:5000/api/items")
-      .then((data) => {
-        dispatch({ type: "fetchData", data: data.data });
-      })
-      .catch((err) => console.log(err));
-  }, []);
   const [nextPage, setNextPage] = React.useState(12);
   const next = () => {
     setNextPage((prev) => prev + 3);
@@ -57,23 +48,31 @@ export default function DaftarItem() {
         Daftar Barang
       </Grid>
       {onePage &&
-        onePage.map((item) => {
+        onePage.map((item, index) => {
           return (
-            <Grid item className={styles.wraper}>
+            <Grid key={item._id} item className={styles.wraper}>
               <div className={styles.kotak}>
                 <div>
                   <img
                     className={styles.img}
+                    alt={item.name}
                     width={100}
-                    // src={item.image}
-                  ></img>
+                    src={`/uploads/${item.images[0].fileName}`}
+                  />
                 </div>
                 <div>
                   <h2 style={{ padding: 0, margin: 0, fontWeight: "normal" }}>
                     {item.name}
                   </h2>
-                  <p style={{ padding: 0, margin: 0, textAlign: "left" }}>
-                    {/* {formatRupiah(item.harga)} */}
+                  <p
+                    style={{
+                      padding: 0,
+                      margin: 0,
+                      textAlign: "left",
+                      marginTop: 10,
+                    }}
+                  >
+                    {formatRupiah(item.harga)}
                   </p>
                 </div>
               </div>
@@ -113,6 +112,15 @@ export default function DaftarItem() {
             </Grid>
           );
         })}
+      {onePage.length <= 3 ? null : (
+        <Grid container justify="center" className={styles.bottom}>
+          <Grid item>
+            <Button onClick={next} className={styles.lihat}>
+              LIHAT LAINNYA
+            </Button>
+          </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 }

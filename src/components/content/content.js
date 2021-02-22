@@ -4,8 +4,8 @@ import { Grid, makeStyles, Button } from "@material-ui/core";
 // sortbyprice
 import SortbyPrice from "../sortbyPrice";
 import { useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { sideButton, sideButtonDua } from "../../utils/utils";
+import { useSelector } from "react-redux";
+import { sideButton, sideButtonDua, sorting } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   kiri: {
     backgroundColor: "#ebebeb",
@@ -71,49 +71,23 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
   },
 }));
-function Content() {
+function Content({ items, setSort, setData, data, sort }) {
   const styles = useStyles();
 
   // ambil state dari react router ketika link di klik
   const location = useLocation();
-
-  // sort
-  const [sort, setSort] = React.useState({
-    by: "",
-    tanda: false,
-  });
-
-  // data
-  const items = useSelector((state) => state.item);
-  const dispatch = useDispatch();
-  const [data, setData] = React.useState(
-    location.state === undefined
-      ? items
-      : items.filter((item) => item.jenis === location.state.nama)
-  );
-  const sortBy = (value) => {
-    console.log(value);
-    setSort({
-      by: value,
-      tanda: true,
-    });
-    if (value === "All Products") {
-      dispatch({ type: "allProducts" });
-    } else if (value === "lowToHigh") {
-      dispatch({ type: "lowestPrice" });
-    } else if (value === "highToLow") {
-      dispatch({ type: "highestPrice" });
-    } else {
-      dispatch({ type: "filterByValue", value: value });
-    }
+  const sortBy = (jenis) => {
+    sorting(items, setSort, setData, jenis);
   };
+
   // state untuk next data
   const [nextPage, setNextPage] = React.useState(12);
+
   const next = () => {
     setNextPage((prev) => prev + 3);
   };
   // 6 data yang di tampilkan
-  const onePage = items.slice(0, nextPage);
+  const onePage = data.slice(0, nextPage);
   return (
     <>
       <Grid className={styles.sideTool} item xs={12} sm={3} md={3} lg={3}>
@@ -170,7 +144,7 @@ function Content() {
       <Grid className={styles.content} item xs={12} sm={12} md={12} lg={9}>
         <h1 className={styles.kategoriName}>
           {location.state !== undefined && sort.tanda === false
-            ? location.state.nama
+            ? location.state.jenis
             : sort.by}
         </h1>
         <div>

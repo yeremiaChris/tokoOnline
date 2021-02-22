@@ -196,7 +196,7 @@ function AddItem() {
       },
     };
     data.images.map((item) => {
-      formData.append("images", item.src);
+      return formData.append("images", item.src);
     });
     formData.append("name", data.nama);
     formData.append("harga", data.harga);
@@ -214,7 +214,13 @@ function AddItem() {
           icon: "success",
           button: "Close",
         });
-        // history.push("/");
+        axios
+          .get("http://localhost:5000/api/items")
+          .then((data) => {
+            dispatch({ type: "fetchData", data: data.data });
+            history.push("/daftar");
+          })
+          .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));
   };
@@ -391,7 +397,7 @@ function AddItem() {
                     {error}
                   </p>
                   <p style={{ margin: 0 }} className={styles.errorContainer}>
-                    {errors.images}
+                    {touched.images && errors.images}
                   </p>
                   {values.images.length >= 6 ? null : (
                     <Button
@@ -455,7 +461,7 @@ function AddItem() {
                               onClick={() => {
                                 setFieldValue("images", [
                                   ...values.images.filter(
-                                    (items) => items.key != item.key
+                                    (items) => items.key !== item.key
                                   ),
                                 ]);
                               }}

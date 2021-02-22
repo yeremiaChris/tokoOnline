@@ -4,8 +4,8 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import "@szhsin/react-menu/dist/index.css";
 import { menuList } from "../utils/utils";
-import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import { sorting } from "../utils/utils";
 import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,21 +44,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TopMenu() {
+export default function TopMenu({ items, setSort, setData, data, sort }) {
   const styles = useStyles();
   // linking
-  const location = useLocation();
-  console.log(location);
   const history = useHistory();
   const goTo = (nama) => {
     history.push({
       pathname: `/content`,
       state: {
-        nama,
+        jenis: nama,
       },
     });
   };
-
+  // define the button depends on the location
+  const location = useLocation();
+  const sortButton = (jenis) => {
+    sorting(items, setSort, setData, jenis);
+  };
   return (
     <Grid container className={styles.containerFull}>
       <div className={styles.container}>
@@ -79,13 +81,18 @@ export default function TopMenu() {
                         </p>
                       }
                     >
-                      {item.menu.map((item) => {
-                        return (
-                          <MenuItem onClick={() => goTo(item)} key={item}>
-                            {item}
-                          </MenuItem>
-                        );
-                      })}
+                      {item.menu.map((item) => (
+                        <MenuItem
+                          onClick={() =>
+                            location.pathname === "/content"
+                              ? sortButton(item.jenis)
+                              : goTo(item.jenis)
+                          }
+                          key={item.key}
+                        >
+                          {item.jenis}
+                        </MenuItem>
+                      ))}
                     </Menu>
                   ) : (
                     <p className={styles.link} href="/#">

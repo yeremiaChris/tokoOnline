@@ -106,7 +106,7 @@ export default function Kategori() {
                     to={{
                       pathname: `/content`,
                       state: {
-                        nama: item.nama,
+                        jenis: item.nama,
                       },
                     }}
                     style={{ textDecoration: "none" }}

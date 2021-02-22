@@ -8,11 +8,7 @@ const ImageSchema = new Schema({
     type: String,
     required: [true, "Field ini harus ada"],
   },
-  src: {
-    data: Buffer,
-    contentType: String,
-  },
-  srcImage: {
+  fileName: {
     type: String,
     required: [true, "Field ini harus ada"],
   },
