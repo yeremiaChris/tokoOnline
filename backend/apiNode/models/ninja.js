@@ -12,28 +12,35 @@ const ImageSchema = new Schema({
     type: String,
     required: [true, "Field ini harus ada"],
   },
-});
-
-// ninja schema
-const NinjaSchema = new Schema({
-  name: {
+  tempat: {
     type: String,
     required: [true, "Field ini harus ada"],
   },
-  harga: {
-    type: Number,
-    required: [true, "Field ini harus di isi"],
+});
+
+// ninja schema
+const NinjaSchema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, "Field ini harus ada"],
+    },
+    harga: {
+      type: Number,
+      required: [true, "Field ini harus di isi"],
+    },
+    jenis: {
+      type: String,
+      required: [true, "Field ini harus di isi"],
+    },
+    deskripsi: {
+      type: String,
+      required: [true, "Field ini harus di isi"],
+    },
+    images: [ImageSchema],
   },
-  jenis: {
-    type: String,
-    required: [true, "Field ini harus di isi"],
-  },
-  deskripsi: {
-    type: String,
-    required: [true, "Field ini harus di isi"],
-  },
-  images: [ImageSchema],
-},{ timestamps: true });
+  { timestamps: true }
+);
 
 // create a model
 const Ninja = mongoose.model("ninja", NinjaSchema);

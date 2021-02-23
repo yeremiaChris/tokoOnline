@@ -144,7 +144,7 @@ function AddItem({ setSort, setData }) {
   // ref gambar array of object
   const refGambar = React.useRef([]);
   // klik to open input element
-  const tambahGambar = (index) => {
+  const tambahGambar = () => {
     // refGambar.current[index].click();
     refGambar.current.click();
   };
@@ -366,15 +366,18 @@ function AddItem({ setSort, setData }) {
                     values.images.map((item, i) => {
                       return (
                         <div
-                          // onClick={() => tambahGambar(i)}
-
-                          key={item.key}
+                          key={
+                            location.state === undefined ? item.key : item._id
+                          }
                           style={{ color: "gray", marginRight: 40 }}
                         >
                           <p className={styles.name}>{item.name}</p>
                           <div
                             style={{
-                              backgroundImage: "url(" + item.srcImage + ")",
+                              backgroundImage:
+                                location.state === undefined
+                                  ? `url('${item.srcImage}')`
+                                  : `url('/uploads/${item.name}')`,
                               backgroundPosition: "center",
                               backgroundSize: "cover",
                               backgroundRepeat: "no-repeat",
@@ -383,11 +386,17 @@ function AddItem({ setSort, setData }) {
                           >
                             <CloseIcon
                               onClick={() => {
-                                setFieldValue("images", [
-                                  ...values.images.filter(
-                                    (items) => items.key !== item.key
-                                  ),
-                                ]);
+                                location.state === undefined
+                                  ? setFieldValue("images", [
+                                      ...values.images.filter(
+                                        (items) => items.key !== item.key
+                                      ),
+                                    ])
+                                  : setFieldValue("images", [
+                                      ...values.images.filter(
+                                        (items) => items._id !== item._id
+                                      ),
+                                    ]);
                               }}
                               className={styles.close}
                               fontSize="large"

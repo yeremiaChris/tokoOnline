@@ -7,6 +7,10 @@ import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import { deleteItem } from "./action";
+import { sorting } from "../../utils/utils";
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {},
@@ -36,9 +40,11 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 10,
   },
 }));
-export default function DaftarItem({ data }) {
+export default function DaftarItem({ data, setSort, setData }) {
   const styles = useStyles();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const history = useHistory();
   const [nextPage, setNextPage] = React.useState(12);
   const next = () => {
     setNextPage((prev) => prev + 3);
@@ -82,13 +88,20 @@ export default function DaftarItem({ data }) {
                 <Link
                   style={{ color: "black" }}
                   to={{
-                    pathname: `/editItem/${item.key}`,
+                    pathname: `/editItem/${item.name}`,
                     state: {
-                      nama: item.nama,
+                      nama: item.name,
                       harga: item.harga,
                       deskripsi: item.deskripsi,
                       jenis: item.jenis,
-                      images: item.images,
+                      images: item.images.map((item) => {
+                        return {
+                          key: item._id,
+                          name: item.fileName,
+                          src: "tidak ada",
+                          srcImage: "tidak ada",
+                        };
+                      }),
                     },
                   }}
                 >
@@ -103,7 +116,19 @@ export default function DaftarItem({ data }) {
                 <IconButton
                   edge="start"
                   className={styles.menuButton}
-                  onClick={() => deleteItem(item.nama, item.key, dispatch)}
+                  onClick={() =>
+                    deleteItem(
+                      item.name,
+                      item._id,
+                      axios,
+                      dispatch,
+                      sorting,
+                      history,
+                      setSort,
+                      setData,
+                      location
+                    )
+                  }
                   aria-label="menu"
                 >
                   <DeleteOutlineOutlinedIcon fontSize="inherit" />

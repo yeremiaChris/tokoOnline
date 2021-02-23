@@ -1,6 +1,7 @@
 const Ninja = require("../models/ninja");
 const fs = require("fs");
 require("dotenv/config");
+
 // multer
 
 const multipart = require("connect-multiparty");
@@ -27,6 +28,7 @@ module.exports.items_post = (req, res, next) => {
       return {
         name: item.originalname,
         fileName: item.filename,
+        tempat: item.path,
       };
     }),
   };
@@ -52,6 +54,14 @@ module.exports.items_put = (req, res, next) => {
 module.exports.items_delete = (req, res, next) => {
   Ninja.findByIdAndDelete({ _id: req.params.id })
     .then((data) => {
+      data.images.map((item) => {
+        fs.unlink(item.tempat, function (err) {
+          if (err) {
+            console.log(err);
+            next();
+          }
+        });
+      });
       res.send(data);
     })
     .catch(next);

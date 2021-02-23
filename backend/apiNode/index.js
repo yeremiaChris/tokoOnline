@@ -14,13 +14,12 @@ db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function () {
   console.log("connect to db");
 });
-app.use(cors());
-
-app.use(express.static("../../public"));
 
 // middleware untuk mengakses response data
 app.use(bodyParser.json());
+app.use(express.static("../../public"));
 
+app.use(cors());
 app.use("/api", routerApi);
 
 app.use((err, req, res, next) => {

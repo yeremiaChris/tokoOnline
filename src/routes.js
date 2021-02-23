@@ -133,7 +133,7 @@ export default function Routes() {
         <Route path="/daftar">
           <div className={styles.content}>
             <Grid container className={styles.container}>
-              <DaftarItem data={data} />
+              <DaftarItem data={data} setSort={setSort} setData={setData} />
             </Grid>
           </div>
         </Route>
