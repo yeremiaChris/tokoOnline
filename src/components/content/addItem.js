@@ -6,7 +6,6 @@ import { Grid, makeStyles, TextField } from "@material-ui/core";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Button from "@material-ui/core/Button";
 import RotateLeftIcon from "@material-ui/icons/RotateLeft";
 import SendIcon from "@material-ui/icons/Send";
@@ -25,7 +24,7 @@ import { useLocation } from "react-router-dom";
 import swal from "sweetalert";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloseIcon from "@material-ui/icons/Close";
-import { sorting } from "../../utils/utils";
+import { sorting, submitItem, inputImage } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -152,89 +151,22 @@ function AddItem({ setSort, setData }) {
   // onsubmit
   const dispatch = useDispatch();
   const history = useHistory();
-  const [file, setFile] = React.useState({});
   const [error, setError] = React.useState("");
+
+  // submit data
   const onSubmit = (data) => {
-    // const key = Math.random();
-    // console.log(data);
-    // location.state === undefined
-    //   ? dispatch({
-    //       type: "addItem",
-    //       item: {
-    //         nama: data.nama,
-    //         harga: data.harga,
-    //         stok: 0,
-    //         image: data.images[0].srcImage,
-    //         images: data.images,
-    //         key: key.toString(),
-    //         recomendasi: true,
-    //         jenis: data.jenis,
-    //         deskripsi: data.deskripsi,
-    //       },
-    //     })
-    //   : dispatch({
-    //       type: "updateItem",
-    //       key: data.key,
-    //       nama: data.nama,
-    //       harga: data.harga,
-    //       image: data.images[0].srcImage,
-    //       images: data.images,
-    //       jenis: data.jenis,
-    //       deskripsi: data.deskripsi,
-    //     });
-    // untuk sementara pake history untuk redirect tapi kalo udah masuk database nanti pake   redirect component dari react router lebih bagus
-    // if (file.length !== 6) {
-    //   setError("Gambar harus di inputkan dan berjumlah 6");
-    // } else {
-    //   file.forEach((element) => {
-    //     console.log(element.error);
-    //   });
-    // }
-    let formData = new FormData();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-    };
-    data.images.map((item) => {
-      return formData.append("images", item.src);
-    });
-    formData.append("name", data.nama);
-    formData.append("harga", data.harga);
-    formData.append("jenis", data.jenis);
-    formData.append("deskripsi", data.deskripsi);
-    axios
-      .post("http://localhost:5000/api/items", formData, config)
-      .then((datas) => {
-        axios
-          .get("http://localhost:5000/api/items")
-          .then((data) => {
-            swal({
-              title: `BERHASIL ${
-                location.state === undefined ? "MENAMBAH" : "UPDATE"
-              } ITEM`,
-              text: null,
-              icon: "success",
-              button: "Close",
-            });
-            dispatch({ type: "fetchData", data: data.data });
-            sorting(data.data, setSort, setData, "All Products");
-            history.push({
-              pathname: `/content`,
-              state: {
-                jenis: "All Products",
-              },
-            });
-            history.push({
-              pathname: `/daftar`,
-              state: {
-                jenis: "All Products",
-              },
-            });
-          })
-          .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err));
+    // submit function dari utils
+    submitItem(
+      data,
+      axios,
+      swal,
+      dispatch,
+      sorting,
+      history,
+      setSort,
+      location,
+      setData
+    );
   };
   return (
     <Grid container className={styles.container}>
@@ -479,25 +411,8 @@ function AddItem({ setSort, setData }) {
                 ref={refGambar}
                 onBlur={handleBlur(`images`)}
                 onChange={(e) => {
-                  if (
-                    e.target.files[0].type === "image/jpg" ||
-                    e.target.files[0].type === "image/jpeg" ||
-                    e.target.files[0].type === "image/png"
-                  ) {
-                    setFieldValue(
-                      "images",
-                      values.images.concat({
-                        name: e.target.files[0].name,
-                        key: `${e.target.files[0].name} + ${Date.now()} `,
-                        src: e.target.files[0],
-                        srcImage: URL.createObjectURL(e.target.files[0]),
-                      })
-                    );
-                    setError("");
-                  } else {
-                    setError("tipe gambar salah");
-                  }
-                  setFile(values.images);
+                  // function ini dari utils
+                  inputImage(e, values, setFieldValue, setError);
                 }}
               ></input>
               <Grid item lg={12} md={12} sm={12} xs={12}>

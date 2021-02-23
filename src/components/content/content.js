@@ -149,7 +149,7 @@ function Content({ items, setSort, setData, data, sort }) {
         <div>
           <ItemContent data={onePage} />
         </div>
-        {onePage.length === data.length ? null : (
+        {onePage.length <= 6 ? null : (
           <Grid container justify="center" className={styles.bottom}>
             <Grid item>
               <Button onClick={next} className={styles.lihat}>

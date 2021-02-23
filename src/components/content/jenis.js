@@ -137,7 +137,7 @@ export default function Jenis() {
           </Card>
         ))}
       </Grid>
-      {onePage.length <= 3 ? null : (
+      {onePage.length <= 6 ? null : (
         <Grid container justify="center" className={classes.bottom}>
           <Grid item>
             <Button onClick={next} className={classes.lihat}>

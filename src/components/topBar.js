@@ -249,7 +249,7 @@ export default function ButtonAppBar({ items, setSort, setData }) {
 
   // back
   const back = () => {
-    history.goBack();
+    history.push("/");
   };
   return (
     <div className={classes.root}>

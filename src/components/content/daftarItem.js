@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles, Grid, Button } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { formatRupiah } from "../../redux/formatRupiah";
 import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
@@ -29,10 +29,15 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     height: "100%",
   },
+  formatRupiah: {
+    padding: 0,
+    margin: 0,
+    textAlign: "left",
+    marginTop: 10,
+  },
 }));
 export default function DaftarItem({ data }) {
   const styles = useStyles();
-  const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
   const [nextPage, setNextPage] = React.useState(12);
   const next = () => {
@@ -49,9 +54,11 @@ export default function DaftarItem({ data }) {
       >
         Daftar Barang
       </Grid>
-      {onePage &&
+      {onePage.length === 0 ? (
+        <p>Item tidak tersedia</p>
+      ) : (
+        onePage &&
         onePage.map((item, index) => {
-          console.log(onePage);
           return (
             <Grid key={item._id} item className={styles.wraper}>
               <div className={styles.kotak}>
@@ -62,18 +69,11 @@ export default function DaftarItem({ data }) {
                     src={`/uploads/${item.images[0].fileName}`}
                   />
                 </div>
-                <div>
+                <div style={{ marginLeft: 20 }}>
                   <h2 style={{ padding: 0, margin: 0, fontWeight: "normal" }}>
                     {item.name}
                   </h2>
-                  <p
-                    style={{
-                      padding: 0,
-                      margin: 0,
-                      textAlign: "left",
-                      marginTop: 10,
-                    }}
-                  >
+                  <p className={styles.formatRupiah}>
                     {formatRupiah(item.harga)}
                   </p>
                 </div>
@@ -111,8 +111,9 @@ export default function DaftarItem({ data }) {
               </div>
             </Grid>
           );
-        })}
-      {onePage.length <= 3 ? null : (
+        })
+      )}
+      {onePage.length <= 6 ? null : (
         <Grid container justify="center" className={styles.bottom}>
           <Grid item>
             <Button onClick={next} className={styles.lihat}>
