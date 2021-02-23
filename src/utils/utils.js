@@ -73,7 +73,7 @@ export const sorting = (items, setSort, setData, jenis) => {
       if (a.harga > b.harga) return -1;
       if (a.harga < b.harga) return 1;
     } else if (jenis === "New Arrivals") {
-      return a.createdAt + b.createdAt;
+      return new Date(b.createdAt) - new Date(a.createdAt);
     }
   });
   setSort({

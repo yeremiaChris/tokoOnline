@@ -108,7 +108,7 @@ function DetailContent() {
                   small.map((item) => {
                     return (
                       <div
-                        key={item.key}
+                        key={item._id}
                         onClick={() => clickSmallImage(item.fileName)}
                         className={styles.smallImage}
                         style={{

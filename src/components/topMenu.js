@@ -76,7 +76,11 @@ export default function TopMenu({ items, setSort, setData, data, sort }) {
                     <Menu
                       menuButton={
                         <p className={styles.link} href="/#">
-                          {sort.by}
+                          {sort.by === "New Arrivals" ||
+                          sort.by === "Highest Price" ||
+                          sort.by === "Lowest Price"
+                            ? "All Products"
+                            : sort.by}
                           <ArrowDropDownIcon
                             fontSize="small"
                             className={styles.icon}
@@ -99,6 +103,11 @@ export default function TopMenu({ items, setSort, setData, data, sort }) {
                     </Menu>
                   ) : (
                     <p
+                      style={{
+                        backgroundColor:
+                          sort.by === item.name ? "#dadada" : null,
+                        borderRadius: 10,
+                      }}
                       onClick={() => {
                         location.pathname === "/"
                           ? goTo("New Arrivals")

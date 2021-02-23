@@ -26,6 +26,8 @@ const useStyles = makeStyles((theme) => ({
   img: {
     objectFit: "cover",
     marginRight: 20,
+    width: "100%",
+    height: "100%",
   },
 }));
 export default function DaftarItem({ data }) {
@@ -49,14 +51,14 @@ export default function DaftarItem({ data }) {
       </Grid>
       {onePage &&
         onePage.map((item, index) => {
+          console.log(onePage);
           return (
             <Grid key={item._id} item className={styles.wraper}>
               <div className={styles.kotak}>
-                <div>
+                <div style={{ width: 100, height: 100 }}>
                   <img
                     className={styles.img}
                     alt={item.name}
-                    width={100}
                     src={`/uploads/${item.images[0].fileName}`}
                   />
                 </div>

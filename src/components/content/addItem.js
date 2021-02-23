@@ -218,6 +218,13 @@ function AddItem({ setSort, setData }) {
               button: "Close",
             });
             dispatch({ type: "fetchData", data: data.data });
+            sorting(data.data, setSort, setData, "All Products");
+            history.push({
+              pathname: `/content`,
+              state: {
+                jenis: "All Products",
+              },
+            });
             history.push({
               pathname: `/daftar`,
               state: {
