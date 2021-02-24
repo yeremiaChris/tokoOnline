@@ -154,7 +154,7 @@ export default function Routes() {
         <Route path="/editItem/:slug">
           <div className={styles.content}>
             <Grid container className={styles.container}>
-              <AddItem />
+              <AddItem setSort={setSort} setData={setData} />
             </Grid>
           </div>
         </Route>

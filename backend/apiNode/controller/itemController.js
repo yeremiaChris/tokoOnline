@@ -40,7 +40,33 @@ module.exports.items_post = (req, res, next) => {
 };
 
 module.exports.items_put = (req, res, next) => {
-  Ninja.findByIdAndUpdate({ _id: req.params.id }, req.body)
+  const images = [];
+  // if (req.files.length === 0) {
+  //   req.body.images.map((item) => images.push(JSON.parse(item)));
+  // } else {
+  //   const array = req.files.map((item) => JSON.parse(item));
+  //   images.push(array);
+  // }
+  if (req.files.length === 0) {
+    req.body.images.map((item) => images.push(JSON.parse(item)));
+  } else {
+    req.files.map((item) => images.push(item));
+  }
+  const obj = {
+    _id: req.params.id,
+    name: req.body.name,
+    harga: req.body.harga,
+    jenis: req.body.jenis,
+    deskripsi: req.body.deskripsi,
+    images: images.map((item) => {
+      return {
+        name: item.srcImage.slice(9),
+        fileName: item.name,
+        tempat: item.src,
+      };
+    }),
+  };
+  Ninja.findByIdAndUpdate({ _id: req.params.id }, obj)
     .then(() => {
       Ninja.findOne({ _id: req.params.id })
         .then((data) => {

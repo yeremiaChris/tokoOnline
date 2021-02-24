@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import { deleteItem } from "./action";
+import { deleteItem, updateItem } from "./action";
 import { sorting } from "../../utils/utils";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -90,6 +90,7 @@ export default function DaftarItem({ data, setSort, setData }) {
                   to={{
                     pathname: `/editItem/${item.name}`,
                     state: {
+                      _id: item._id,
                       nama: item.name,
                       harga: item.harga,
                       deskripsi: item.deskripsi,
@@ -97,9 +98,9 @@ export default function DaftarItem({ data, setSort, setData }) {
                       images: item.images.map((item) => {
                         return {
                           key: item._id,
-                          name: item.fileName,
-                          src: "tidak ada",
-                          srcImage: "tidak ada",
+                          name: item.name,
+                          src: item.tempat,
+                          srcImage: `/uploads/${item.fileName}`,
                         };
                       }),
                     },

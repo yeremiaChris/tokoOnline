@@ -25,6 +25,7 @@ import swal from "sweetalert";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloseIcon from "@material-ui/icons/Close";
 import { sorting, submitItem, inputImage } from "../../utils/utils";
+import { updateItem } from "./action";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -152,22 +153,59 @@ function AddItem({ setSort, setData }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [error, setError] = React.useState("");
-
+  console.log(location);
   // submit data
   const onSubmit = (data) => {
     // submit function dari utils
-    submitItem(
-      data,
-      axios,
-      swal,
-      dispatch,
-      sorting,
-      history,
-      setSort,
-      location,
-      setData
-    );
+    if (location.pathname !== "/addItem") {
+      const obj = {
+        nama: data.nama,
+        harga: data.harga,
+        jenis: data.jenis,
+        deskripsi: data.deskripsi,
+        images: data.images.map((item) => {
+          return {
+            key: item.key,
+            srcImage: item.srcImage,
+            src: item.src,
+            name: item.name,
+          };
+        }),
+      };
+      updateItem(
+        data.nama,
+        data._id,
+        axios,
+        dispatch,
+        sorting,
+        history,
+        setSort,
+        setData,
+        location,
+        obj
+      );
+    } else {
+      submitItem(
+        data,
+        axios,
+        swal,
+        dispatch,
+        sorting,
+        history,
+        setSort,
+        location,
+        setData
+      );
+    }
+
+    // if (location.pathname === "/addItem") {
+
+    // } else {
+
+    // }
   };
+  const [urlUpdateImage, setUrlUpdateImage] = React.useState("/uploads/");
+
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -181,9 +219,11 @@ function AddItem({ setSort, setData }) {
           location.state === undefined
             ? initialValues
             : {
+                _id: location.state._id,
                 nama: location.state.nama,
                 harga: location.state.harga,
                 jenis: location.state.jenis,
+
                 deskripsi: location.state.deskripsi,
                 images: location.state.images,
               }
@@ -367,17 +407,16 @@ function AddItem({ setSort, setData }) {
                       return (
                         <div
                           key={
-                            location.state === undefined ? item.key : item._id
+                            location.state === undefined
+                              ? item.key
+                              : item.tempat
                           }
                           style={{ color: "gray", marginRight: 40 }}
                         >
                           <p className={styles.name}>{item.name}</p>
                           <div
                             style={{
-                              backgroundImage:
-                                location.state === undefined
-                                  ? `url('${item.srcImage}')`
-                                  : `url('/uploads/${item.name}')`,
+                              backgroundImage: `url('${item.srcImage}')`,
                               backgroundPosition: "center",
                               backgroundSize: "cover",
                               backgroundRepeat: "no-repeat",
@@ -386,17 +425,11 @@ function AddItem({ setSort, setData }) {
                           >
                             <CloseIcon
                               onClick={() => {
-                                location.state === undefined
-                                  ? setFieldValue("images", [
-                                      ...values.images.filter(
-                                        (items) => items.key !== item.key
-                                      ),
-                                    ])
-                                  : setFieldValue("images", [
-                                      ...values.images.filter(
-                                        (items) => items._id !== item._id
-                                      ),
-                                    ]);
+                                setFieldValue("images", [
+                                  ...values.images.filter(
+                                    (items) => items.key !== item.key
+                                  ),
+                                ]);
                               }}
                               className={styles.close}
                               fontSize="large"
