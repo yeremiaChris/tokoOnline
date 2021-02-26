@@ -26,6 +26,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloseIcon from "@material-ui/icons/Close";
 import { sorting, submitItem, inputImage } from "../../utils/utils";
 import { updateItem } from "./action";
+import { addingItem } from "../../redux/actionRedux";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -153,7 +154,6 @@ function AddItem({ setSort, setData }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [error, setError] = React.useState("");
-  console.log(location);
   // submit data
   const onSubmit = (data) => {
     // submit function dari utils
@@ -185,26 +185,10 @@ function AddItem({ setSort, setData }) {
         obj
       );
     } else {
-      submitItem(
-        data,
-        axios,
-        swal,
-        dispatch,
-        sorting,
-        history,
-        setSort,
-        location,
-        setData
-      );
+      dispatch(addingItem(data));
+      history.push("/daftar");
     }
-
-    // if (location.pathname === "/addItem") {
-
-    // } else {
-
-    // }
   };
-  const [urlUpdateImage, setUrlUpdateImage] = React.useState("/uploads/");
 
   return (
     <Grid container className={styles.container}>
@@ -223,7 +207,6 @@ function AddItem({ setSort, setData }) {
                 nama: location.state.nama,
                 harga: location.state.harga,
                 jenis: location.state.jenis,
-
                 deskripsi: location.state.deskripsi,
                 images: location.state.images,
               }
@@ -407,9 +390,7 @@ function AddItem({ setSort, setData }) {
                       return (
                         <div
                           key={
-                            location.state === undefined
-                              ? item.key
-                              : item.tempat
+                            location.state === undefined ? item.key : item.key
                           }
                           style={{ color: "gray", marginRight: 40 }}
                         >

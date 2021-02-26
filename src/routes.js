@@ -11,15 +11,13 @@ import AddItem from "./components/content/addItem";
 import NotFound from "./components/notFound";
 import { Switch, Route } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import Topbar from "./components/topBar";
 import TopMenu from "./components/topMenu";
 import ButtonSortCategori from "./components/content/ButtonSortCategori";
 import ScrollToTop from "./scrollTop";
 import { createBrowserHistory } from "history";
-
+import { fetchData } from "./redux/actionRedux";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1050,
@@ -42,31 +40,18 @@ const useStyles = makeStyles((theme) => ({
 export default function Routes() {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation();
-
+  // data
+  const items = useSelector((state) => state.item);
+  const [data, setData] = React.useState(items);
   // fetchData
   React.useEffect(() => {
-    const fetchData = () => {
-      return axios
-        .get("http://localhost:5000/api/items")
-        .then((data) => {
-          dispatch({ type: "fetchData", data: data.data });
-          setData(data.data);
-        })
-        .catch((err) => console.log(err));
-    };
-    fetchData();
+    dispatch(fetchData());
   }, [dispatch]);
-
   // sort
   const [sort, setSort] = React.useState({
     by: "All Products",
     tanda: false,
   });
-
-  // data
-  const items = useSelector((state) => state.item);
-  const [data, setData] = React.useState(items);
   return (
     <>
       <Topbar items={items} setSort={setSort} setData={setData} />

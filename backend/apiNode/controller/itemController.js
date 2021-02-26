@@ -12,19 +12,24 @@ const multipartMiddleware = multipart();
 
 module.exports.items_get = (req, res, next) => {
   Ninja.find({})
-    .then((data) => {
-      res.send(data);
-    })
-    .catch(next);
+    .sort({ createdAt: -1 })
+    .exec((err, doc) => {
+      if (err) {
+        return next();
+      }
+      res.send(doc);
+    });
 };
 
 module.exports.items_post = (req, res, next) => {
+  const files = req.files;
+  const objs = req.body;
   const obj = {
-    name: req.body.name,
-    harga: req.body.harga,
-    jenis: req.body.jenis,
-    deskripsi: req.body.deskripsi,
-    images: req.files.map((item, index) => {
+    name: objs.name,
+    harga: parseInt(objs.harga),
+    jenis: objs.jenis,
+    deskripsi: objs.deskripsi,
+    images: files.map((item) => {
       return {
         name: item.originalname,
         fileName: item.filename,
@@ -32,21 +37,26 @@ module.exports.items_post = (req, res, next) => {
       };
     }),
   };
-  Ninja.create(obj)
-    .then((data) => {
-      res.status(201).send(data);
-    })
-    .catch(next);
+  Ninja.create(obj, (err, data) => {
+    if (err) {
+      console.log("CREATE Error: " + err);
+      res.status(500).send("Error");
+      next();
+    } else {
+      Ninja.find({})
+        .sort({ createdAt: -1 })
+        .exec((err, doc) => {
+          if (err) {
+            return next();
+          }
+          res.send(doc);
+        });
+    }
+  });
 };
 
 module.exports.items_put = (req, res, next) => {
   const images = [];
-  // if (req.files.length === 0) {
-  //   req.body.images.map((item) => images.push(JSON.parse(item)));
-  // } else {
-  //   const array = req.files.map((item) => JSON.parse(item));
-  //   images.push(array);
-  // }
   if (req.files.length === 0) {
     req.body.images.map((item) => images.push(JSON.parse(item)));
   } else {
@@ -60,8 +70,8 @@ module.exports.items_put = (req, res, next) => {
     deskripsi: req.body.deskripsi,
     images: images.map((item) => {
       return {
-        name: item.srcImage.slice(9),
-        fileName: item.name,
+        name: item.name,
+        fileName: item.srcImage.slice(9),
         tempat: item.src,
       };
     }),
@@ -70,6 +80,7 @@ module.exports.items_put = (req, res, next) => {
     .then(() => {
       Ninja.findOne({ _id: req.params.id })
         .then((data) => {
+          console.log(data);
           res.send(data);
         })
         .catch(next);
@@ -88,7 +99,18 @@ module.exports.items_delete = (req, res, next) => {
           }
         });
       });
-      res.send(data);
+      console.log(data);
+      Ninja.find({})
+        .sort({ createdAt: -1 })
+        .exec((err, doc) => {
+          if (err) {
+            return next();
+          }
+          res.send(doc);
+        });
     })
-    .catch(next);
+    .catch((err) => {
+      console.log(err);
+      next();
+    });
 };

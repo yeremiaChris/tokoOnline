@@ -2,7 +2,7 @@ import Image1 from "../image/black.jpeg";
 import Image2 from "../image/white.jpeg";
 import Image3 from "../image/tan.jpeg";
 import Image4 from "../image/grey.jpeg";
-
+import { FETCH_DATA, DELETE_ITEM_DATA, ADDING_ITEM } from "./reduxName";
 const initState = {
   item: [],
   cart: [],
@@ -49,10 +49,10 @@ const initState = {
 
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
-    case "fetchData":
+    case FETCH_DATA:
       return {
         ...state,
-        item: action.data,
+        item: action.items,
       };
     case "addCart":
       return {
@@ -96,40 +96,51 @@ const rootReducer = (state = initState, action) => {
         ...state,
         cart: [...state.cart.filter((item) => item.key !== action.key)],
       };
-    case "addItem":
+    // case "addItem":
+    //   return {
+    //     ...state,
+    //     item: [action.item, ...state.item],
+    //   };
+    // case "updateItem":
+    //   return {
+    //     ...state,
+    //     item: [
+    //       ...state.item.map((item) =>
+    //         item.key === action.key
+    //           ? {
+    //               ...item,
+    //               nama: action.nama,
+    //               harga: action.harga,
+    //               image: action.image,
+    //               images: action.images,
+    //               deskripsi: action.deskripsi,
+    //               jenis: action.jenis,
+    //             }
+    //           : item
+    //       ),
+    //     ],
+    //   };
+    // case "deleteItem":
+    //   return {
+    //     ...state,
+    //     item: [
+    //       ...state.item.filter((item) =>
+    //         item.key === action.key ? item.key !== action.key : item
+    //       ),
+    //     ],
+    //   };
+    case ADDING_ITEM:
+      const newItem = action.item;
       return {
         ...state,
-        item: [action.item, ...state.item],
+        item: [newItem, ...state.item],
       };
-    case "updateItem":
+    case DELETE_ITEM_DATA: {
       return {
+        item: [...state.item.filter((data) => data._id !== action.key)],
         ...state,
-        item: [
-          ...state.item.map((item) =>
-            item.key === action.key
-              ? {
-                  ...item,
-                  nama: action.nama,
-                  harga: action.harga,
-                  image: action.image,
-                  images: action.images,
-                  deskripsi: action.deskripsi,
-                  jenis: action.jenis,
-                }
-              : item
-          ),
-        ],
       };
-    case "deleteItem":
-      return {
-        ...state,
-        item: [
-          ...state.item.filter((item) =>
-            item.key === action.key ? item.key !== action.key : item
-          ),
-        ],
-      };
-
+    }
     default:
       return state;
   }

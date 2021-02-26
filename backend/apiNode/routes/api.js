@@ -36,7 +36,7 @@ router.get("/items", itemController.items_get);
 router.post("/items", upload.array("images"), itemController.items_post);
 
 // update a ninja in db
-router.put("/items/:id", upload.array("images"), itemController.items_put);
+router.put("/items/:id", upload.array("image"), itemController.items_put);
 
 // delete ninja in db
 router.delete("/items/:id", itemController.items_delete);

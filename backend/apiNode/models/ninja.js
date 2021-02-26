@@ -37,7 +37,10 @@ const NinjaSchema = new Schema(
       type: String,
       required: [true, "Field ini harus di isi"],
     },
-    images: [ImageSchema],
+    images: {
+      type: Array,
+      required: [true, "Field ini harus di isi"],
+    },
   },
   { timestamps: true }
 );

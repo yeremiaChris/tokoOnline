@@ -90,7 +90,6 @@ export const updateItem = (
       axios
         .put(`http://localhost:5000/api/items/${key}`, formData, config)
         .then((data) => {
-          console.log(data);
           axios
             .get("http://localhost:5000/api/items")
             .then((data) => {

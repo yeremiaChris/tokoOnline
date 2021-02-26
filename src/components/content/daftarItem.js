@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import { deleteItem, updateItem } from "./action";
+import { deleteItem } from "./action";
 import { sorting } from "../../utils/utils";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-
+import { useSelector } from "react-redux";
+import { deleteItemData } from "../../redux/actionRedux";
 const useStyles = makeStyles((theme) => ({
   container: {},
   wraper: {
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function DaftarItem({ data, setSort, setData }) {
+  const items = useSelector((state) => state.item);
   const styles = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -50,7 +52,7 @@ export default function DaftarItem({ data, setSort, setData }) {
     setNextPage((prev) => prev + 3);
   };
   // 6 data yang di tampilkan
-  const onePage = data.slice(0, nextPage);
+  const onePage = items.slice(0, nextPage);
   return (
     <Grid container className={styles.container}>
       <Grid
@@ -60,11 +62,11 @@ export default function DaftarItem({ data, setSort, setData }) {
       >
         Daftar Barang
       </Grid>
-      {onePage.length === 0 ? (
+      {items.length === 0 ? (
         <p>Item tidak tersedia</p>
       ) : (
-        onePage &&
-        onePage.map((item, index) => {
+        items &&
+        items.map((item, index) => {
           return (
             <Grid key={item._id} item className={styles.wraper}>
               <div className={styles.kotak}>
@@ -117,19 +119,7 @@ export default function DaftarItem({ data, setSort, setData }) {
                 <IconButton
                   edge="start"
                   className={styles.menuButton}
-                  onClick={() =>
-                    deleteItem(
-                      item.name,
-                      item._id,
-                      axios,
-                      dispatch,
-                      sorting,
-                      history,
-                      setSort,
-                      setData,
-                      location
-                    )
-                  }
+                  onClick={() => dispatch(deleteItemData(item._id, item.name))}
                   aria-label="menu"
                 >
                   <DeleteOutlineOutlinedIcon fontSize="inherit" />

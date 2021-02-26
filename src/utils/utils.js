@@ -95,6 +95,7 @@ export const sorting = (items, setSort, setData, jenis) => {
 };
 
 // submit pada tambah item
+
 export const submitItem = (
   data,
   axios,
@@ -107,11 +108,6 @@ export const submitItem = (
   setData
 ) => {
   let formData = new FormData();
-  const config = {
-    headers: {
-      "content-type": "multipart/form-data",
-    },
-  };
   data.images.map((item) => {
     return formData.append("images", item.src);
   });
@@ -119,30 +115,15 @@ export const submitItem = (
   formData.append("harga", data.harga);
   formData.append("jenis", data.jenis);
   formData.append("deskripsi", data.deskripsi);
+
   axios
-    .post("http://localhost:5000/api/items", formData, config)
+    .post("http://localhost:5000/api/items", formData, {})
     .then((datas) => {
-      axios
-        .get("http://localhost:5000/api/items")
-        .then((data) => {
-          swal({
-            title: `BERHASIL ${
-              location.state === undefined ? "MENAMBAH" : "UPDATE"
-            } ITEM`,
-            text: null,
-            icon: "success",
-            button: "Close",
-          });
-          dispatch({ type: "fetchData", data: data.data });
-          sorting(data.data, setSort, setData, "All Products");
-          history.push({
-            pathname: `/daftar`,
-            state: {
-              jenis: "All Products",
-            },
-          });
-        })
-        .catch((err) => console.log(err));
+      const data = datas.data;
+      dispatch({ type: "addingItem", data: data });
+      history.push({
+        pathname: `/daftar`,
+      });
     })
     .catch((err) => console.log(err));
 };
