@@ -1,14 +1,15 @@
 const express = require("express");
-const app = express();
 const routerApi = require("./routes/api");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var cors = require("cors");
+
 // middleware untuk mengakses response data
 // parse application/x-www-form-urlencoded
 // connect to db
-app.use(express.json());
-
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // middleware untuk access public folder
 
 app.use(express.static("../../public"));

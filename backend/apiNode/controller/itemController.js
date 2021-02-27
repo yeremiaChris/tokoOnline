@@ -23,94 +23,80 @@ module.exports.items_get = (req, res, next) => {
 
 module.exports.items_post = (req, res, next) => {
   const files = req.files;
+  const array = [];
+  files.map((item, index) => {
+    const obj = {
+      name: item.originalname,
+      fileName: item.filename,
+      tempat: item.path,
+      src: {
+        data: fs.readFileSync(item.path),
+        contentType: item.mimetype,
+      },
+    };
+    return array.push(obj);
+  });
   const objs = req.body;
   const obj = {
     name: objs.name,
     harga: parseInt(objs.harga),
     jenis: objs.jenis,
     deskripsi: objs.deskripsi,
-    images: files.map((item) => {
-      return {
-        name: item.originalname,
-        fileName: item.filename,
-        tempat: item.path,
-      };
-    }),
+    images: array,
   };
   Ninja.create(obj, (err, data) => {
     if (err) {
       console.log("CREATE Error: " + err);
       res.status(500).send("Error");
       next();
+    } else if (data) {
+      console.log(data);
+      res.status(201).json(data);
     } else {
-      Ninja.find({})
-        .sort({ createdAt: -1 })
-        .exec((err, doc) => {
-          if (err) {
-            return next();
-          }
-          res.send(doc);
-        });
+      console.log("error");
+      next();
     }
   });
 };
 
 module.exports.items_put = (req, res, next) => {
+  const gambarHapus = JSON.parse(req.body.pathYangDiHapus);
   const images = [];
-  if (req.files.length === 0) {
-    req.body.images.map((item) => images.push(JSON.parse(item)));
-  } else {
-    req.files.map((item) => images.push(item));
-  }
+  req.body.images.map((item) => {
+    const objek = JSON.parse(item);
+    return {
+      name: "terdampak-covid.jpeg",
+      fileName: "603a0eaf56f317052b4b0c50",
+      tempat: "../../public/uploads/images-1614417582486.jpeg",
+    };
+  });
   const obj = {
-    _id: req.params.id,
     name: req.body.name,
     harga: req.body.harga,
     jenis: req.body.jenis,
     deskripsi: req.body.deskripsi,
-    images: images.map((item) => {
-      return {
-        name: item.name,
-        fileName: item.srcImage.slice(9),
-        tempat: item.src,
-      };
-    }),
+    images: images,
   };
-  Ninja.findByIdAndUpdate({ _id: req.params.id }, obj)
-    .then(() => {
-      Ninja.findOne({ _id: req.params.id })
-        .then((data) => {
-          console.log(data);
-          res.send(data);
-        })
-        .catch(next);
-    })
-    .catch(next);
+  res.send("update");
+  // Ninja.findByIdAndUpdate({ _id: req.params.id }, obj, { new: true })
+  //   .then((data) => {
+  //     console.log(data);
+  //   })
+  //   .catch(next);
 };
 
 module.exports.items_delete = (req, res, next) => {
-  Ninja.findByIdAndDelete({ _id: req.params.id })
-    .then((data) => {
-      data.images.map((item) => {
-        fs.unlink(item.tempat, function (err) {
-          if (err) {
-            console.log(err);
-            next();
-          }
-        });
-      });
-      console.log(data);
-      Ninja.find({})
-        .sort({ createdAt: -1 })
-        .exec((err, doc) => {
-          if (err) {
-            return next();
-          }
-          res.send(doc);
-        });
-    })
-    .catch((err) => {
-      console.log(err);
+  Ninja.findById(req.params.id, (err, doc) => {
+    if (err) {
+      console.log("error cuy : ", err);
       next();
-    });
+    } else if (doc) {
+      doc.remove(() => {
+        console.log(doc);
+        res.status(201).json(doc);
+      });
+    } else {
+      next();
+    }
+  });
 };

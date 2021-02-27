@@ -3,7 +3,7 @@ import { Grid, makeStyles } from "@material-ui/core";
 import CardShop from "./cardShopDrawer";
 import { useLocation } from "react-router-dom";
 import NotFound from "../notFound";
-
+import { formatRupiah } from "../../redux/formatRupiah";
 const useStyles = makeStyles((theme) => ({
   container: {
     // backgroundColor: "red",
@@ -82,7 +82,7 @@ function DetailContent() {
 
   // state bigImage
   const [big, setBig] = React.useState(
-    location.state === undefined ? null : location.state.images[0].fileName
+    location.state === undefined ? null : location.state.images[0].srcImage
   );
   // click small image
   const clickSmallImage = (image) => {
@@ -97,11 +97,7 @@ function DetailContent() {
           <Grid item lg={6} md={6} sm={12} xs={12} className={styles.kiri}>
             <div>
               <div className={styles.bigImage}>
-                <img
-                  alt=""
-                  className={styles.img}
-                  src={`/uploads/${big}`}
-                ></img>
+                <img alt="" className={styles.img} src={`${big}`}></img>
               </div>
               <div className={styles.smallImageContainer}>
                 {small &&
@@ -109,10 +105,10 @@ function DetailContent() {
                     return (
                       <div
                         key={item._id}
-                        onClick={() => clickSmallImage(item.fileName)}
+                        onClick={() => clickSmallImage(item.srcImage)}
                         className={styles.smallImage}
                         style={{
-                          backgroundImage: `url('/uploads/${item.fileName}')`,
+                          backgroundImage: `url('${item.srcImage}')`,
                         }}
                       ></div>
                     );
@@ -126,9 +122,13 @@ function DetailContent() {
                 <h3 style={{ fontSize: 35 }} className={styles.name}>
                   {location.state === undefined ? null : location.state.nama}
                 </h3>
-                <h5 className={styles.name} style={{ marginTop: 10 }}>
-                  Rp.
-                  {location.state === undefined ? null : location.state.harga}
+                <h5
+                  className={styles.name}
+                  style={{ marginTop: 10, fontSize: 30 }}
+                >
+                  {formatRupiah(
+                    location.state === undefined ? null : location.state.harga
+                  )}
                 </h5>
               </div>
               <div className={styles.button}>

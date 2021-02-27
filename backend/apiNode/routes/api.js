@@ -3,6 +3,7 @@ const router = express.Router();
 const itemController = require("../controller/itemController");
 const multer = require("multer");
 const path = require("path");
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "../../public/uploads");
@@ -36,7 +37,7 @@ router.get("/items", itemController.items_get);
 router.post("/items", upload.array("images"), itemController.items_post);
 
 // update a ninja in db
-router.put("/items/:id", upload.array("image"), itemController.items_put);
+router.put("/items/:id", upload.array("images"), itemController.items_put);
 
 // delete ninja in db
 router.delete("/items/:id", itemController.items_delete);

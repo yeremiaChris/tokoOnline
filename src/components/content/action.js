@@ -70,7 +70,6 @@ export const updateItem = (
       // dispatch({ type: "deleteItem", key });
       // swal("Item berhasil di hapus", {
       //   icon: "success",
-      // });
       let formData = new FormData();
       const config = {
         headers: {

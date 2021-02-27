@@ -6,15 +6,12 @@ import { Link } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import { deleteItem } from "./action";
-import { sorting } from "../../utils/utils";
-import axios from "axios";
-import { useLocation } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { deleteItemData } from "../../redux/actionRedux";
 const useStyles = makeStyles((theme) => ({
-  container: {},
+  container: {
+    marginTop: 100,
+  },
   wraper: {
     display: "flex",
     justifyContent: "space-between",
@@ -45,14 +42,13 @@ export default function DaftarItem({ data, setSort, setData }) {
   const items = useSelector((state) => state.item);
   const styles = useStyles();
   const dispatch = useDispatch();
-  const location = useLocation();
-  const history = useHistory();
   const [nextPage, setNextPage] = React.useState(12);
   const next = () => {
     setNextPage((prev) => prev + 3);
   };
   // 6 data yang di tampilkan
   const onePage = items.slice(0, nextPage);
+
   return (
     <Grid container className={styles.container}>
       <Grid
@@ -65,8 +61,8 @@ export default function DaftarItem({ data, setSort, setData }) {
       {items.length === 0 ? (
         <p>Item tidak tersedia</p>
       ) : (
-        items &&
-        items.map((item, index) => {
+        onePage &&
+        onePage.map((item, index) => {
           return (
             <Grid key={item._id} item className={styles.wraper}>
               <div className={styles.kotak}>

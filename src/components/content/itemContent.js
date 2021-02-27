@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { formatRupiah } from "../../redux/formatRupiah";
+import { convertBufferToImage } from "../../utils/utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +79,8 @@ export default function ItemContent({ data, filter }) {
         ) : (
           data &&
           data.map((item) => {
+            const array = [];
+            convertBufferToImage(item, array);
             return (
               <Card key={item._id} className={classes.root}>
                 <Link
@@ -91,7 +94,12 @@ export default function ItemContent({ data, filter }) {
                     state: {
                       nama: item.name,
                       harga: item.harga,
-                      images: item.images,
+                      images: item.images.map((item, index) => {
+                        return {
+                          _id: item._id,
+                          srcImage: `data:${array[index].contentType};base64,${array[index].img}`,
+                        };
+                      }),
                       key: item._id,
                       detail: true,
                     },
@@ -100,7 +108,7 @@ export default function ItemContent({ data, filter }) {
                   <CardActionArea>
                     <CardMedia
                       className={classes.media}
-                      image={`/uploads/${item.images[0].fileName}`}
+                      image={`data:${array[0].contentType};base64,${array[0].img}`}
                       title={item.name}
                     />
                     <div

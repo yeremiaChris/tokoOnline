@@ -18,6 +18,8 @@ import ButtonSortCategori from "./components/content/ButtonSortCategori";
 import ScrollToTop from "./scrollTop";
 import { createBrowserHistory } from "history";
 import { fetchData } from "./redux/actionRedux";
+import { useLocation } from "react-router-dom";
+import TableDaftar from "./components/content/tableDaftar";
 const useStyles = makeStyles((theme) => ({
   container: {
     maxWidth: 1050,
@@ -52,27 +54,34 @@ export default function Routes() {
     by: "All Products",
     tanda: false,
   });
+
+  // location
+  const location = useLocation();
+
   return (
     <>
       <Topbar items={items} setSort={setSort} setData={setData} />
-      <div className={styles.content} style={{ marginBottom: 120 }}>
-        <Grid
-          container
-          className={styles.container}
-          style={{
-            position: "fixed",
-            zIndex: 1,
-          }}
-        >
-          <TopMenu
-            items={items}
-            setSort={setSort}
-            setData={setData}
-            data={data}
-            sort={sort}
-          />
-        </Grid>
-      </div>
+      {location.pathname === "/daftar" ? null : (
+        <div className={styles.content} style={{ marginBottom: 120 }}>
+          <Grid
+            container
+            className={styles.container}
+            style={{
+              position: "fixed",
+              zIndex: 1,
+            }}
+          >
+            <TopMenu
+              items={items}
+              setSort={setSort}
+              setData={setData}
+              data={data}
+              sort={sort}
+            />
+          </Grid>
+        </div>
+      )}
+
       <div className={styles.content} style={{ marginBottom: 0 }}>
         <Grid container className={styles.container}>
           <ButtonSortCategori />
@@ -115,10 +124,17 @@ export default function Routes() {
             </Grid>
           </div>
         </Route>
-        <Route path="/daftar">
+        {/* <Route path="/daftar">
           <div className={styles.content}>
             <Grid container className={styles.container}>
               <DaftarItem data={data} setSort={setSort} setData={setData} />
+            </Grid>
+          </div>
+        </Route> */}
+        <Route path="/daftar">
+          <div className={styles.content}>
+            <Grid container className={styles.container}>
+              <TableDaftar />
             </Grid>
           </div>
         </Route>

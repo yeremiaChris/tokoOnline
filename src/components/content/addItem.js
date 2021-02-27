@@ -21,12 +21,10 @@ import {
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import swal from "sweetalert";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import CloseIcon from "@material-ui/icons/Close";
-import { sorting, submitItem, inputImage } from "../../utils/utils";
-import { updateItem } from "./action";
-import { addingItem } from "../../redux/actionRedux";
+import { sorting, inputImage } from "../../utils/utils";
+import { addingItem, updateItem } from "../../redux/actionRedux";
 const useStyles = makeStyles((theme) => ({
   gambarContainer: {
     display: "flex",
@@ -155,35 +153,26 @@ function AddItem({ setSort, setData }) {
   const history = useHistory();
   const [error, setError] = React.useState("");
   // submit data
+  const [gambarYangDiganti, setGambarYangDiganti] = React.useState([]);
+  console.log(gambarYangDiganti);
   const onSubmit = (data) => {
     // submit function dari utils
     if (location.pathname !== "/addItem") {
-      const obj = {
-        nama: data.nama,
-        harga: data.harga,
-        jenis: data.jenis,
-        deskripsi: data.deskripsi,
-        images: data.images.map((item) => {
-          return {
-            key: item.key,
-            srcImage: item.srcImage,
-            src: item.src,
-            name: item.name,
-          };
-        }),
-      };
-      updateItem(
-        data.nama,
-        data._id,
-        axios,
-        dispatch,
-        sorting,
-        history,
-        setSort,
-        setData,
-        location,
-        obj
-      );
+      // const obj = {
+      //   nama: data.nama,
+      //   harga: data.harga,
+      //   jenis: data.jenis,
+      //   deskripsi: data.deskripsi,
+      //   images: data.images.map((item) => {
+      //     return {
+      //       key: item.key,
+      //       srcImage: item.srcImage,
+      //       src: item.src,
+      //       name: item.name,
+      //     };
+      //   }),
+      // };
+      dispatch(updateItem(data, gambarYangDiganti));
     } else {
       dispatch(addingItem(data));
       history.push("/daftar");
@@ -194,7 +183,7 @@ function AddItem({ setSort, setData }) {
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
         <h2 style={{ textAlign: "left", marginBottom: 50 }}>
-          {location.state === undefined ? "Add Item" : "Update Item"}
+          {location.state === undefined ? "Tambah Item" : "Edit Item"}
         </h2>
       </Grid>
       <Formik
@@ -203,7 +192,7 @@ function AddItem({ setSort, setData }) {
           location.state === undefined
             ? initialValues
             : {
-                _id: location.state._id,
+                key: location.state._id,
                 nama: location.state.nama,
                 harga: location.state.harga,
                 jenis: location.state.jenis,
@@ -390,7 +379,9 @@ function AddItem({ setSort, setData }) {
                       return (
                         <div
                           key={
-                            location.state === undefined ? item.key : item.key
+                            location.pathname === "/editItem/:slug"
+                              ? item.key
+                              : item.key
                           }
                           style={{ color: "gray", marginRight: 40 }}
                         >
@@ -406,6 +397,15 @@ function AddItem({ setSort, setData }) {
                           >
                             <CloseIcon
                               onClick={() => {
+                                if (location.state !== undefined) {
+                                  setGambarYangDiganti([
+                                    ...gambarYangDiganti,
+                                    {
+                                      path: item.src,
+                                      name: item.name,
+                                    },
+                                  ]);
+                                }
                                 setFieldValue("images", [
                                   ...values.images.filter(
                                     (items) => items.key !== item.key

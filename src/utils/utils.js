@@ -33,6 +33,36 @@ export const menuList = [
     ],
   },
 ];
+// menu list
+export const menuListDua = [
+  {
+    name: "All Products",
+    key: "4",
+    icon: true,
+    menu: [
+      {
+        jenis: "All Products",
+        key: "5",
+      },
+      {
+        jenis: "T-Shirt",
+        key: "1",
+      },
+      {
+        jenis: "Shoes",
+        key: "2",
+      },
+      {
+        jenis: "Pants",
+        key: "3",
+      },
+      {
+        jenis: "Shirt",
+        key: "4",
+      },
+    ],
+  },
+];
 // akhir menu list
 
 // awal side menu categories
@@ -147,4 +177,15 @@ export const inputImage = (e, values, setFieldValue, setError) => {
   } else {
     setError("tipe gambar salah");
   }
+};
+
+export const convertBufferToImage = (item, array) => {
+  item.images.map((item) => {
+    const base64String = {
+      img: btoa(String.fromCharCode(...new Uint8Array(item.src.data.data))),
+      contentType: item.src.contentType,
+    };
+    array.push(base64String);
+    return array;
+  });
 };

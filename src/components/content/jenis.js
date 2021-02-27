@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { formatRupiah } from "../../redux/formatRupiah";
-
+import { convertBufferToImage } from "../../utils/utils";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 320,
@@ -77,65 +77,75 @@ export default function Jenis() {
         <div className={classes.terbaru}>
           <h1 className={classes.terbaruText}>REKOMENDASI</h1>
         </div>
-        {onePage.map((item) => (
-          <Card key={item._id} className={classes.root}>
-            <Link
-              style={{
-                color: "black",
-                textDecoration: "none",
-                textAlign: "left",
-              }}
-              to={{
-                pathname: `/detail/${item.name}`,
-                state: {
-                  nama: item.name,
-                  harga: item.harga,
-                  images: item.images,
-                  key: item._id,
-                  detail: true,
-                },
-              }}
-            >
-              <CardActionArea>
-                <CardMedia
-                  className={classes.media}
-                  image={`/uploads/${item.images[0].fileName}`}
-                  title={item.nama}
-                />
-              </CardActionArea>
-            </Link>
-            <CardContent
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-end",
-                padding: 0,
-              }}
-            >
-              <div>
-                <Typography
-                  style={{ marginTop: 20 }}
-                  gutterBottom
-                  variant="h5"
-                  component="h2"
-                >
-                  {item.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="textSecondary"
-                  component="p"
-                  style={{
-                    textAlign: "left",
-                    fontSize: 20,
-                  }}
-                >
-                  {formatRupiah(item.harga)}
-                </Typography>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        {onePage.map((item) => {
+          const array = [];
+          convertBufferToImage(item, array);
+
+          return (
+            <Card key={item._id} className={classes.root}>
+              <Link
+                style={{
+                  color: "black",
+                  textDecoration: "none",
+                  textAlign: "left",
+                }}
+                to={{
+                  pathname: `/detail/${item.name}`,
+                  state: {
+                    nama: item.name,
+                    harga: item.harga,
+                    images: item.images.map((item, index) => {
+                      return {
+                        _id: item._id,
+                        srcImage: `data:${array[index].contentType};base64,${array[index].img}`,
+                      };
+                    }),
+                    key: item._id,
+                    detail: true,
+                  },
+                }}
+              >
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={`data:${array[0].contentType};base64,${array[0].img}`}
+                    title={item.nama}
+                  />
+                </CardActionArea>
+              </Link>
+              <CardContent
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  padding: 0,
+                }}
+              >
+                <div>
+                  <Typography
+                    style={{ marginTop: 20 }}
+                    gutterBottom
+                    variant="h5"
+                    component="h2"
+                  >
+                    {item.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                    style={{
+                      textAlign: "left",
+                      fontSize: 20,
+                    }}
+                  >
+                    {formatRupiah(item.harga)}
+                  </Typography>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
       </Grid>
       {onePage.length <= 6 ? null : (
         <Grid container justify="center" className={classes.bottom}>

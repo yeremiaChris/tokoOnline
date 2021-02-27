@@ -136,9 +136,10 @@ const rootReducer = (state = initState, action) => {
         item: [newItem, ...state.item],
       };
     case DELETE_ITEM_DATA: {
+      const baru = state.item.filter((item) => item._id !== action.key);
       return {
-        item: [...state.item.filter((data) => data._id !== action.key)],
         ...state,
+        item: baru,
       };
     }
     default:
