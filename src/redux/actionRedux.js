@@ -84,25 +84,20 @@ export const updateItem = (data, gambarYangDiganti) => {
     }).then((willDelete) => {
       if (willDelete) {
         let formData = new FormData();
-        const config = {
-          headers: {
-            "content-type": "multipart/form-data",
-          },
-        };
-        data.images.map((item) =>
-          typeof item.src === "object"
-            ? formData.append("images", item.src)
-            : formData.append("images[]", JSON.stringify(item))
-        );
-        if (Array.isArray(gambarYangDiganti) === true) {
-          gambarYangDiganti.map((item) => {
-            return formData.append("pathYangDiHapus[]", JSON.stringify(item));
-          });
-        }
         formData.append("name", data.nama);
         formData.append("harga", data.harga);
         formData.append("jenis", data.jenis);
         formData.append("deskripsi", data.deskripsi);
+        data.images.map((item) =>
+          "data" in item.src
+            ? formData.append("images", JSON.stringify(item))
+            : formData.append("images", item.src)
+        );
+        // if (Array.isArray(gambarYangDiganti) === true) {
+        //   gambarYangDiganti.map((item) => {
+        //     return formData.append("pathYangDiHapus[]", JSON.stringify(item));
+        //   });
+        // }
 
         const controller = new AbortController();
         const signal = controller.signal;

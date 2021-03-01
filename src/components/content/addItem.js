@@ -157,20 +157,20 @@ function AddItem({ setSort, setData }) {
   const onSubmit = (data) => {
     // submit function dari utils
     if (location.pathname !== "/addItem") {
-      // const obj = {
-      //   nama: data.nama,
-      //   harga: data.harga,
-      //   jenis: data.jenis,
-      //   deskripsi: data.deskripsi,
-      //   images: data.images.map((item) => {
-      //     return {
-      //       key: item.key,
-      //       srcImage: item.srcImage,
-      //       src: item.src,
-      //       name: item.name,
-      //     };
-      //   }),
-      // };
+      const obj = {
+        nama: data.nama,
+        harga: data.harga,
+        jenis: data.jenis,
+        deskripsi: data.deskripsi,
+        images: data.images.map((item) => {
+          return {
+            key: item.key,
+            srcImage: item.srcImage,
+            src: item.src,
+            name: item.name,
+          };
+        }),
+      };
       dispatch(updateItem(data, gambarYangDiganti));
     } else {
       dispatch(addingItem(data));
@@ -399,7 +399,7 @@ function AddItem({ setSort, setData }) {
                                   setGambarYangDiganti([
                                     ...gambarYangDiganti,
                                     {
-                                      path: item.src.tempat,
+                                      path: item.src.data,
                                       name: item.name,
                                     },
                                   ]);

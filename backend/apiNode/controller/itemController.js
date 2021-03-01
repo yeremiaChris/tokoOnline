@@ -68,7 +68,6 @@ module.exports.items_post = (req, res, next) => {
 };
 
 module.exports.items_put = (req, res, next) => {
-  res.send("test");
   // const images = [];
   // const gambarTerhapus = [];
   // if (req.body.pathYangDiHapus) {
@@ -76,15 +75,28 @@ module.exports.items_put = (req, res, next) => {
   //     return array.push(JSON.parse(item));
   //   });
   // }
-  // req.body.images.map((item) => {
-  //   const objek = JSON.parse(item);
-  //   return {
-  //     ...item,
-  //     name: "terdampak-covid.jpeg",
-  //     fileName: "603a0eaf56f317052b4b0c50",
-  //     tempat: "../../public/uploads/images-1614417582486.jpeg",
-  //   };
-  // });
+  const array = [];
+  const images = [];
+  // if (req.files.length > 0) {
+  //   req.files.map((item, index) => {
+  //     const obj = {
+  //       name: item.originalname,
+  //       fileName: item.filename,
+  //       tempat: item.path,
+  //       src: {
+  //         data: fs.readFileSync(item.path).toString("base64"),
+  //         contentType: item.mimetype,
+  //       },
+  //     };
+  //     return images.push(obj);
+  //   });
+  // }
+  req.body.images.map((item) => {
+    return array.push(JSON.parse(item));
+  });
+
+  console.log(array);
+  res.send("update");
   // const obj = {
   //   name: req.body.name,
   //   harga: req.body.harga,
@@ -92,10 +104,10 @@ module.exports.items_put = (req, res, next) => {
   //   deskripsi: req.body.deskripsi,
   //   images: images,
   // };
-  // res.status(201).json({ test: "update" });
   // Ninja.findByIdAndUpdate({ _id: req.params.id }, obj, { new: true })
   //   .then((data) => {
   //     console.log(data);
+  //     res.status(201).json(data);
   //   })
   //   .catch(next);
 };
