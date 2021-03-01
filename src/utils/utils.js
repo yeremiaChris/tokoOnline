@@ -178,14 +178,3 @@ export const inputImage = (e, values, setFieldValue, setError) => {
     setError("tipe gambar salah");
   }
 };
-
-export const convertBufferToImage = (item, array) => {
-  item.images.map((item) => {
-    const base64String = {
-      img: btoa(String.fromCharCode(...new Uint8Array(item.src.data.data))),
-      contentType: item.src.contentType,
-    };
-    array.push(base64String);
-    return array;
-  });
-};

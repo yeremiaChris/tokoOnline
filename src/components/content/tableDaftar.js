@@ -16,7 +16,7 @@ import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import { useDispatch } from "react-redux";
 import { deleteItemData } from "../../redux/actionRedux";
 import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import { menuListDua, convertBufferToImage } from "../../utils/utils";
+import { menuListDua } from "../../utils/utils";
 import { Menu, MenuItem } from "@szhsin/react-menu";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
@@ -64,7 +64,6 @@ export default function BasicTable() {
   const classes = useStyles();
   const items = useSelector((state) => state.item);
   const dispatch = useDispatch();
-
   return (
     <Grid container className={classes.container}>
       <Grid
@@ -131,8 +130,6 @@ export default function BasicTable() {
           </TableHead>
           <TableBody>
             {items.map((item) => {
-              const array = [];
-              convertBufferToImage(item, array);
               return (
                 <TableRow key={item._id}>
                   <TableCell component="th" scope="row">
@@ -140,7 +137,7 @@ export default function BasicTable() {
                       <img
                         className={classes.img}
                         alt={item.name}
-                        src={`data:${array[0].contentType};base64,${array[0].img}`}
+                        src={`data:${item.images[0].src.contentType};base64,${item.images[0].src.data}`}
                       />
                     </div>
                   </TableCell>
@@ -177,8 +174,8 @@ export default function BasicTable() {
                               return {
                                 key: item._id,
                                 name: item.name,
-                                src: item.tempat,
-                                srcImage: `data:${array[index].contentType};base64,${array[index].img}`,
+                                src: item.src,
+                                srcImage: `data:${item.src.contentType};base64,${item.src.data}`,
                               };
                             }),
                           },

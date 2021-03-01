@@ -17,7 +17,7 @@ module.exports.items_get = (req, res, next) => {
       if (err) {
         return next();
       }
-      res.send(doc);
+      res.status(201).json(doc);
     });
 };
 
@@ -30,7 +30,7 @@ module.exports.items_post = (req, res, next) => {
       fileName: item.filename,
       tempat: item.path,
       src: {
-        data: fs.readFileSync(item.path),
+        data: fs.readFileSync(item.path).toString("base64"),
         contentType: item.mimetype,
       },
     };
@@ -50,7 +50,15 @@ module.exports.items_post = (req, res, next) => {
       res.status(500).send("Error");
       next();
     } else if (data) {
-      console.log(data);
+      data.images.map((img) => {
+        fs.unlink(img.tempat, (err) => {
+          if (err) {
+            console.log("gagal hapus");
+            next();
+          }
+          console.log("berhasil hapus");
+        });
+      });
       res.status(201).json(data);
     } else {
       console.log("error");
@@ -60,24 +68,31 @@ module.exports.items_post = (req, res, next) => {
 };
 
 module.exports.items_put = (req, res, next) => {
-  const gambarHapus = JSON.parse(req.body.pathYangDiHapus);
-  const images = [];
-  req.body.images.map((item) => {
-    const objek = JSON.parse(item);
-    return {
-      name: "terdampak-covid.jpeg",
-      fileName: "603a0eaf56f317052b4b0c50",
-      tempat: "../../public/uploads/images-1614417582486.jpeg",
-    };
-  });
-  const obj = {
-    name: req.body.name,
-    harga: req.body.harga,
-    jenis: req.body.jenis,
-    deskripsi: req.body.deskripsi,
-    images: images,
-  };
-  res.send("update");
+  res.send("test");
+  // const images = [];
+  // const gambarTerhapus = [];
+  // if (req.body.pathYangDiHapus) {
+  //   req.body.pathYangDiHapus.map((item) => {
+  //     return array.push(JSON.parse(item));
+  //   });
+  // }
+  // req.body.images.map((item) => {
+  //   const objek = JSON.parse(item);
+  //   return {
+  //     ...item,
+  //     name: "terdampak-covid.jpeg",
+  //     fileName: "603a0eaf56f317052b4b0c50",
+  //     tempat: "../../public/uploads/images-1614417582486.jpeg",
+  //   };
+  // });
+  // const obj = {
+  //   name: req.body.name,
+  //   harga: req.body.harga,
+  //   jenis: req.body.jenis,
+  //   deskripsi: req.body.deskripsi,
+  //   images: images,
+  // };
+  // res.status(201).json({ test: "update" });
   // Ninja.findByIdAndUpdate({ _id: req.params.id }, obj, { new: true })
   //   .then((data) => {
   //     console.log(data);

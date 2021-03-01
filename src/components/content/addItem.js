@@ -153,8 +153,7 @@ function AddItem({ setSort, setData }) {
   const history = useHistory();
   const [error, setError] = React.useState("");
   // submit data
-  const [gambarYangDiganti, setGambarYangDiganti] = React.useState([]);
-  console.log(gambarYangDiganti);
+  const [gambarYangDiganti, setGambarYangDiganti] = React.useState("");
   const onSubmit = (data) => {
     // submit function dari utils
     if (location.pathname !== "/addItem") {
@@ -178,7 +177,6 @@ function AddItem({ setSort, setData }) {
       history.push("/daftar");
     }
   };
-
   return (
     <Grid container className={styles.container}>
       <Grid item lg={12} md={12} sm={12} xs={12}>
@@ -401,7 +399,7 @@ function AddItem({ setSort, setData }) {
                                   setGambarYangDiganti([
                                     ...gambarYangDiganti,
                                     {
-                                      path: item.src,
+                                      path: item.src.tempat,
                                       name: item.name,
                                     },
                                   ]);

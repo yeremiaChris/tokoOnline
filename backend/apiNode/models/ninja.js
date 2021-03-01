@@ -17,7 +17,7 @@ const ImageSchema = new Schema({
     required: [true, "Field ini harus ada"],
   },
   src: {
-    data: Buffer,
+    data: String,
     contentType: String,
   },
 });

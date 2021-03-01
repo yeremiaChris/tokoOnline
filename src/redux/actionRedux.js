@@ -94,12 +94,11 @@ export const updateItem = (data, gambarYangDiganti) => {
             ? formData.append("images", item.src)
             : formData.append("images[]", JSON.stringify(item))
         );
-        gambarYangDiganti.map((item) => {
-          return formData.append(
-            "pathYangDiHapus[]",
-            JSON.stringify(gambarYangDiganti)
-          );
-        });
+        if (Array.isArray(gambarYangDiganti) === true) {
+          gambarYangDiganti.map((item) => {
+            return formData.append("pathYangDiHapus[]", JSON.stringify(item));
+          });
+        }
         formData.append("name", data.nama);
         formData.append("harga", data.harga);
         formData.append("jenis", data.jenis);

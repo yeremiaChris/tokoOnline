@@ -78,9 +78,6 @@ export default function Jenis() {
           <h1 className={classes.terbaruText}>REKOMENDASI</h1>
         </div>
         {onePage.map((item) => {
-          const array = [];
-          convertBufferToImage(item, array);
-
           return (
             <Card key={item._id} className={classes.root}>
               <Link
@@ -97,7 +94,7 @@ export default function Jenis() {
                     images: item.images.map((item, index) => {
                       return {
                         _id: item._id,
-                        srcImage: `data:${array[index].contentType};base64,${array[index].img}`,
+                        srcImage: `data:${item.src.contentType};base64,${item.src.data}`,
                       };
                     }),
                     key: item._id,
@@ -108,7 +105,7 @@ export default function Jenis() {
                 <CardActionArea>
                   <CardMedia
                     className={classes.media}
-                    image={`data:${array[0].contentType};base64,${array[0].img}`}
+                    image={`data:${item.images[0].src.contentType};base64,${item.images[0].src.data}`}
                     title={item.nama}
                   />
                 </CardActionArea>

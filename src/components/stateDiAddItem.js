@@ -55,6 +55,7 @@ export const schema = yup.object().shape({
         key: yup.string().required("perlu"),
         src: yup.mixed(),
         srcImage: yup.string(),
+        fileBuffer: yup.mixed(),
       })
     )
     .min(6, "6 gambar harus di inputkan")
