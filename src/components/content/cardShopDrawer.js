@@ -197,7 +197,7 @@ export default function TemporaryDrawer({ key, data }) {
                     <div className={classes.iconMenu}>
                       <div
                         style={{
-                          backgroundImage: `url('/uploads/${item.data.images[0].fileName}')`,
+                          backgroundImage: `url('${item.data.images[0].srcImage}')`,
                         }}
                         className={classes.gambarCart}
                       ></div>
